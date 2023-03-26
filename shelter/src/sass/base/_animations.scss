@@ -1,0 +1,24 @@
+.rotate90deg {
+    transform: rotate(90deg);
+    .header-pets &{
+        .burger-btn-line {
+            border-color: $color-primary !important;
+        }
+    }
+}
+
+.show-menu {
+    transform: translateX(0) !important;
+}
+
+.show-menu-screen {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.no-transition {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+

@@ -1,0 +1,36 @@
+.menu-screen {
+    width:100vw;
+    height:100vh;
+    position: fixed;
+    top:0;
+    left:0;
+    display:flex;
+    justify-content: flex-end;
+    z-index: 4;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color ease-in-out 1s;
+}
+
+.menu-wrapper {
+    width:320px;
+    height:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background: $color-dark-3xl;
+    z-index: 5;
+    transform: translateX(320px);
+    transition: transform ease-in-out 1s;
+}
+
+.mobile-menu {
+    width: 243px;
+    height: 327px;
+    text-align: center;
+    ul {
+        height:100%;
+        @include flex-center(space-between);
+        flex-direction: column;
+        list-style: none;
+    }
+}

@@ -1,0 +1,250 @@
+html {
+  font-family: Georgia, sans-serif;
+  font-weight:400;
+}
+
+.logo:hover {
+  .h1 {
+    transition: ease-in-out color 0.3s;
+    color:$color-primary-light;
+    &.on-light {
+      color:$color-dark-3xl;
+    }
+  }
+  .logo-secondary {
+    transition: ease-in-out color 0.3s;
+    color:$color-light-xl;
+    &.on-light {
+        color:$color-dark-m;
+    }
+  }
+}
+
+h1 {
+  font-size:2rem;
+  line-height: 110%;
+  font-weight:400;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.06em;
+  color: $color-primary;
+  &.on-light {
+    color: $color-dark-l;
+  }
+}
+
+.logo-secondary {
+  font-family: Arial, sans-serif;
+  font-size:13px;
+  line-height: 15px;
+  margin-left:4px;
+  letter-spacing: 0.1em;
+  color: $color-light-xl;
+  &.on-light {
+    color: $color-dark-3xl;
+  }
+}
+
+.on-dark {
+  color: $color-light-xl;
+}
+
+h2, h3, h4, h5 {
+  font-weight:400;
+  color: $color-dark-l;
+}
+
+h2 {
+  line-height:130%;
+  @media (max-width: $tablet-width) {
+    font-size: 25px;
+    .start-screen & {
+      letter-spacing: 0.06em;
+    }
+  }
+  @media (min-width: $tablet-width) {
+    font-size:44px;
+    .start-screen & {
+      letter-spacing: inherit;
+    }
+  }
+}
+
+h3 {
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  @media (max-width: $tablet-width) {
+    font-size: 25px;
+  }
+  @media (min-width:$tablet-width) {
+    font-size: 35px;
+  }
+}
+
+h4, .button-round{
+  font-size: 20px;
+  line-height: 115%;
+  letter-spacing: 0.06em;
+}
+
+h4 {
+  @media (max-width:$tablet-width) {
+    font-size:15px;
+  }
+  @media (min-width:$tablet-width) {
+    font-size: 20px;
+  }
+}
+
+h5 {
+  font-size: 15px;
+  line-height: 110%;
+  letter-spacing: 0.06em;
+
+  @media (max-width:$tablet-width) {
+    .help-donation & {
+      letter-spacing: inherit;
+    }
+  }
+  @media (min-width:$tablet-width) {
+    .help-donation & {
+      letter-spacing: 0.06em;
+    }
+  }
+}
+
+.paragraph-l {
+  font-family: 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 160%;
+  color: $color-dark-xl;
+  &.on-light {
+    color:$color-dark-l;
+    &.initialized {
+      color:$color-dark-3xl;
+      border-bottom: 3px solid $color-primary;
+    }
+  }
+
+  &.on-dark {
+    color: $color-dark-s;
+
+    &.initialized {
+      color: $color-light-s;
+      border-bottom:3px solid $color-primary;
+    }
+  }
+}
+
+.paragraph-s {
+  font-family: 'Arial', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: $color-dark-m;
+}
+
+footer figcaption h4{
+  color: $color-primary;
+}
+
+a {
+  text-decoration: none;
+  cursor:pointer;
+  border-bottom: 3px solid rgba(0,0,0,0);
+  transition: color ease-in-out 0.3s,
+  border-color ease-in-out 0.3s;
+  &.on-dark:hover {
+    color: $color-light-s;
+  }
+
+  &.on-dark:active, &.on-dark:target {
+    color:$color-light-s;
+    border-color: $color-primary;
+  }
+
+  &.on-light:hover {
+    color: $color-dark-3xl;
+  }
+
+  &.on-light:active, &.on-light:target {
+    color: $color-dark-l;
+    border-color:$color-primary;
+  }
+}
+
+.pet h4 {
+  font-size: 20px;
+}
+
+.contacts-row a, .locations-row a {
+  h4 {
+    color: $color-primary;
+    transition: ease-in-out color 0.3s;
+    font-size:20px;
+  }
+  svg {
+    fill: $color-primary;
+    transition: ease-in-out fill 0.3s;
+  }
+  &:hover{
+    h4 {
+      color: $color-light-xl;
+    }
+    svg {
+      fill: $color-light-xl;
+    }
+  }
+}
+
+button {
+  font-size:17px;
+}
+
+.paragraph-mobile-menu {
+  font-family: 'Arial', sans-serif;
+  font-size: 32px;
+  line-height: 160%;
+  color: $color-dark-s;
+
+  &.initialized {
+    color: $color-light-s;
+    border-bottom: 3px solid $color-primary;
+  }
+}
+
+.h5-modal-window {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 110%;
+  letter-spacing: 0.06em;
+  &::after {
+    content: ": ";
+  }
+  color:black;
+}
+
+.modal h3, h4, h5 {
+  color:black;
+}
+
+.modal h5 {
+  @media (min-width:$tablet-width) and (max-width: $desktop-width) {
+    font-size:13px;
+  }
+  @media (min-width: $desktop-width) {
+    font-size: 15px;
+  }
+}
+
+.modal-list-item {
+  font-style: normal;
+  font-size: 15px;
+  line-height: 110%;
+  letter-spacing: 0.06em;
+  color:black;
+}

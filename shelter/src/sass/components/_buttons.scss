@@ -1,0 +1,57 @@
+button {
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  color: $color-dark-3xl;
+  cursor:pointer;
+  display:inline;
+  width:auto;
+  height:52px;
+  border-radius: 100px;
+  border:2px solid $color-primary;
+  padding:15px 45px;
+  margin:0;
+  transition: ease-in-out background 0.3s,
+  ease-in-out border 0.3s, ease-in-out transform 0.2s;
+  background:transparent;
+
+  svg {
+    fill: $color-dark-3xl;
+  }
+  &:hover {
+    background-color:$color-primary-light;
+    border-color:$color-primary-light;
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.button-primary {
+  background-color:$color-primary;
+}
+
+.button-round {
+  width:52px;
+  height:52px;
+  border-radius: 50%;
+  padding:23px 19px;
+  display:inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    background-color: $color-primary;
+  }
+  &:disabled, &:disabled:hover, &:disabled:active {
+    cursor: auto;
+    color:$color-dark-s;
+    border-color: $color-dark-s;
+    transform: none;
+    transition: none;
+    background-color:transparent;
+  }
+}
+
+.right svg {
+  transform: rotate(180deg);
+}

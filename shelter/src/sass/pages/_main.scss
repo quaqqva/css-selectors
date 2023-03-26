@@ -1,0 +1,333 @@
+.start-screen {
+  @include gradient-bg;
+  padding-top:30px;
+  padding-bottom: 0;
+  .start-screen-elements {
+    display:flex;
+    justify-content: space-between;
+    .text-wrapper {
+      display:flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      h2 {
+        width:70%;
+      }
+    }
+
+    @media (max-width: $desktop-width) {
+      margin-top:60px;
+      flex-direction: column;
+      img {
+        align-self: flex-end;
+      }
+      .text-wrapper {
+        align-self: center;
+        max-width:460px;
+      }
+    }
+
+    @media (max-width: $tablet-width) {
+      gap:105px;
+      .text-wrapper {
+        gap:42px;
+        text-align:center;
+        align-items: center;
+        width:100%;
+      }
+      img {
+        @include responsive-img(260, 320, 20px);
+      }
+    }
+    @media (min-width:$tablet-width) and (max-width: $desktop-width) {
+      gap:100px;
+      .text-wrapper {
+        height:322px;
+        text-align:start;
+        align-items:flex-start;
+        button {
+          align-self:center;
+        }
+      }
+      img {
+        @include responsive-img(570, 768, 60px);
+        max-width:570px;
+      }
+    }
+    @media (min-width:$desktop-width) {
+      margin-top:90px;
+      flex-direction: row;
+      gap:42px;
+      .text-wrapper {
+        margin:163px 0 243px;
+        align-self:auto;
+        button {
+          align-self:flex-start;
+        }
+      }
+      img {
+        max-height:100%;
+        max-width:100%;
+      }
+    }
+  }
+}
+
+.about {
+  background: $color-light-xl;
+  display:flex;
+  justify-content: center;
+
+  .text-wrapper {
+    max-width: 430px;
+    display: flex;
+    flex-direction: column;
+    gap:25px;
+    h3 {
+      width: 370px;
+      height: 90px;
+    }
+  }
+  img {
+    max-width: 300px;
+    max-height: 408px;
+  }
+
+  @media (max-width:$desktop-width) {
+    flex-direction: column-reverse;
+    align-items:center;
+  }
+  @media (max-width: $tablet-width) {
+    gap:42px;
+    .text-wrapper {
+      gap:22px;
+      align-items: center;
+      padding:0 15px;
+      text-align:justify;
+      h3 {
+        text-align:center;
+        max-width:250px;
+        height:auto;
+      }
+    }
+    img {
+      @include responsive-img(260, 320, 20px);
+    }
+  }
+  @media (min-width: $tablet-width) and (max-width: $desktop-width) {
+    gap:80px;
+    .text-wrapper {
+      align-items:flex-start;
+      text-align:start;
+      padding:0;
+      h3 {
+        max-width:100%;
+        text-align:start;
+      }
+    }
+    img {
+      @include responsive-img(300, 768, 60px);
+    }
+  }
+  @media (min-width: $desktop-width) {
+    flex-direction:row;
+    gap:120px;
+    .text-wrapper {
+      padding-top:14px;
+    }
+  }
+}
+
+.our-pets {
+  background:$color-light-l;
+  text-align:center;
+  h3 {
+    margin: 0 auto;
+  }
+  .carousel-wrapper {
+    @include flex-center(space-between);
+    margin:60px 0;
+    .pets-wrapper {
+      display:flex;
+      position: relative;
+      transition: left ease-in-out 1s;
+    }
+  }
+  >button {
+    margin:0 auto;
+  }
+
+  .slider-wrapper {
+    width:100%;
+    overflow-x:clip;
+    overflow-y: visible;
+  }
+
+
+  @media (max-width: $tablet-width) {
+    .slider-wrapper {
+      order:-1;
+      flex:1 0 270px;
+      margin:0 calc((100vw - 270px)/2);
+    }
+    .pets-wrapper {  
+      gap:20px;
+    }
+    .carousel-wrapper {
+      margin:42px 0;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:20px calc(80 / 320 * (100% + 20px));
+    }
+  }
+  @media (min-width: $tablet-width) and (max-width: $desktop-width) {
+    .carousel-wrapper {
+      margin: 60px 0;
+      justify-content: space-between;
+      gap:unset;
+    }
+    .slider-wrapper {
+      width:calc(270px * 2 + 40px);
+      order:0;
+      flex: 0 0 auto;
+      margin:0;
+    }
+    .pets-wrapper {
+      gap:40px;
+      justify-content: flex-start;
+    }
+  }
+  @media (min-width: $desktop-width) {
+    .slider-wrapper {
+      width:calc(270px * 3 + 90px * 2);
+    }
+    .pets-wrapper {
+      gap:90px;
+    }
+  }
+}
+
+.help-items {
+  text-align:center;
+  background:$color-light-xl;
+  h3 {
+    margin:0 auto;
+  }
+  .icons-wrapper {
+    @include flex-center(center);
+    flex-wrap:wrap;
+    figure {
+      margin:0;
+      width:auto;
+    }
+  }
+  @media (max-width: $tablet-width) {
+    h3 {
+      margin-bottom:42px;
+    }
+    .icons-wrapper {
+      margin: 0 5px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      figure img{
+          height:50px;
+          margin-bottom:15px;
+      }
+    }
+  }
+  @media (min-width: $tablet-width) and (max-width: $desktop-width) {
+    h3 {
+      margin-bottom:60px;
+    }
+    .icons-wrapper {
+      margin:0 39px;
+      gap:55px 60px;
+      @include flex-center(space-around);
+      figure {
+        flex: 1 0 25%;
+        img {
+          height:auto;
+          margin-bottom:25px;
+        }
+      }
+    }
+  }
+  @media (min-width: $desktop-width) {
+    h3 {
+      margin-bottom:60px;
+    }
+    .icons-wrapper {
+      margin:0;
+      gap:55px 120px;
+      justify-content: center;
+      figure {
+        flex:0 0 auto;
+        img {
+          margin-bottom:25px;
+        }
+      }
+    }
+  }
+}
+
+.help-donation {
+  background-color: $color-light-l;
+  @include flex-center(center);
+
+  .text-wrapper {
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    h3 {
+      width: 300px;
+    }
+    .paragraph-s {
+      width: 380px;
+      height: 72px;
+    }
+  }
+
+  @media (max-width: $desktop-width) {
+    flex-direction: column-reverse;
+  }
+  @media (max-width: $tablet-width) {
+    gap:42px;
+    .text-wrapper {
+      text-align:center;
+      align-items:center;
+      h5 {
+        height:24px;
+      }
+      .paragraph-s {
+        width:280px;
+        height:90px;
+      }
+    }
+    img {
+      @include responsive-img(260, 320, 20px);
+    }
+  }
+  @media (min-width: $tablet-width) and (max-width: $desktop-width) {
+    gap:60px;
+    .text-wrapper {
+      text-align: start;
+      align-items:flex-start;
+      padding:0;
+      h5 {
+        height:17px;
+      }
+      .paragraph-s {
+        width: 380px;
+        height: 72px;
+      }
+    }
+    img {
+      @include responsive-img(505, 768, 60px);
+    }
+  }
+  @media (min-width: $desktop-width) {
+    gap:30px;
+    flex-direction:row;
+  }
+}

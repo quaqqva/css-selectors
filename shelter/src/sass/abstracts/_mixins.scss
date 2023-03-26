@@ -1,0 +1,26 @@
+@mixin gradient-bg {
+  background: url("./../img/bg/noise_transparent@2X.png"),
+  radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
+}
+
+@mixin flex-center ($justify-content) {
+  display:flex;
+  justify-content: $justify-content;
+  align-items: center;
+}
+
+@mixin section-padding {
+  @media (max-width: $tablet-width) {
+    padding: 42px 10px;
+  }
+  @media (min-width: $tablet-width) and (max-width:$desktop-width) {
+    padding:80px 30px 100px;
+  }
+  @media (min-width: $desktop-width) {
+    padding:80px calc((100% - 1280px)/2 + 40px) 100px;
+  }
+}
+
+@mixin responsive-img($init-width, $window-size, $padding) {
+  max-width: calc($init-width / $window-size * (100% + $padding));
+}
