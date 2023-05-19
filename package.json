@@ -4,9 +4,30 @@
   "description": "Minesweeper task for the Rolling Scopes School",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "webpack serve",
+    "build:prod": "set NODE_ENV=production&&webpack"
   },
   "keywords": [],
   "author": "Quaqva (Alexandr Sazonnikov)",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.7.4",
+    "eslint": "^8.40.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "postcss": "^8.4.23",
+    "postcss-loader": "^7.3.0",
+    "postcss-preset-env": "^8.3.2",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.2.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.83.1",
+    "webpack-cli": "^5.1.1",
+    "webpack-dev-server": "^4.15.0"
+  }
 }
