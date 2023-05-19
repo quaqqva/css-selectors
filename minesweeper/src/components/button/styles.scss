@@ -1,0 +1,17 @@
+.button {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.button__main-text {
+  font-weight: 700;
+}
+
+.button__additional-text {
+  font-size: 0.7em;
+  font-weight: 400;
+}

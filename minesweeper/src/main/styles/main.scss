@@ -1,2 +1,9 @@
 @import "vendors/normalize.css";
-@import "base/typography.scss";
+
+@import "abstracts/colors";
+
+@import "base/reset";
+@import "base/typography";
+
+@import "components/modal";
+@import "components/button";

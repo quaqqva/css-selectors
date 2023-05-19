@@ -1,0 +1,12 @@
+.modal {
+  background-color: $primary-color;
+  border: 3px solid $box-shadow-color;
+  border-radius: 50px;
+  box-shadow: 0 5px $box-shadow-color;
+  padding: 2%;
+  padding-bottom: 0;
+}
+
+.modal_start-modal {
+  width: 30% !important;
+}

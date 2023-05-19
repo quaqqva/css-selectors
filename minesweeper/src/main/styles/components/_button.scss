@@ -1,0 +1,28 @@
+.button {
+  width: 90%;
+  height: 20%;
+  margin: 5% auto;
+  color: $secondary-color;
+  border-radius: 10px;
+  border: 4px solid $secondary-color;
+  box-shadow: 0 4px $secondary-color;
+  position: relative;
+
+  &:active {
+    top:4px;
+    box-shadow: none;
+  };
+}
+
+.button__easy {
+  background-color: $easy-btn-color;
+}
+
+.button__medium {
+  background-color: $medium-btn-color;
+}
+
+.button__hard {
+  background-color: $hard-btn-color;
+  margin-bottom: 0;
+}
