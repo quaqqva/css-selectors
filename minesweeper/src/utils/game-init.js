@@ -7,12 +7,14 @@ const DIFFICULTY_PARAMS = {
   HARD: 25,
 };
 
-export default function showStartDialog() {
+function showStartDialog() {
+  // Form content
   let content = '';
   Object.keys(DIFFICULTY_PARAMS).forEach((difficulty) => {
     const size = DIFFICULTY_PARAMS[difficulty];
     const button = createButton({ mainText: difficulty, additionalText: `${size}x${size} field` });
     button.classList.add(`button__${difficulty.toLowerCase()}`);
+    button.dataset.fieldSize = size;
     content += button.outerHTML;
   });
   const startModal = new Modal({
@@ -20,6 +22,16 @@ export default function showStartDialog() {
     content,
     blockClose: true,
   });
+  // Add style
   startModal.modalElement.classList.add('modal_start-modal');
+  // Add click listener
+  startModal.modalElement.addEventListener('click', (event) => {
+    if (event.target.dataset.fieldSize) startModal.hide();
+  });
   startModal.show();
+}
+
+export default function init() {
+  formGamefield();
+  showStartDialog();
 }

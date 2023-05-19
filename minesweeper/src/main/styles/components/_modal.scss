@@ -1,4 +1,5 @@
 .modal {
+  background: linear-gradient($primary-color, darken($primary-color, 5));
   background-color: $primary-color;
   border: 3px solid $box-shadow-color;
   border-radius: 50px;
