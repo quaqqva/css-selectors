@@ -1,11 +1,24 @@
 import Modal from '../components/modal';
 import createButton from '../components/button';
+import createSlider from '../components/slider';
+import Minefield from '../components/playground';
 
 const DIFFICULTY_PARAMS = {
+  // Field sizes
   EASY: 10,
   MEDIUM: 15,
   HARD: 25,
 };
+
+const MINE_COUNTS = {
+  MIN: 10,
+  MAX: 99,
+};
+
+function formGamefield(fieldSize, mineCount) {
+  const field = new Minefield({ size: fieldSize, mineCount });
+  document.body.querySelector('main').append(field.layout);
+}
 
 function showStartDialog() {
   // Form content
@@ -22,16 +35,19 @@ function showStartDialog() {
     content,
     blockClose: true,
   });
+  startModal.modalElement.append(createSlider(MINE_COUNTS.MIN, MINE_COUNTS.MAX));
   // Add style
   startModal.modalElement.classList.add('modal_start-modal');
   // Add click listener
   startModal.modalElement.addEventListener('click', (event) => {
-    if (event.target.dataset.fieldSize) startModal.hide();
+    if (event.target.dataset.fieldSize) {
+      startModal.close();
+      formGamefield(event.target.dataset.fieldSize);
+    }
   });
   startModal.show();
 }
 
-export default function init() {
-  formGamefield();
+export default function initGame() {
   showStartDialog();
 }

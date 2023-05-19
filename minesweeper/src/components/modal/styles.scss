@@ -2,7 +2,7 @@ $show-transition: 2s;
 
 .modal {
    width:50%;
-   height:55%;
+   height:auto;
    margin:0 auto;
    transform: translateY(-100%);
    transition: transform $show-transition ease-in-out;
