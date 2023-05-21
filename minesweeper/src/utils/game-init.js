@@ -16,33 +16,39 @@ const MINE_COUNTS = {
   MAX: 99,
 };
 
+let field = null;
+let menu = null;
+
 function formGamefield({ fieldSize, mineCount }) {
-  const field = new Minefield({ size: fieldSize, mineCount });
+  field = new Minefield({ size: fieldSize, mineCount });
   document.body.querySelector('main').append(field.layout);
   setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
-  addGameHandlers(field);
-  setupMenu(field);
+  addGameHandlers();
+  setupMenu();
 }
 
-function setupMenu(field) {
-  const menu = new UserMenu(field);
+function setupMenu() {
+  menu = new UserMenu(field);
   document.querySelector('main').prepend(menu.layout);
   menu.flagsCounter.setValue(field.mineCount);
-  menu.minesCounter.setValue(field.mineCount);
 }
 
 function addGameHandlers() {
-  // const winHandler = () => {
-  //   const modalContent = '<span class = "win-modal__content">You win!</span><button class="win-modal__button">OK</button>';
-  //   const modal = new Modal({
-  //     title: '',
-  //     content: modalContent,
-  //     blockClose: false,
-  //   });
-  //   window.scrollTo(0, 0);
-  //   modal.show();
-  // };
-  // document.body.addEventListener('win', winHandler);
+  const winHandler = () => {
+    const modalContent = `
+    <span class = "win-modal__content">
+    You found all mines in ${menu.clicksCounter.value} moves!
+    </span>
+    <button class="win-modal__button">OK</button>`;
+    const modal = new Modal({
+      title: 'Hooray!',
+      content: modalContent,
+      blockClose: false,
+    });
+    window.scrollTo(0, 0);
+    modal.show();
+  };
+  document.body.addEventListener('win', winHandler);
 }
 
 function showStartDialog() {
