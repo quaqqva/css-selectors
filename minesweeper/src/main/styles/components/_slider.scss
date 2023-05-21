@@ -1,4 +1,8 @@
 .slider-wrapper {
   margin: 10px 5px;
   text-align: center;
+  z-index: 1;
+  input {
+    z-index: 1;
+  }
 }

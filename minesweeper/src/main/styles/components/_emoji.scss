@@ -1,0 +1,10 @@
+.menu__emoji {
+  @include pixel-box(
+    $corner-size: 2,
+    $border-size: 4px,
+    $background-color: $modal-bg-color,
+    $border-color: $secondary-color
+  );
+  max-height: 65px;
+  padding: 10px;
+}

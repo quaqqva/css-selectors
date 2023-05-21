@@ -1,11 +1,12 @@
 $show-transition: 2s;
+$timing-func: steps(50, end);
 
 .modal {
    width:50%;
    height:auto;
    margin:0 auto;
    transform: translateY(-100%);
-   transition: transform $show-transition ease-in-out;
+   transition: transform $show-transition $timing-func;
    z-index: 0;
 
    h2 {
@@ -15,8 +16,10 @@ $show-transition: 2s;
 
 .modal__background {
   width:100%;
-  height:100vh;
-  background-color: rgba(0, 0, 0, 0);
-  transition: background-color $show-transition ease-in-out;
+  height:100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background-color $show-transition $timing-func;
   z-index: 1;
+  position:absolute;
+  top:0;
 }

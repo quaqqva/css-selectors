@@ -1,0 +1,22 @@
+@mixin window-boilerplate($bg-color, $bord-color) {
+    color: $secondary-color;
+
+    @include pixel-box(
+      $corner-size: 2,
+      $border-size: 3px,
+      $background-color: $bg-color,
+      $border-color: $bord-color,
+      $border-inset: true,
+      $border-inset-color: darken($bord-color, 5),
+      $border-inset-sides: all
+    );
+    z-index:0;
+    //border: 3px solid $border-color;
+    //box-shadow: 0 5px $border-color;
+    padding: 2%;
+    padding-bottom: 0;
+
+    button {
+      color: $secondary-color;
+    }
+}

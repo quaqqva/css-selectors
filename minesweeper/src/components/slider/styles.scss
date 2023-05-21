@@ -3,6 +3,7 @@ input[type = "range"] {
     background: rgba(255, 255, 255, 0.6);
     border-radius: 5px;
     background-image: linear-gradient(grey, grey);
+    position: relative;
   
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -10,7 +11,7 @@ input[type = "range"] {
       width: 15px;
       border-radius: 50%;
       background: red;
-      cursor: ew-resize;
+      cursor: pointer;
     }
   
     &::-webkit-slider-runnable-track {

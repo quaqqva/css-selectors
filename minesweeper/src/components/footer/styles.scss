@@ -1,0 +1,27 @@
+footer {
+  text-align: center;
+
+  a{
+    &:hover {
+      color: purple;
+    }
+    &:visited {
+      color: inherit;
+      &:hover {
+        color: purple;
+      }
+    }
+  }
+}
+
+.footer__logo {
+  svg {
+    max-height: 100%;
+  }
+
+  &:hover {
+  svg {
+    fill: purple;
+  }
+  }
+}

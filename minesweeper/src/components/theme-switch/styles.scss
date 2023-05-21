@@ -1,0 +1,115 @@
+@import "node_modules/pixel-borders/src/styles/pixel-borders/pixel-borders-mixins";
+/** sunny side **/
+$blue-background: #c2e9f6;
+$blue-border: #72cce3;
+$blue-color: #96dcee;
+$yellow-background: #fffaa8;
+$yellow-border: #f5eb71;
+/** dark side **/
+$indigo-background: #808fc7;
+$indigo-border: #5d6baa;
+$indigo-color: #6b7abb;
+$gray-border: #e8e8ea;
+$gray-dots: #e8e8ea;
+$white: #fff;
+
+.menu__theme-switch {
+  align-self: center;
+  appearance: none;
+  cursor: pointer;
+
+  width: 2.5em;
+  aspect-ratio: 2/1;
+  @include pixel-box(
+    $corner-size: 2,
+    $border-size: 4px,
+    $background-color: $blue-color,
+    $border-color: $blue-border,
+    $border-inset: false
+  );
+  display: flex;
+  position: relative;
+  transition: all 500ms steps(3, end);
+
+  &:before {
+    height: 90%;
+    aspect-ratio: 1/1;
+    position: relative;
+    left:0;
+  @include pixel-box(
+      $corner-size: 2,
+      $border-size: 4px,
+      $background-color: $yellow-background,
+      $border-color: $yellow-border,
+      $border-inset: false
+    );
+    animation-timing-function: steps(3, end);
+    animation-name: reverse;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    content: '';
+  }
+
+  &:after {
+    transition: all 500ms steps(3, end);
+    position: absolute;
+    content: '';
+    box-shadow: $gray-dots -0.6em 0 0 2px, $gray-dots -0.8em 7px 0 -2px;
+    left: 85%;
+    top: 10%;
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  &:checked{
+    @include pixel-box(
+    $corner-size: 2,
+    $border-size: 4px,
+    $background-color: $indigo-color,
+    $border-color: $indigo-border,
+    $border-inset: false
+    );
+    &:before {
+      animation-name: switch;
+      @include pixel-box(
+      $corner-size: 2,
+      $border-size: 4px,
+      $background-color: white,
+      $border-color: $gray-border,
+      $border-inset: false
+      );
+    }
+    &:after {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes switch {
+  0% {
+    left: 0;
+  }
+  40% {
+    left: 5%;
+    aspect-ratio: 2/1;
+  }
+  100% {
+    left: calc(95% - 1.125em);
+  }
+}
+
+@keyframes reverse {
+  0% {
+    left: calc(95% - 1.125em);
+  }
+  60% {
+    left: 5%;
+    aspect-ratio: 2/1;
+  }
+  100% {
+    left: 0;
+  }
+}

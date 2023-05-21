@@ -1,10 +1,17 @@
-@import "vendors/normalize.css";
+@import "../../../node_modules/normalize.css/normalize.css";
 
 @import "abstracts/colors";
+@import "abstracts/variables";
+@import "node_modules/pixel-borders/src/styles/pixel-borders/pixel-borders-mixins";
+@import "abstracts/mixins";
 
 @import "base/reset";
 @import "base/typography";
 
+@import "page/sections";
+
 @import "components/modal";
 @import "components/button";
 @import "components/slider";
+@import "components/counter";
+@import "components/emoji";

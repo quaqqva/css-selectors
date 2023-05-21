@@ -15,9 +15,10 @@ const MINE_COUNTS = {
   MAX: 99,
 };
 
-function formGamefield(fieldSize, mineCount) {
+function formGamefield({ fieldSize, mineCount }) {
   const field = new Minefield({ size: fieldSize, mineCount });
   document.body.querySelector('main').append(field.layout);
+  setTimeout(() => { field.layout.style = 'opacity: 1'; }, 30);
 }
 
 function showStartDialog() {
@@ -42,7 +43,11 @@ function showStartDialog() {
   startModal.modalElement.addEventListener('click', (event) => {
     if (event.target.dataset.fieldSize) {
       startModal.close();
-      formGamefield(event.target.dataset.fieldSize);
+      const slider = startModal.modalElement.lastChild.querySelector('input');
+      formGamefield({
+        fieldSize: Number(event.target.dataset.fieldSize),
+        mineCount: Number(slider.value),
+      });
     }
   });
   startModal.show();

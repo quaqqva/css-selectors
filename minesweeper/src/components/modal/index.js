@@ -1,4 +1,5 @@
 import modalLayout from './index.html';
+import createElement from '../../utils/createElement';
 import './styles.scss';
 
 export default class Modal {
@@ -7,9 +8,7 @@ export default class Modal {
   BUILD_DELAY = 30;
 
   constructor({ title, content, blockClose }) {
-    const template = document.createElement('template');
-    template.insertAdjacentHTML('afterbegin', modalLayout);
-    this.modalElement = template.firstChild;
+    this.modalElement = createElement(modalLayout);
     this.modalElement.querySelector('h2').innerHTML = title;
     this.modalElement.insertAdjacentHTML('beforeend', content);
 
@@ -22,9 +21,10 @@ export default class Modal {
 
   show() {
     document.body.prepend(this.modalBG);
+    document.body.style = 'overflow: hidden';
     setTimeout(() => {
       this.modalElement.style = 'transform: translateY(20vh)';
-      this.modalBG.style = 'background: rgba(0, 0, 0, 0.65)';
+      this.modalBG.style = 'background: rgba(0, 0, 0, 0.75)';
     }, 30);
   }
 
@@ -33,6 +33,7 @@ export default class Modal {
     this.modalBG.style = '';
     setTimeout(() => {
       document.body.removeChild(this.modalBG);
+      document.body.style = '';
     }, this.OPEN_TIME);
   }
 

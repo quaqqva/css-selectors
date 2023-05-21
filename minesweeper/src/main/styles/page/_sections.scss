@@ -1,0 +1,25 @@
+body {
+    width: 100vw;
+    max-height:1080px;
+    background-image:url("../../assets/img/bg_day.png");
+    background-repeat:no-repeat;
+    background-position: center center;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    
+  }
+
+main {
+    width: 90%;
+    height:100vmin;
+    margin: 2% auto 0;
+    @include window-boilerplate($main-bg-color, $secondary-color);
+}
+
+
+footer {
+    padding-top: 1%;
+    height: 5vh;
+}

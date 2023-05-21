@@ -1,0 +1,27 @@
+$show-transition:2s;
+
+.minefield {
+  display: grid;
+  height: 75%;
+  aspect-ratio: 1/1;
+  margin:2% auto;
+  gap:0;
+  justify-content: flex-start;
+  position: relative;
+  z-index:1;
+
+  transition: opacity ease-in-out 2s;
+  opacity: 0;
+
+  @for $i from 2 through 5 {
+    $size: $i * 5;
+    
+    &[data-size="#{$size}"] {
+        grid-template-rows: repeat($size, 1fr);
+        grid-template-columns: repeat($size, 1fr);
+    }
+  }
+}
+
+.minefield__button {
+}

@@ -1,0 +1,11 @@
+.counter {
+  background-color: $shadow-color;
+}
+
+.counter__description {
+    @include pixel-borders(
+        $border-color: white,
+        $border-size: 3px
+      );
+    filter: hue-rotate(56.67deg) saturate(200%) brightness(96.47%);;
+}
