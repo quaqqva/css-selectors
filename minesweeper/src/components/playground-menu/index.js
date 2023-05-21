@@ -32,14 +32,15 @@ export default class UserMenu {
   }
 
   addHandlers(field) {
-    this.leftBtnHandler = () => { this.emoji.src = emojiScared; };
-    this.clickCounterHandler = () => { this.clicksCounter.increase(); };
-    this.mouseUpHandler = () => { this.emoji.src = emojiSmile; };
+    const clickCounterHandler = () => { this.clicksCounter.increase(); };
 
-    document.body.addEventListener(field.BUTTON_DOWN_LEFT, this.leftBtnHandler);
-    document.body.addEventListener(field.BUTTON_DOWN_LEFT, this.clickCounterHandler);
-    document.body.addEventListener(field.BUTTON_DOWN_RIGHT, this.clickCounterHandler);
-    document.body.addEventListener(field.BUTTON_UP, this.mouseUpHandler);
+    document.body.addEventListener(field.BUTTON_DOWN_LEFT, () => { this.emoji.src = emojiScared; });
+    document.body.addEventListener(field.BUTTON_DOWN_LEFT, clickCounterHandler);
+    document.body.addEventListener(field.BUTTON_DOWN_RIGHT, clickCounterHandler);
+    document.body.addEventListener(field.BUTTON_UP, () => { this.emoji.src = emojiSmile; });
+
+    document.body.addEventListener(field.FLAG_SET, () => { this.flagsCounter.decrease(); });
+    document.body.addEventListener(field.FLAG_REMOVED, () => { this.flagsCounter.increase(); });
 
     document.body.addEventListener(field.LOSE, () => { this.emoji.src = emojiLose; });
     document.body.addEventListener(field.WIN, () => { this.emoji.src = emojiWin; });

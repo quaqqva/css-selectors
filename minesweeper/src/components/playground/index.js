@@ -65,7 +65,8 @@ export default class Minefield {
 
     const revealHandler = (event) => {
       const pressedButton = event.target;
-      if (!pressedButton.dataset.flagged) this.revealButton({ pressedButton, revealMine: true });
+      if (!pressedButton.flagged
+         && !(this.lost || this.won)) this.revealButton({ pressedButton, revealMine: true });
     };
 
     this.mouseDownDispatcher = (event) => {
@@ -87,16 +88,24 @@ export default class Minefield {
       }
     };
 
+    this.flagDispatcher = (event) => {
+      const eventType = event.clicked.flagged ? this.FLAG_REMOVED : this.FLAG_SET;
+      console.log(event.clicked.flagged, eventType);
+      const flagEvent = new Event(eventType, { bubbles: true });
+      this.layout.dispatchEvent(flagEvent);
+    };
+
     this.addClickHandler(revealHandler.bind(this));
+    this.layout.addEventListener(this.BUTTON_DOWN_RIGHT, this.flagDispatcher);
     this.layout.addEventListener(this.BUTTON_DOWN_RIGHT, (event) => {
       const button = event.clicked;
-      if (button.dataset.flagged) button.innerHTML = '';
+      if (button.flagged) button.innerHTML = '';
       else {
         const flagImage = new Image();
         flagImage.src = flagSrc;
         button.append(flagImage);
       }
-      button.dataset.flagged = !button.dataset.flagged;
+      button.flagged = !button.flagged;
     });
     this.layout.addEventListener('contextmenu', (event) => event.preventDefault());
     this.layout.addEventListener('mousedown', this.mouseDownDispatcher);
@@ -106,6 +115,7 @@ export default class Minefield {
   removeDispatchers() {
     this.layout.removeEventListener('mousedown', this.mouseDownDispatcher);
     this.layout.removeEventListener('mouseup', this.mouseUpDispatcher);
+    this.layout.removeEventListener(this.BUTTON_DOWN_RIGHT, this.flagDispatcher);
   }
 
   addClickHandler(handler) {
@@ -137,7 +147,7 @@ export default class Minefield {
   revealButton({ pressedButton, revealMine, visited = null }) {
     const button = pressedButton;
     if (!button) return;
-    if (button.dataset.flagged) return;
+    if (button.flagged) return;
 
     if (visited && visited.includes(pressedButton)) return;
     if (visited) visited.push(pressedButton);
