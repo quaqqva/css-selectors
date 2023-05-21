@@ -137,6 +137,8 @@ export default class Minefield {
   revealButton({ pressedButton, revealMine, visited = null }) {
     const button = pressedButton;
     if (!button) return;
+    if (button.dataset.flagged) return;
+
     if (visited && visited.includes(pressedButton)) return;
     if (visited) visited.push(pressedButton);
     else visited = [pressedButton];
