@@ -16,6 +16,8 @@ main {
     height:100vmin;
     margin: 2% auto 0;
     @include window-boilerplate($main-bg-color, $secondary-color);
+    transform: translateY(100%);
+    transition: transform steps(50, start) 2s;
 }
 
 

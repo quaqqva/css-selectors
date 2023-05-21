@@ -18,7 +18,7 @@ const MINE_COUNTS = {
 function formGamefield({ fieldSize, mineCount }) {
   const field = new Minefield({ size: fieldSize, mineCount });
   document.body.querySelector('main').append(field.layout);
-  setTimeout(() => { field.layout.style = 'opacity: 1'; }, 30);
+  setTimeout(() => { document.body.querySelector('main').style = 'transform: none'; }, 500);
 }
 
 function showStartDialog() {
