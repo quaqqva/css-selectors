@@ -21,12 +21,14 @@ function formGamefield({ fieldSize, mineCount }) {
   document.body.querySelector('main').append(field.layout);
   setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
   addGameHandlers(field);
-  setupMenu(field)
+  setupMenu(field);
 }
 
 function setupMenu(field) {
-  const menu = new UserMenu();
+  const menu = new UserMenu(field);
   document.querySelector('main').prepend(menu.layout);
+  menu.flagsCounter.setValue(field.mineCount);
+  menu.minesCounter.setValue(field.mineCount);
 }
 
 function addGameHandlers() {

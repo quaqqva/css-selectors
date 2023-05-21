@@ -10,6 +10,14 @@ function getCoordinates(button) {
 }
 
 export default class Minefield {
+  BUTTON_SELECTOR = '.minefield__button';
+
+  BUTTON_DOWN_LEFT = 'minefield-mousedown-left';
+
+  BUTTON_DOWN_RIGHT = 'minefield-mousedown-right';
+
+  BUTTON_UP = 'minefield-mouseup';
+
   constructor({ size, mineCount }) {
     this.size = size;
     this.mineCount = mineCount;
@@ -50,8 +58,31 @@ export default class Minefield {
       const pressedButton = event.target;
       if (!pressedButton.flagged) this.revealButton({ pressedButton, revealMine: true });
     };
+
+    this.mouseDownDispatcher = (event) => {
+      if (event.target.matches(this.BUTTON_SELECTOR)) {
+        const eventType = event.button === 2 ? this.BUTTON_DOWN_RIGHT : this.BUTTON_DOWN_LEFT;
+        const mouseDownEvent = new Event(eventType, { bubbles: true });
+        this.layout.dispatchEvent(mouseDownEvent);
+      }
+    };
+
+    this.mouseUpDispatcher = (event) => {
+      if (event.target.matches(this.BUTTON_SELECTOR)) {
+        const mouseUpEvent = new Event(this.BUTTON_UP, { bubbles: true });
+        this.layout.dispatchEvent(mouseUpEvent);
+      }
+    };
+
     this.addClickHandler(showHandler.bind(this));
     this.layout.addEventListener('contextmenu', (event) => event.preventDefault());
+    this.layout.addEventListener('mousedown', this.mouseDownDispatcher);
+    this.layout.addEventListener('mouseup', this.mouseUpDispatcher);
+  }
+
+  removeDispatchers() {
+    this.layout.removeEventListener('mousedown', this.mouseDownDispatcher);
+    this.layout.removeEventListener('mouseup', this.mouseUpDispatcher);
   }
 
   addClickHandler(handler) {
@@ -92,6 +123,7 @@ export default class Minefield {
       const loseEvent = new Event('lose', { bubbles: true });
       this.layout.dispatchEvent(loseEvent);
       this.revealAllMines();
+      this.removeDispatchers();
     } else if (!pressedButton.flagged) {
       const adjacentMinesCount = this.calculateAdjacentMines(pressedButton);
       if (adjacentMinesCount > 0) button.innerHTML = adjacentMinesCount;
@@ -101,6 +133,7 @@ export default class Minefield {
       const winEvent = new Event('win', { bubbles: true });
       this.layout.dispatchEvent(winEvent);
       this.won = true;
+      this.removeDispatchers();
     }
   }
 
