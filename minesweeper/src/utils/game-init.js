@@ -2,6 +2,7 @@ import Modal from '../components/modal';
 import createButton from '../components/button';
 import createSlider from '../components/slider';
 import Minefield from '../components/playground';
+import UserMenu from '../components/playground-menu';
 
 const DIFFICULTY_PARAMS = {
   // Field sizes
@@ -20,9 +21,15 @@ function formGamefield({ fieldSize, mineCount }) {
   document.body.querySelector('main').append(field.layout);
   setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
   addGameHandlers(field);
+  setupMenu(field)
 }
 
-function addGameHandlers(field) {
+function setupMenu(field) {
+  const menu = new UserMenu();
+  document.querySelector('main').prepend(menu.layout);
+}
+
+function addGameHandlers() {
   // const winHandler = () => {
   //   const modalContent = '<span class = "win-modal__content">You win!</span><button class="win-modal__button">OK</button>';
   //   const modal = new Modal({

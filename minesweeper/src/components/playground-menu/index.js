@@ -28,17 +28,31 @@ export default class UserMenu {
     this.clicksCounter = new Counter({ description: 'Total clicks', initValue });
     this.layout.append(this.clicksCounter.layout);
 
-    this.addListeners();
+    this.addHandlers();
   }
 
-  addListeners() {
-    document.body.addEventListener('mousedown', (event) => {
-      if (event.target instanceof HTMLButtonElement) this.emoji.src = emojiScared;
+  addHandlers() {
+    this.mouseDownHandler = (event) => {
+      if (event.target.matches('.minefield__button')) {
+        this.emoji.src = emojiScared;
+        this.clicksCounter.increase();
+      }
+    };
+    document.body.addEventListener('mousedown', this.mouseDownHandler);
+    this.mouseUpHandler = (event) => { if (event.target.matches('.minefield__button')) this.emoji.src = emojiSmile; };
+    document.body.addEventListener('mouseup', this.mouseUpHandler);
+    document.body.addEventListener('lose', () => {
+      this.emoji.src = emojiLose;
+      this.removeMouseHandlers();
     });
-    document.body.addEventListener('mouseup', (event) => {
-      if (event.target instanceof HTMLButtonElement) this.emoji.src = emojiSmile;
+    document.body.addEventListener('win', () => {
+      this.emoji.src = emojiWin;
+      this.removeMouseHandlers();
     });
-    document.body.addEventListener('lose', () => { this.emoji.src = emojiLose; });
-    document.body.addEventListener('win', () => { this.emoji.src = emojiWin; });
+  }
+
+  removeMouseHandlers() {
+    document.body.removeEventListener('mousedown', this.mouseDownHandler);
+    document.body.removeEventListener('mouseup', this.mouseUpHandler);
   }
 }
