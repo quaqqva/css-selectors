@@ -4,6 +4,8 @@ import createFooter from '../components/footer';
 import initGame from '../utils/game-init';
 import setupMenu from '../utils/menu-setup';
 
+window.onbeforeunload = () => window.scrollTo(0, 0);
+
 document.body.append(document.createElement('main'));
 document.body.append(createFooter());
 initGame();
