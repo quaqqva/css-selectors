@@ -1,5 +1,8 @@
 .counter {
   background-color: $shadow-color;
+  @include pixel-borders(
+    $corner-size: 2,
+  );
 }
 
 .counter__description {
@@ -7,5 +10,6 @@
         $border-color: white,
         $border-size: 3px
       );
-    filter: hue-rotate(56.67deg) saturate(200%) brightness(96.47%);;
+    filter: hue-rotate(56.67deg) saturate(200%) brightness(96.47%);
+    
 }
