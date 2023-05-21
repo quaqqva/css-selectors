@@ -47,7 +47,8 @@ export default class Minefield {
     this.layout.addEventListener('click', generateMinesHandler);
 
     const showHandler = (event) => {
-      this.revealButton({ pressedButton: event.target, revealMine: true });
+      const pressedButton = event.target;
+      if (!pressedButton.flagged) this.revealButton({ pressedButton, revealMine: true });
     };
     this.addClickHandler(showHandler.bind(this));
     this.layout.addEventListener('contextmenu', (event) => event.preventDefault());
@@ -91,58 +92,74 @@ export default class Minefield {
       const loseEvent = new Event('lose', { bubbles: true });
       this.layout.dispatchEvent(loseEvent);
       this.revealAllMines();
-    } else {
+    } else if (!pressedButton.flagged) {
       const adjacentMinesCount = this.calculateAdjacentMines(pressedButton);
       if (adjacentMinesCount > 0) button.innerHTML = adjacentMinesCount;
-      else {
-        const revealMine = false;
-        const [row, column] = getCoordinates(pressedButton);
-        if (row) {
-          this.revealButton({
-            pressedButton: this.field[row - 1][column - 1],
-            revealMine,
-            visited,
-          });
-          this.revealButton({
-            pressedButton: this.field[row - 1][column],
-            revealMine,
-            visited,
-          });
-          this.revealButton({
-            pressedButton: this.field[row - 1][column + 1],
-            revealMine,
-            visited,
-          });
-        }
-        if (row + 1 < this.size) {
-          this.revealButton({
-            pressedButton: this.field[row + 1][column - 1],
-            revealMine,
-            visited,
-          });
-          this.revealButton({
-            pressedButton: this.field[row + 1][column],
-            revealMine,
-            visited,
-          });
-          this.revealButton({
-            pressedButton: this.field[row + 1][column + 1],
-            revealMine,
-            visited,
-          });
-        }
-        this.revealButton({
-          pressedButton: this.field[row][column - 1],
-          revealMine,
-          visited,
-        });
-        this.revealButton({
-          pressedButton: this.field[row][column + 1],
-          revealMine,
-          visited,
-        });
+      else this.revealAdjacentFields({ pressedButton, visited });
+    }
+    if (this.onlyMinesLeft() && !this.won) {
+      const winEvent = new Event('win', { bubbles: true });
+      this.layout.dispatchEvent(winEvent);
+      this.won = true;
+    }
+  }
+
+  onlyMinesLeft() {
+    for (let i = 0; i < this.size; i += 1) {
+      for (let j = 0; j < this.size; j += 1) {
+        if (!(this.field[i][j].disabled) && !(this.mineIsPresent([i, j]))) return false;
       }
     }
+    return true;
+  }
+
+  revealAdjacentFields({ pressedButton, visited }) {
+    const revealMine = false;
+    const [row, column] = getCoordinates(pressedButton);
+    if (row) {
+      this.revealButton({
+        pressedButton: this.field[row - 1][column - 1],
+        revealMine,
+        visited,
+      });
+      this.revealButton({
+        pressedButton: this.field[row - 1][column],
+        revealMine,
+        visited,
+      });
+      this.revealButton({
+        pressedButton: this.field[row - 1][column + 1],
+        revealMine,
+        visited,
+      });
+    }
+    if (row + 1 < this.size) {
+      this.revealButton({
+        pressedButton: this.field[row + 1][column - 1],
+        revealMine,
+        visited,
+      });
+      this.revealButton({
+        pressedButton: this.field[row + 1][column],
+        revealMine,
+        visited,
+      });
+      this.revealButton({
+        pressedButton: this.field[row + 1][column + 1],
+        revealMine,
+        visited,
+      });
+    }
+    this.revealButton({
+      pressedButton: this.field[row][column - 1],
+      revealMine,
+      visited,
+    });
+    this.revealButton({
+      pressedButton: this.field[row][column + 1],
+      revealMine,
+      visited,
+    });
   }
 
   calculateAdjacentMines(pressedButton) {

@@ -19,6 +19,21 @@ function formGamefield({ fieldSize, mineCount }) {
   const field = new Minefield({ size: fieldSize, mineCount });
   document.body.querySelector('main').append(field.layout);
   setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
+  addGameHandlers(field);
+}
+
+function addGameHandlers(field) {
+  // const winHandler = () => {
+  //   const modalContent = '<span class = "win-modal__content">You win!</span><button class="win-modal__button">OK</button>';
+  //   const modal = new Modal({
+  //     title: '',
+  //     content: modalContent,
+  //     blockClose: false,
+  //   });
+  //   window.scrollTo(0, 0);
+  //   modal.show();
+  // };
+  // document.body.addEventListener('win', winHandler);
 }
 
 function showStartDialog() {
