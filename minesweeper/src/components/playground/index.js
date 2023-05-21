@@ -1,4 +1,5 @@
 import './styles.scss';
+import flagSrc from '../../assets/img/flag.png';
 
 function getRandomInt({ min, max }) {
   return min + Math.floor(Math.random() * max);
@@ -16,7 +17,15 @@ export default class Minefield {
 
   BUTTON_DOWN_RIGHT = 'minefield-mousedown-right';
 
+  FLAG_SET = 'minefield-flag-set';
+
+  FLAG_REMOVED = 'minefield-flag-removed';
+
   BUTTON_UP = 'minefield-mouseup';
+
+  LOSE = 'lose';
+
+  WIN = 'win';
 
   constructor({ size, mineCount }) {
     this.size = size;
@@ -54,15 +63,19 @@ export default class Minefield {
     };
     this.layout.addEventListener('click', generateMinesHandler);
 
-    const showHandler = (event) => {
+    const revealHandler = (event) => {
       const pressedButton = event.target;
-      if (!pressedButton.flagged) this.revealButton({ pressedButton, revealMine: true });
+      if (!pressedButton.dataset.flagged) this.revealButton({ pressedButton, revealMine: true });
     };
 
     this.mouseDownDispatcher = (event) => {
-      if (event.target.matches(this.BUTTON_SELECTOR)) {
+      if (event.target.matches(this.BUTTON_SELECTOR)
+       || event.target.parentNode.matches(this.BUTTON_SELECTOR)) {
         const eventType = event.button === 2 ? this.BUTTON_DOWN_RIGHT : this.BUTTON_DOWN_LEFT;
         const mouseDownEvent = new Event(eventType, { bubbles: true });
+        mouseDownEvent.clicked = event.target.matches(this.BUTTON_SELECTOR)
+          ? event.target
+          : event.target.parentNode;
         this.layout.dispatchEvent(mouseDownEvent);
       }
     };
@@ -74,7 +87,17 @@ export default class Minefield {
       }
     };
 
-    this.addClickHandler(showHandler.bind(this));
+    this.addClickHandler(revealHandler.bind(this));
+    this.layout.addEventListener(this.BUTTON_DOWN_RIGHT, (event) => {
+      const button = event.clicked;
+      if (button.dataset.flagged) button.innerHTML = '';
+      else {
+        const flagImage = new Image();
+        flagImage.src = flagSrc;
+        button.append(flagImage);
+      }
+      button.dataset.flagged = !button.dataset.flagged;
+    });
     this.layout.addEventListener('contextmenu', (event) => event.preventDefault());
     this.layout.addEventListener('mousedown', this.mouseDownDispatcher);
     this.layout.addEventListener('mouseup', this.mouseUpDispatcher);
@@ -119,18 +142,19 @@ export default class Minefield {
     else visited = [pressedButton];
     button.disabled = true;
     if (revealMine
-       && this.mineIsPresent(getCoordinates(pressedButton))) {
-      const loseEvent = new Event('lose', { bubbles: true });
+       && this.mineIsPresent(getCoordinates(pressedButton)) && !this.won) {
+      const loseEvent = new Event(this.LOSE, { bubbles: true });
       this.layout.dispatchEvent(loseEvent);
       this.revealAllMines();
       this.removeDispatchers();
-    } else if (!pressedButton.flagged) {
+      this.lost = true;
+    } else {
       const adjacentMinesCount = this.calculateAdjacentMines(pressedButton);
       if (adjacentMinesCount > 0) button.innerHTML = adjacentMinesCount;
       else this.revealAdjacentFields({ pressedButton, visited });
     }
-    if (this.onlyMinesLeft() && !this.won) {
-      const winEvent = new Event('win', { bubbles: true });
+    if (this.onlyMinesLeft() && !this.won && !this.lost) {
+      const winEvent = new Event(this.WIN, { bubbles: true });
       this.layout.dispatchEvent(winEvent);
       this.won = true;
       this.removeDispatchers();

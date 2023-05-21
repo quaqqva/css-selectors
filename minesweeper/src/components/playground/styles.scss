@@ -25,4 +25,9 @@
   &:disabled {
     cursor: default;
   }
+
+  img {
+    max-height: 90%;
+    max-width: 90%;
+  }
 }

@@ -32,16 +32,16 @@ export default class UserMenu {
   }
 
   addHandlers(field) {
-    this.mouseDownHandler = () => {
-      this.emoji.src = emojiScared;
-      this.clicksCounter.increase();
-    };
+    this.leftBtnHandler = () => { this.emoji.src = emojiScared; };
+    this.clickCounterHandler = () => { this.clicksCounter.increase(); };
     this.mouseUpHandler = () => { this.emoji.src = emojiSmile; };
 
-    document.body.addEventListener(field.BUTTON_DOWN_LEFT, this.mouseDownHandler);
+    document.body.addEventListener(field.BUTTON_DOWN_LEFT, this.leftBtnHandler);
+    document.body.addEventListener(field.BUTTON_DOWN_LEFT, this.clickCounterHandler);
+    document.body.addEventListener(field.BUTTON_DOWN_RIGHT, this.clickCounterHandler);
     document.body.addEventListener(field.BUTTON_UP, this.mouseUpHandler);
 
-    document.body.addEventListener('lose', () => { this.emoji.src = emojiLose; });
-    document.body.addEventListener('win', () => { this.emoji.src = emojiWin; });
+    document.body.addEventListener(field.LOSE, () => { this.emoji.src = emojiLose; });
+    document.body.addEventListener(field.WIN, () => { this.emoji.src = emojiWin; });
   }
 }
