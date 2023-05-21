@@ -19,5 +19,10 @@
 }
 
 .minefield__button {
+  cursor: pointer;
+  outline: none;
 
+  &:disabled {
+    cursor: default;
+  }
 }

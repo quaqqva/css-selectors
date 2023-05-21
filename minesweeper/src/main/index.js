@@ -4,7 +4,7 @@ import createFooter from '../components/footer';
 import initGame from '../utils/game-init';
 import setupMenu from '../utils/menu-setup';
 
-window.scrollTo(0, 0);
+history.scrollRestoration = 'manual';
 
 document.body.append(document.createElement('main'));
 document.body.append(createFooter());

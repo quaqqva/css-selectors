@@ -25,3 +25,19 @@
 .button__hard {
   background-color: $hard-btn-color;
 }
+
+.minefield__button {
+  &:active {
+    @include pixel-box(
+      $corner-size: 1,
+      $border-color: darken($minefield-btn-color, 25),
+      $border-size: 2px,
+      $background-color: $minefield-btn-color
+    );
+    
+  }
+
+  &:disabled {
+    border-color: none;
+  }
+}
