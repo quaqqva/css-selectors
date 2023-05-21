@@ -19,25 +19,11 @@ const MINE_COUNTS = {
 let field = null;
 let menu = null;
 
-function formGamefield({ fieldSize, mineCount }) {
-  field = new Minefield({ size: fieldSize, mineCount });
-  document.body.querySelector('main').append(field.layout);
-  setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
-  addGameHandlers();
-  setupMenu();
-}
-
-function setupMenu() {
-  menu = new UserMenu(field);
-  document.querySelector('main').prepend(menu.layout);
-  menu.flagsCounter.setValue(field.mineCount);
-}
-
 function addGameHandlers() {
   const winHandler = () => {
     const modalContent = `
     <span class = "win-modal__content">
-    You found all mines in ${menu.clicksCounter.value} moves!
+    You found all mines in ${menu.secondsCounter.value} seconds and ${menu.clicksCounter.value} moves!
     </span>
     <button class="win-modal__button">OK</button>`;
     const modal = new Modal({
@@ -45,10 +31,40 @@ function addGameHandlers() {
       content: modalContent,
       blockClose: false,
     });
-    window.scrollTo(0, 0);
     modal.show();
   };
-  document.body.addEventListener('win', winHandler);
+  document.body.addEventListener(field.WIN, winHandler);
+
+  const loseHandler = () => {
+    const modalContent = `
+    <span class = "lose-modal__content">
+    Game over. Try again
+    </span>
+    <button class="lose-modal__button">OK</button>`;
+    const modal = new Modal({
+      title: ':(',
+      content: modalContent,
+      blockClose: false,
+    });
+    modal.show();
+  };
+  document.body.addEventListener(field.LOSE, loseHandler);
+}
+
+function setupMenu() {
+  menu = new UserMenu(field);
+  document.querySelector('main').prepend(menu.layout);
+  menu.flagsCounter.setValue(field.mineCount);
+
+  document.addEventListener(menu.FLAG_TOGGLE, () => field.toggleFlag());
+}
+
+function formGamefield({ fieldSize, mineCount }) {
+  field = new Minefield({ size: fieldSize, mineCount });
+  document.body.querySelector('main').append(field.layout);
+  setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
+  addGameHandlers();
+  setupMenu();
 }
 
 function showStartDialog() {

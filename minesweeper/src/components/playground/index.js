@@ -63,11 +63,13 @@ export default class Minefield {
     };
     this.layout.addEventListener('click', generateMinesHandler);
 
-    const revealHandler = (event) => {
-      const pressedButton = event.target;
-      if (!pressedButton.flagged
-         && !(this.lost || this.won)) this.revealButton({ pressedButton, revealMine: true });
-    };
+    this.revealHandler = ((event) => {
+      if (event.target !== event.currentTarget) {
+        const pressedButton = event.target;
+        if (!pressedButton.flagged
+           && !(this.lost || this.won)) this.revealButton({ pressedButton, revealMine: true });
+      }
+    }).bind(this);
 
     this.mouseDownDispatcher = (event) => {
       if (event.target.matches(this.BUTTON_SELECTOR)
@@ -90,14 +92,14 @@ export default class Minefield {
 
     this.flagDispatcher = (event) => {
       const eventType = event.clicked.flagged ? this.FLAG_REMOVED : this.FLAG_SET;
-      console.log(event.clicked.flagged, eventType);
       const flagEvent = new Event(eventType, { bubbles: true });
       this.layout.dispatchEvent(flagEvent);
     };
 
-    this.addClickHandler(revealHandler.bind(this));
+    this.layout.addEventListener('click', this.revealHandler);
     this.layout.addEventListener(this.BUTTON_DOWN_RIGHT, this.flagDispatcher);
-    this.layout.addEventListener(this.BUTTON_DOWN_RIGHT, (event) => {
+
+    this.flagSetHandler = (event) => {
       const button = event.clicked;
       if (button.flagged) button.innerHTML = '';
       else {
@@ -106,7 +108,8 @@ export default class Minefield {
         button.append(flagImage);
       }
       button.flagged = !button.flagged;
-    });
+    };
+    this.layout.addEventListener(this.BUTTON_DOWN_RIGHT, this.flagSetHandler);
     this.layout.addEventListener('contextmenu', (event) => event.preventDefault());
     this.layout.addEventListener('mousedown', this.mouseDownDispatcher);
     this.layout.addEventListener('mouseup', this.mouseUpDispatcher);
@@ -118,11 +121,17 @@ export default class Minefield {
     this.layout.removeEventListener(this.BUTTON_DOWN_RIGHT, this.flagDispatcher);
   }
 
-  addClickHandler(handler) {
-    const clickHandler = (event) => {
-      if (event.target !== event.currentTarget) handler(event);
-    };
-    this.layout.addEventListener('click', clickHandler);
+  toggleFlag() {
+    this.flagLeftClick = !this.flagLeftClick;
+    if (this.flagLeftClick) {
+      this.layout.removeEventListener(this.BUTTON_DOWN_LEFT, this.revealHandler);
+      this.layout.addEventListener(this.BUTTON_DOWN_LEFT, this.flagDispatcher);
+      this.layout.addEventListener(this.BUTTON_DOWN_LEFT, this.flagSetHandler);
+    } else {
+      this.layout.removeEventListener(this.BUTTON_DOWN_LEFT, this.flagDispatcher);
+      this.layout.removeEventListener(this.BUTTON_DOWN_LEFT, this.flagSetHandler);
+      this.layout.addEventListener(this.BUTTON_DOWN_LEFT, this.revealDispatcher);
+    }
   }
 
   generateMines({ pressed, count }) {

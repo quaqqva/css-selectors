@@ -20,6 +20,7 @@ export default class Modal {
   }
 
   show() {
+    window.scrollTo(0, 0);
     document.body.prepend(this.modalBG);
     document.body.style = 'overflow: hidden';
     setTimeout(() => {

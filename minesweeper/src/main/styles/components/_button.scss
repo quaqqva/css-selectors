@@ -41,3 +41,13 @@
     border-color: none;
   }
 }
+
+.menu__flag-button {
+  @include pixel-borders();
+  background-color: $secondary-color;
+  z-index: 1;
+
+  &:hover {
+    background-color: darken($secondary-color, 10);
+  }
+}

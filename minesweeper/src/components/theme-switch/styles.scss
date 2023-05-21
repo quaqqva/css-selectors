@@ -13,10 +13,14 @@ $gray-border: #e8e8ea;
 $gray-dots: #e8e8ea;
 $white: #fff;
 
-.menu__theme-switch {
+.theme-switch {
   align-self: center;
   appearance: none;
   cursor: pointer;
+  position: absolute;
+  z-index: 1;
+  left: 22.5%;
+  top: 10%;
 
   width: 2.5em;
   aspect-ratio: 2/1;
@@ -27,7 +31,7 @@ $white: #fff;
     $border-color: $blue-border,
     $border-inset: false
   );
-  display: flex;
+  display: inline-flex;
   position: relative;
   transition: all 500ms steps(3, end);
 
