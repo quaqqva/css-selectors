@@ -3,6 +3,8 @@ import createButton from '../components/button';
 import createSlider from '../components/slider';
 import Minefield from '../components/playground';
 import UserMenu from '../components/playground-menu';
+import createFooter from '../components/footer';
+import createThemeSwitch from '../components/theme-switch';
 
 const DIFFICULTY_PARAMS = {
   // Field sizes
@@ -51,23 +53,24 @@ function addGameHandlers() {
   document.body.addEventListener(field.LOSE, loseHandler);
 }
 
-function setupMenu() {
+function setupMenu(firstTime) {
   menu = new UserMenu(field);
   document.querySelector('main').prepend(menu.layout);
   menu.flagsCounter.setValue(field.mineCount);
 
-  document.addEventListener(menu.FLAG_TOGGLE, () => field.toggleFlag());
+  if (firstTime) document.addEventListener(menu.FLAG_TOGGLE, () => field.toggleFlag());
+  menu.newGameBtn.addEventListener('click', startNewGame);
 }
 
-function formGamefield({ fieldSize, mineCount }) {
+function formGamefield({ fieldSize, mineCount, firstTime }) {
   field = new Minefield({ size: fieldSize, mineCount });
   document.body.querySelector('main').append(field.layout);
   setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
-  addGameHandlers();
-  setupMenu();
+  if (firstTime) addGameHandlers();
+  setupMenu(firstTime);
 }
 
-function showStartDialog() {
+function showStartDialog(firstTime) {
   // Form content
   let content = '';
   Object.keys(DIFFICULTY_PARAMS).forEach((difficulty) => {
@@ -93,12 +96,33 @@ function showStartDialog() {
       formGamefield({
         fieldSize: Number(event.target.dataset.fieldSize),
         mineCount: Number(slider.value),
+        firstTime,
       });
     }
   });
   startModal.show();
 }
 
-export default function initGame() {
-  showStartDialog();
+function createMain() {
+  const main = document.createElement('main');
+  main.append(createThemeSwitch());
+
+  document.body.append(main);
+  document.body.append(createFooter());
+}
+
+export default function initGame(firstTime) {
+  createMain();
+  showStartDialog(firstTime);
+}
+
+function startNewGame() {
+  const main = document.querySelector('main');
+  main.style = 'transform: translateY(100%)';
+  const footer = document.querySelector('footer');
+  setTimeout(() => {
+    document.body.removeChild(main);
+    document.body.removeChild(footer);
+  }, 2000);
+  setTimeout(() => { initGame(false); }, 1000);
 }
