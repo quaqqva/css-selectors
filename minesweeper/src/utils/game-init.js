@@ -5,6 +5,9 @@ import Minefield from '../components/playground';
 import UserMenu from '../components/playground-menu';
 import createFooter from '../components/footer';
 import createThemeSwitch from '../components/theme-switch';
+import scoresFuncs from './scores';
+
+const { writeScore, showScores } = scoresFuncs;
 
 const DIFFICULTY_PARAMS = {
   // Field sizes
@@ -21,6 +24,13 @@ const MINE_COUNTS = {
 let field = null;
 let menu = null;
 
+function getDifficulty() {
+  let difficulty = 'Easy';
+  if (field.mineCount === 15) difficulty = 'Medium';
+  if (field.mineCount === 20) difficulty = 'Hard';
+  return difficulty;
+}
+
 function addGameHandlers() {
   const winHandler = () => {
     const modalContent = `
@@ -34,6 +44,11 @@ function addGameHandlers() {
       blockClose: false,
     });
     modal.show();
+    writeScore(
+      {
+        result: 'Win', difficulty: getDifficulty(), clicks: menu.clicksCounter.value, time: menu.secondsCounter.value,
+      },
+    );
   };
   document.body.addEventListener(field.WIN, winHandler);
 
@@ -49,6 +64,11 @@ function addGameHandlers() {
       blockClose: false,
     });
     modal.show();
+    writeScore(
+      {
+        result: 'Lose', difficulty: getDifficulty(), clicks: menu.clicksCounter.value, time: menu.secondsCounter.value,
+      },
+    );
   };
   document.body.addEventListener(field.LOSE, loseHandler);
 }
@@ -60,6 +80,7 @@ function setupMenu(firstTime) {
 
   if (firstTime) document.addEventListener(menu.FLAG_TOGGLE, () => field.toggleFlag());
   menu.newGameBtn.addEventListener('click', startNewGame);
+  menu.viewScoresBtn.addEventListener('click', showScores);
 }
 
 function formGamefield({ fieldSize, mineCount, firstTime }) {
