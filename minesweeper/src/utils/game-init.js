@@ -24,6 +24,14 @@ const MINE_COUNTS = {
 let field = null;
 let menu = null;
 
+function saveGame() {
+
+}
+
+function loadGame() {
+
+}
+
 function getDifficulty() {
   let difficulty = 'Easy';
   if (field.mineCount === 15) difficulty = 'Medium';
@@ -81,6 +89,8 @@ function setupMenu(firstTime) {
   if (firstTime) document.addEventListener(menu.FLAG_TOGGLE, () => field.toggleFlag());
   menu.newGameBtn.addEventListener('click', startNewGame);
   menu.viewScoresBtn.addEventListener('click', showScores);
+  menu.saveGameBtn.addEventListener('click', saveGame);
+  menu.loadGameBtn.addEventListener('click', loadGame);
 }
 
 function formGamefield({ fieldSize, mineCount, firstTime }) {

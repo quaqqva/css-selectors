@@ -31,6 +31,8 @@ export default class UserMenu {
     const buttons = Array.from(this.layout.querySelectorAll('.menu__button'));
     [this.newGameBtn] = buttons.filter((button) => button.innerHTML === 'New game');
     [this.viewScoresBtn] = buttons.filter((button) => button.innerHTML === 'Highscores');
+    [this.saveGameBtn] = buttons.filter((button) => button.innerHTML === 'Save game');
+    [this.loadGameBtn] = buttons.filter((button) => button.innerHTML === 'Load game');
 
     this.addHandlers(field);
     this.setupFlagButton();
