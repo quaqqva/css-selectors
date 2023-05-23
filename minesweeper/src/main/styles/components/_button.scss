@@ -97,6 +97,8 @@
 }
 
 .switch-sound-button {
+  width: 60px;
+  aspect-ratio: 1/1;
   @include pixel-box(
     $corner-size: 1,
     $border-color: $shadow-color,
@@ -112,5 +114,9 @@
     $background-color: grey
     );
     position: absolute;
+  }
+
+  @media (max-width: 700px) {
+    width: 7%;
   }
 }

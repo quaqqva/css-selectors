@@ -22,7 +22,20 @@ $white: #fff;
   left: 25%;
   top: 10%;
 
-  width: 2.5em;
+  @media (max-width: 1300px) {
+    left: 15%;
+  }
+
+  @media (max-width: 1000px) {
+    left: calc(25vw - 162.5px);
+    width: 40px;
+  }
+
+  @media (max-width: 700px) {
+    left: 0.5%;
+  }
+
+  width: 50px;
   aspect-ratio: 2/1;
   @include pixel-box(
     $corner-size: 2,

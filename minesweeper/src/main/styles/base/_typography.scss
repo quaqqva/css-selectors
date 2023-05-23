@@ -13,7 +13,10 @@
 html {
   font-family: "Pixeloid Sans";
   color: $shadow-color;
-  font-size: 20px;
+}
+
+.menu__button {
+  font-size: max(calc(100vw * 2 / 105 - 712px / 105), 10px);
 }
 
 body.night {
