@@ -6,7 +6,7 @@ import Minefield from '../components/playground';
 import UserMenu from '../components/playground-menu';
 import createFooter from '../components/footer';
 import createThemeSwitch from '../components/theme-switch';
-import createSoundButton from '../components/sound-button';
+import soundButtonFuncs from '../components/sound-button';
 import scoresFuncs from './scores';
 import saveFuncs from './save-load';
 import addGameHandlers from './game-hadlers';
@@ -15,6 +15,7 @@ import changeTheme from './change-theme';
 
 const { showScores } = scoresFuncs;
 const { saveGame, saveIsPresent, loadGame } = saveFuncs;
+const { createSoundButton } = soundButtonFuncs;
 
 const DIFFICULTY_PARAMS = {
   // Field sizes
@@ -57,6 +58,8 @@ function formGamefield({ fieldSize, mineCount, firstTime }) {
     changeTheme(document.body.querySelector('main'));
     document.body.querySelector('.theme-switch').checked = true;
   }
+  const formFieldEvent = new Event('formField', { bubbles: true });
+  document.body.dispatchEvent(formFieldEvent);
 }
 
 function showStartDialog(firstTime) {
