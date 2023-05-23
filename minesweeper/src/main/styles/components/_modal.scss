@@ -79,5 +79,9 @@
 .modal_start-modal {
   width: 30% !important;
   gap: 2vmin;
+
+  @media (max-width: 1000px) {
+    width: 60% !important;
+  }
 }
 
