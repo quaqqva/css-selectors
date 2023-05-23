@@ -8,8 +8,10 @@ body {
     &::-webkit-scrollbar {
         display: none;
     }
-    
-  }
+    &.night {
+      background-image:url("../../assets/img/bg_night.png") ;
+    }
+}
 
 main {
     position: relative;
@@ -20,6 +22,10 @@ main {
     transform: translateY(100%);
     transition: transform steps(50, start) 2s;
     padding-bottom: 5vmin;
+
+    &.night {
+      background-color: $main-bg-color-night;
+    }
 }
 
 

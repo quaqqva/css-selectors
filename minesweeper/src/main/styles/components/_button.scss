@@ -47,6 +47,23 @@
       $background-color: darken($minefield-btn-color, 5)
     )
   }
+
+  &.night {
+    @include pixel-box(
+    $corner-size: 2,
+    $border-color: darken($minefield-btn-color-night, 25),
+    $border-size: 2px,
+    $background-color: $minefield-btn-color-night
+    );
+    &:disabled {
+      @include pixel-box(
+        $corner-size: 2,
+        $border-color: darken($minefield-btn-color-night, 30),
+        $border-size: 1px,
+        $background-color: darken($minefield-btn-color-night, 5)
+      )
+    }
+  }
 }
 
 .minefield__button_releaved, .minefield__button_releaved:disabled {
@@ -69,6 +86,14 @@
   &:hover {
     background-color: darken($secondary-color, 10);
   }
+
+  &.night {
+    background-color: $medium-btn-color;
+    @include pixel-borders(
+    $border-size: 3px,
+    $border-color: $secondary-color
+  );
+  }
 }
 
 .switch-sound-button {
@@ -78,4 +103,14 @@
     $border-size: 3px,
     $background-color: $secondary-color
   );
+
+  &.night {
+    @include pixel-box(
+    $corner-size: 1,
+    $border-color: $shadow-color,
+    $border-size: 3px,
+    $background-color: grey
+    );
+    position: absolute;
+  }
 }

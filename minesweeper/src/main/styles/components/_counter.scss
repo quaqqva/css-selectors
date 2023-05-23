@@ -1,14 +1,30 @@
 .counter {
-  background-color: $shadow-color;
+  background-color: $secondary-color;
+  color: $shadow-color;
   @include pixel-borders(
     $corner-size: 2,
   );
+  &.night {
+    background-color: $shadow-color;
+    color: $secondary-color;
+    @include pixel-borders(
+    $corner-size: 2,
+    $border-color: $secondary-color
+  );
+  }
 }
 
 .counter__description {
+  @include pixel-borders(
+    $border-size: 3px,
+    $border-color: $shadow-color
+  );
+  filter: hue-rotate(0deg) saturate(100%) brightness(16.47%);
+  &.night {
     @include pixel-borders(
-        $border-color: white,
-        $border-size: 3px
-      );
+      $border-color: white,
+      $border-size: 3px
+    );
     filter: hue-rotate(56.67deg) saturate(200%) brightness(96.47%);
+  }   
 }

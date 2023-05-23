@@ -11,15 +11,15 @@
 }
 
 html {
-    font-family: "Pixeloid Sans";
-    color: $shadow-color;
-    font-size: 20px;
+  font-family: "Pixeloid Sans";
+  color: $shadow-color;
+  font-size: 20px;
+}
+
+body.night {
+  color: $secondary-color !important;
 }
 
 .button {
   font-size: 1.25rem;
-}
-
-footer {
-  color: $secondary-color;
 }

@@ -32,6 +32,18 @@ $button-active-color: rgb(255, 254, 237);
     border-color: $button-active-color;
   }
 
+  &.night {
+    color: $button-hover-color;
+    &:hover {
+      color: $button-active-color;
+      border-color: $button-active-color;
+    }
+    &:active {
+      color: $button-hover-color;
+      border-color: $button-hover-color;
+    }
+  }
+
   &:nth-of-type(3) {
     grid-column: span 2;
   }

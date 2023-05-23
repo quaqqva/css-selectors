@@ -2,9 +2,12 @@
   @include pixel-box(
     $corner-size: 2,
     $border-size: 3px,
-    $background-color: $modal-bg-color,
+    $background-color: $main-bg-color-night,
     $border-color: $secondary-color
   );
   max-height: 65px;
   padding: 10px;
+  &.night {
+    background-color: $main-bg-color;
+  }
 }

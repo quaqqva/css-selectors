@@ -5,4 +5,13 @@
     $border-size: 3px
   );
   background-color: darken($minefield-btn-color, 40);
+
+  &.night {
+    @include pixel-borders(
+    $border-color: $shadow-color,
+    $corner-size: 2,
+    $border-size: 3px
+  );
+    background-color: darken($minefield-btn-color-night, 40);
+  }
 }
