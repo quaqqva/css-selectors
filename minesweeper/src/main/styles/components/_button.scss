@@ -57,3 +57,7 @@
     background-color: darken($secondary-color, 10);
   }
 }
+
+.switch-sound-button {
+  @include pixel-borders();
+}
