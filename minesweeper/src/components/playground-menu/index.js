@@ -22,7 +22,7 @@ export default class UserMenu {
 
     this.secondsCounter = new Counter({ description: 'Total time (seconds)', initValue });
     this.layout.insertBefore(this.secondsCounter.layout, this.emoji);
-    this.timer = setInterval(() => { this.secondsCounter.increase(); }, 1000);
+    this.launchTimer();
 
     this.clicksCounter = new Counter({ description: 'Total clicks', initValue });
     this.layout.append(this.clicksCounter.layout);
@@ -36,6 +36,14 @@ export default class UserMenu {
 
     this.addHandlers(field);
     this.setupFlagButton();
+  }
+
+  launchTimer() {
+    this.timer = setInterval(() => { this.secondsCounter.increase(); }, 1000);
+  }
+
+  resetEmoji() {
+    this.emoji.src = emojiSmile;
   }
 
   addHandlers(field) {

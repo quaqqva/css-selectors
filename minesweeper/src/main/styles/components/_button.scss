@@ -26,6 +26,12 @@
   background-color: $hard-btn-color;
 }
 
+.start-modal__load-button {
+  color: $shadow-color !important;
+  border-color: $shadow-color;
+  box-shadow: 0 4px $shadow-color;
+}
+
 .minefield__button {
   &:active {
     @include pixel-box(

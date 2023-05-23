@@ -30,12 +30,41 @@ export default class Minefield {
   constructor({ size, mineCount }) {
     this.size = size;
     this.mineCount = mineCount;
+    this.resizeArray(size);
+    this.createLayout();
+    this.addHandlers(true);
+  }
 
+  resizeArray(size) {
+    this.size = size;
     this.field = new Array(size);
     for (let i = 0; i < size; i += 1) this.field[i] = new Array(size);
-    this.createLayout();
+  }
 
-    this.addHandlers();
+  loadState({ mines, buttons }) {
+    this.mines = mines;
+    this.resizeArray(buttons.length);
+    this.createLayout();
+    for (let i = 0; i < buttons.length; i += 1) {
+      for (let j = 0; j < buttons[i].length; j += 1) {
+        const buttonData = buttons[i][j];
+        const curButton = this.field[i][j];
+        if (buttonData.disabled) {
+          curButton.disabled = true;
+          curButton.innerHTML = buttonData.content;
+          curButton.classList.add(`minefield__button_${buttonData.content}`);
+        }
+        if (buttonData.flagged) {
+          const flagImage = new Image();
+          flagImage.src = flagSrc;
+          curButton.append(flagImage);
+          curButton.flagged = true;
+        }
+      }
+    }
+    this.won = false;
+    this.lost = false;
+    this.addHandlers(false);
   }
 
   createLayout() {
@@ -54,14 +83,16 @@ export default class Minefield {
     }
   }
 
-  addHandlers() {
-    const generateMinesHandler = (event) => {
-      if (event.target !== event.currentTarget) {
-        this.generateMines({ pressed: event.target, count: this.mineCount });
-        this.layout.removeEventListener('click', generateMinesHandler);
-      }
-    };
-    this.layout.addEventListener('click', generateMinesHandler);
+  addHandlers(withMinesGenerator) {
+    if (withMinesGenerator) {
+      const generateMinesHandler = (event) => {
+        if (event.target !== event.currentTarget) {
+          this.generateMines({ pressed: event.target, count: this.mineCount });
+          this.layout.removeEventListener('click', generateMinesHandler);
+        }
+      };
+      this.layout.addEventListener('click', generateMinesHandler);
+    }
 
     this.revealHandler = ((event) => {
       if (event.target !== event.currentTarget) {
@@ -69,7 +100,7 @@ export default class Minefield {
         if (!pressedButton.flagged
            && !(this.lost || this.won)) this.revealButton({ pressedButton, revealMine: true });
       }
-    }).bind(this);
+    });
 
     this.mouseDownDispatcher = (event) => {
       if (event.target.matches(this.BUTTON_SELECTOR)
@@ -171,7 +202,7 @@ export default class Minefield {
       this.lost = true;
     } else {
       const adjacentMinesCount = this.calculateAdjacentMines(pressedButton);
-      if (adjacentMinesCount > 0) button.innerHTML = adjacentMinesCount;
+      if (adjacentMinesCount > 0) { button.innerHTML = adjacentMinesCount; button.classList.add(`minefield__button-${adjacentMinesCount}`); }
       else this.revealAdjacentFields({ pressedButton, visited });
     }
     if (this.onlyMinesLeft() && !this.won && !this.lost) {

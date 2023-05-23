@@ -12,9 +12,8 @@ export default {
   },
   showScores() {
     const highscores = JSON.parse(localStorage.getItem(RECORD_NAME));
-    console.log(highscores);
     let modalContent = `
-    <table class='hightscores-modal__content'>
+    <table class='highscores-modal__content'>
       <thead>
         <tr>
           <td>Result</td>
@@ -24,7 +23,7 @@ export default {
         </tr>
       </thead>
       <tbody>`;
-    if (!highscores) modalContent = '<span class="highscores-modal__span">No data avaliable</span>';
+    if (!highscores) modalContent = '<span class="info-modal__span">No data avaliable</span>';
     else {
       highscores.forEach((record) => {
         modalContent += '<tr>';
