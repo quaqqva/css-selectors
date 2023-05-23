@@ -10,6 +10,7 @@ export default function showModalInfo({ title, text }) {
     content: modalContent,
     blockClose: false,
   });
+  infoModal.modalElement.classList.add('info-modal');
   infoModal.modalElement.querySelector('button').addEventListener('click', () => {
     infoModal.close();
   });

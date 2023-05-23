@@ -19,6 +19,7 @@ main {
     @include window-boilerplate($main-bg-color, $secondary-color);
     transform: translateY(100%);
     transition: transform steps(50, start) 2s;
+    padding-bottom: 5vmin;
 }
 
 

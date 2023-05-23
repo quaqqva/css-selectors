@@ -1,0 +1,8 @@
+.minefield {
+  @include pixel-borders(
+    $border-color: darken($minefield-btn-color, 40),
+    $corner-size: 2,
+    $border-size: 3px
+  );
+  background-color: darken($minefield-btn-color, 40);
+}

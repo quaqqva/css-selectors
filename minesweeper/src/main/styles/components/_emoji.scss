@@ -1,7 +1,7 @@
 .menu__emoji {
   @include pixel-box(
     $corner-size: 2,
-    $border-size: 4px,
+    $border-size: 3px,
     $background-color: $modal-bg-color,
     $border-color: $secondary-color
   );

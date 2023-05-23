@@ -1,7 +1,83 @@
 .modal {
   @include window-boilerplate($modal-bg-color, $secondary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-modal, .scores-modal {
+  gap: 3vmin;
+  h2 {
+    margin-bottom: 2vmin;
+    font-size: 3em;
+  }
+}
+
+.info-modal__content {
+  font-size: 1.5em;
+}
+
+.scores-modal__content {
+  width: 95%;
+  @include pixel-box(
+    $corner-size: 2,
+    $border-size: 4px,
+    $background-color: $shadow-color,
+    $border-color: $secondary-color,
+    $border-inset: true
+  );
+  border-collapse: collapse;
+  text-align: center;
+
+  thead, tbody {
+    position: relative;
+    bottom: 1vmin;
+  }
+
+  thead {
+    height: 6vmin;
+    td { border-bottom: 3px solid $secondary-color; }
+  }
+
+  tr {
+    border-bottom: 3px solid $secondary-color;
+    padding: 2vmin;
+    &:last-of-type {
+      border: none;
+    }
+  }
+  td {
+    padding: 0.5vmin;   
+  }
+}
+
+.win {
+  background-color: $easy-btn-color;
+}
+
+.lose {
+  background-color: $hard-btn-color;
+}
+
+.info-modal__ok-button {
+  margin-bottom: 3vmin;
+  padding: 0 5%;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 1.5em;
+  z-index: 1;
+
+  &:hover {
+    color: $modal-bg-color;
+    background-color: $secondary-color;
+  }
 }
 
 .modal_start-modal {
   width: 30% !important;
+  gap: 2vmin;
 }
+

@@ -13,7 +13,7 @@ export default {
   showScores() {
     const highscores = JSON.parse(localStorage.getItem(RECORD_NAME));
     let modalContent = `
-    <table class='highscores-modal__content'>
+    <table class='scores-modal__content'>
       <thead>
         <tr>
           <td>Result</td>
@@ -24,10 +24,10 @@ export default {
         </tr>
       </thead>
       <tbody>`;
-    if (!highscores) modalContent = '<span class="info-modal__span">No data avaliable</span>';
+    if (!highscores) modalContent = '<span class="info-modal__content">No data avaliable</span>';
     else {
       highscores.forEach((record) => {
-        modalContent += '<tr>';
+        modalContent += `<tr class=${record.result.toLowerCase()}>`;
         modalContent += `<td>${record.result}</td>`;
         modalContent += `<td>${record.difficulty}</td>`;
         modalContent += `<td>${record.minesCount}</td>`;
@@ -37,12 +37,15 @@ export default {
       });
       modalContent += '</tbody></table>';
     }
-    modalContent += '<button class="modal__button">OK</button>';
+    modalContent += '<button class="info-modal__ok-button">OK</button>';
     const scoresModal = new Modal({
       title: 'Highscores',
       content: modalContent,
       blockClose: false,
     });
+    scoresModal.modalElement.classList.add('scores-modal');
+    scoresModal.modalElement.querySelector('button').addEventListener('click', () => scoresModal.close());
+    scoresModal.showTransform = '10vh';
     scoresModal.show();
   },
 };

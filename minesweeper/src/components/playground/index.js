@@ -1,5 +1,6 @@
 import './styles.scss';
 import flagSrc from '../../assets/img/flag.png';
+import bombSrc from '../../assets/img/bomb.png';
 
 function getRandomInt({ min, max }) {
   return min + Math.floor(Math.random() * max);
@@ -287,7 +288,12 @@ export default class Minefield {
 
   revealAllMines() {
     this.mines.forEach((pair) => {
-      this.field[pair[0]][pair[1]].innerHTML = 'X';
+      const button = this.field[pair[0]][pair[1]];
+      button.innerHTML = '';
+      button.classList.add('minefield__button_releaved');
+      const image = new Image();
+      image.src = bombSrc;
+      button.append(image);
     });
   }
 }

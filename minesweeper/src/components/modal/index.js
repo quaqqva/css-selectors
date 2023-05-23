@@ -15,6 +15,7 @@ export default class Modal {
     this.modalBG = document.createElement('div');
     this.modalBG.classList.add('modal__background');
     this.modalBG.prepend(this.modalElement);
+    this.showTransform = '20vh';
 
     if (!blockClose) this.addListeners();
   }
@@ -24,7 +25,7 @@ export default class Modal {
     document.body.prepend(this.modalBG);
     document.body.style = 'overflow: hidden';
     setTimeout(() => {
-      this.modalElement.style = 'transform: translateY(20vh)';
+      this.modalElement.style = `transform: translateY(${this.showTransform})`;
       this.modalBG.style = 'background: rgba(0, 0, 0, 0.75)';
     }, 30);
   }

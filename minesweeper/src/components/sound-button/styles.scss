@@ -1,10 +1,9 @@
 .switch-sound-button {
   cursor: pointer;
   position: absolute;
-  left: calc(25% + 10px);
+  left: calc(25% + 5px);
   top: 40%;
   z-index: 1;
-  border: none;
   outline: none;
 
   img {
