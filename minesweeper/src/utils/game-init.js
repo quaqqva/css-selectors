@@ -31,6 +31,7 @@ const MINE_COUNTS = {
 
 let field = null;
 let menu = null;
+let endGameHandlerRemover = null;
 
 function setupMenu(firstTime) {
   menu = new UserMenu(field);
@@ -53,7 +54,8 @@ function formGamefield({ fieldSize, mineCount, firstTime }) {
   document.body.querySelector('main').append(field.layout);
   setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
   setupMenu(firstTime);
-  if (firstTime) addGameHandlers({ menu, field });
+  if (!firstTime) endGameHandlerRemover();
+  endGameHandlerRemover = addGameHandlers({ menu, field });
   if (document.body.classList.contains('night')) {
     changeTheme(document.body.querySelector('main'));
     document.body.querySelector('.theme-switch').checked = true;

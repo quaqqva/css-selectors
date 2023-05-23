@@ -16,7 +16,7 @@ let sound = true;
 
 export default function addSoundHandlers(field) {
   document.body.addEventListener('click', (event) => {
-    if (sound && (event.target instanceof HTMLButtonElement
+    if (sound && !field.won && !field.lost && (event.target instanceof HTMLButtonElement
         || event.target.parentNode instanceof HTMLButtonElement)
         && !event.target.matches(field.BUTTON_SELECTOR)) {
       playSound(clickSound);

@@ -30,4 +30,8 @@ export default function addGameHandlers({ menu, field }) {
     );
   };
   document.body.addEventListener(field.LOSE, loseHandler);
+  return () => {
+    document.body.removeEventListener(field.WIN, winHandler);
+    document.body.removeEventListener(field.LOSE, loseHandler);
+  };
 }
