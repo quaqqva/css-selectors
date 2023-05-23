@@ -11,6 +11,7 @@ import scoresFuncs from './scores';
 import saveFuncs from './save-load';
 import addGameHandlers from './game-hadlers';
 import addSoundHandlers from './sound-handlers';
+import changeTheme from './change-theme';
 
 const { showScores } = scoresFuncs;
 const { saveGame, saveIsPresent, loadGame } = saveFuncs;
@@ -29,9 +30,6 @@ const MINE_COUNTS = {
 
 let field = null;
 let menu = null;
-
-// TODO: add styles (includes button coloring)
-// TODO: add sounds
 
 function setupMenu(firstTime) {
   menu = new UserMenu(field);
@@ -55,6 +53,10 @@ function formGamefield({ fieldSize, mineCount, firstTime }) {
   setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
   setupMenu(firstTime);
   if (firstTime) addGameHandlers({ menu, field });
+  if (document.body.classList.contains('night')) {
+    changeTheme(document.body.querySelector('main'));
+    document.body.querySelector('.theme-switch').checked = true;
+  }
 }
 
 function showStartDialog(firstTime) {

@@ -2,15 +2,17 @@ import showModalInfo from './info-modal';
 
 export default {
   saveGame({ field, menu }) {
-    const { mines } = field;
-    const buttons = field.field.map((row) => row.map((button) => ({ disabled: button.disabled, flagged: button.innerHTML.includes('img'), content: button.innerHTML })));
-    const seconds = menu.secondsCounter.value;
-    const clicks = menu.clicksCounter.value;
-    const state = JSON.stringify({
-      mines, buttons, seconds, clicks,
-    });
-    localStorage.setItem('minesweeper-save', state);
-    showModalInfo({ title: 'Succeed', text: 'Game was saved successfully' });
+    if (!field.won && !field.lost) {
+      const { mines } = field;
+      const buttons = field.field.map((row) => row.map((button) => ({ disabled: button.disabled, flagged: button.innerHTML.includes('img'), content: button.innerHTML })));
+      const seconds = menu.secondsCounter.value;
+      const clicks = menu.clicksCounter.value;
+      const state = JSON.stringify({
+        mines, buttons, seconds, clicks,
+      });
+      localStorage.setItem('minesweeper-save', state);
+      showModalInfo({ title: 'Succeed', text: 'Game was saved successfully' });
+    } else showModalInfo({ title: 'Not avaliable', text: 'You can\'t save finished game' });
   },
 
   saveIsPresent() {

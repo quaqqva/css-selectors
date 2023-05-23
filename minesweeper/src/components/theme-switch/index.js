@@ -1,9 +1,5 @@
 import './styles.scss';
-
-function changeTheme(element) {
-  element.classList.toggle('night');
-  Array.from(element.children).forEach((child) => changeTheme(child));
-}
+import changeTheme from '../../utils/change-theme';
 
 export default function createThemeSwitch() {
   const input = document.createElement('input');
