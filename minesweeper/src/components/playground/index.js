@@ -167,13 +167,13 @@ export default class Minefield {
 
   generateMines({ pressed, count }) {
     this.mines = [];
-    while (this.mines.length !== count) {
-      const row = getRandomInt({ min: 0, max: this.size - 1 });
-      const column = getRandomInt({ min: 0, max: this.size - 1 });
-      const pair = [row, column];
-      const [pressedRow, pressedColumn] = getCoordinates(pressed);
-      if (!(this.mineIsPresent(pair))
-       && (row !== pressedRow || column !== pressedColumn)) this.mines.push(pair);
+    const [pressedRow, pressedColumn] = getCoordinates(pressed);
+    let options = this.field
+      .reduce((arr, row) => arr.concat(row.map((button) => getCoordinates(button))), []);
+    options = options.filter((record) => record[0] !== pressedRow || record[1] !== pressedColumn);
+    for (let i = 0; i < count; i += 1) {
+      const index = getRandomInt({ min: 0, max: options.length - 1 });
+      this.mines.push(options.splice(index, 1)[0]);
     }
   }
 

@@ -18,6 +18,7 @@ export default {
         <tr>
           <td>Result</td>
           <td>Difficulty</td>
+          <td>Mines Count</td>
           <td>Time (s)</td>
           <td>Clicks</td>
         </tr>
@@ -29,6 +30,7 @@ export default {
         modalContent += '<tr>';
         modalContent += `<td>${record.result}</td>`;
         modalContent += `<td>${record.difficulty}</td>`;
+        modalContent += `<td>${record.minesCount}</td>`;
         modalContent += `<td>${record.time}</td>`;
         modalContent += `<td>${record.clicks}</td>`;
         modalContent += '</tr>';

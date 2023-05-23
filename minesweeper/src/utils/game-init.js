@@ -28,10 +28,10 @@ const MINE_COUNTS = {
 let field = null;
 let menu = null;
 
-// TODO: Save, load
 // TODO: remake generation of mines
 // TODO: switch themes
 // TODO: add styles (includes button coloring)
+// TODO: add sounds
 
 function setupMenu(firstTime) {
   menu = new UserMenu(field);

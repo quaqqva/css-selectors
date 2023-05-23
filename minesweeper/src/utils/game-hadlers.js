@@ -15,7 +15,7 @@ export default function addGameHandlers({ menu, field }) {
     showModalInfo({ title: 'Hooray!', text: `You found all mines in ${menu.secondsCounter.value} seconds and ${menu.clicksCounter.value} moves!` });
     writeScore(
       {
-        result: 'Win', difficulty: getDifficulty(field), clicks: menu.clicksCounter.value, time: menu.secondsCounter.value,
+        result: 'Win', difficulty: getDifficulty(field), minesCount: field.mineCount, clicks: menu.clicksCounter.value, time: menu.secondsCounter.value,
       },
     );
   };
@@ -25,7 +25,7 @@ export default function addGameHandlers({ menu, field }) {
     showModalInfo({ title: 'You Lose :(', text: 'Game over. Try again' });
     writeScore(
       {
-        result: 'Lose', difficulty: getDifficulty(field), clicks: menu.clicksCounter.value, time: menu.secondsCounter.value,
+        result: 'Lose', difficulty: getDifficulty(field), minesCount: field.mineCount, clicks: menu.clicksCounter.value, time: menu.secondsCounter.value,
       },
     );
   };
