@@ -1,0 +1,16 @@
+.switch-sound-button {
+  cursor: pointer;
+  position: absolute;
+  left: calc(25% + 10px);
+  top: 40%;
+  z-index: 1;
+  border: none;
+  outline: none;
+
+  img {
+    max-height: 60px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+  }
+  
+}

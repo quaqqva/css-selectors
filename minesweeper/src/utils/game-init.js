@@ -6,9 +6,11 @@ import Minefield from '../components/playground';
 import UserMenu from '../components/playground-menu';
 import createFooter from '../components/footer';
 import createThemeSwitch from '../components/theme-switch';
+import createSoundButton from '../components/sound-button';
 import scoresFuncs from './scores';
 import saveFuncs from './save-load';
 import addGameHandlers from './game-hadlers';
+import addSoundHandlers from './sound-handlers';
 
 const { showScores } = scoresFuncs;
 const { saveGame, saveIsPresent, loadGame } = saveFuncs;
@@ -28,8 +30,6 @@ const MINE_COUNTS = {
 let field = null;
 let menu = null;
 
-// TODO: remake generation of mines
-// TODO: switch themes
 // TODO: add styles (includes button coloring)
 // TODO: add sounds
 
@@ -50,6 +50,7 @@ function setupMenu(firstTime) {
 
 function formGamefield({ fieldSize, mineCount, firstTime }) {
   field = new Minefield({ size: fieldSize, mineCount });
+  addSoundHandlers(field);
   document.body.querySelector('main').append(field.layout);
   setTimeout(() => { document.body.querySelector('main').style = 'transform: none;'; }, 1000);
   setupMenu(firstTime);
@@ -107,6 +108,7 @@ function showStartDialog(firstTime) {
 function createMain() {
   const main = document.createElement('main');
   main.append(createThemeSwitch());
+  main.append(createSoundButton());
 
   document.body.append(main);
   document.body.append(createFooter());
