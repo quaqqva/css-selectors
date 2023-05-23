@@ -203,7 +203,7 @@ export default class Minefield {
       this.lost = true;
     } else {
       const adjacentMinesCount = this.calculateAdjacentMines(pressedButton);
-      if (adjacentMinesCount > 0) { button.innerHTML = adjacentMinesCount; button.classList.add(`minefield__button-${adjacentMinesCount}`); }
+      if (adjacentMinesCount > 0) { button.innerHTML = adjacentMinesCount; button.classList.add(`minefield__button_${adjacentMinesCount}`); }
       else this.revealAdjacentFields({ pressedButton, visited });
     }
     if (this.onlyMinesLeft() && !this.won && !this.lost) {
