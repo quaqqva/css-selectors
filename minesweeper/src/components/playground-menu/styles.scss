@@ -61,6 +61,10 @@ $button-active-color: rgb(255, 254, 237);
   img {
     max-height: 95%;
   }
+
+  @media (max-width: 500px) {
+    height: 45px;
+  }
 }
 .menu__emoji {
   justify-self: center;

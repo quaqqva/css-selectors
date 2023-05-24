@@ -26,6 +26,10 @@ main {
     &.night {
       background-color: $main-bg-color-night;
     }
+
+    @media(max-width: 500px) {
+      margin-top: 20%;
+    }
 }
 
 
