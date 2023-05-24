@@ -111,6 +111,7 @@ export default class Minefield {
         mouseDownEvent.clicked = event.target.matches(this.BUTTON_SELECTOR)
           ? event.target
           : event.target.parentNode;
+        mouseDownEvent.flagSet = mouseDownEvent.clicked.flagged;
         this.layout.dispatchEvent(mouseDownEvent);
       }
     };
@@ -135,6 +136,7 @@ export default class Minefield {
       const button = event.clicked;
       if (button.flagged) button.innerHTML = '';
       else {
+        event.flagSet = true;
         const flagImage = new Image();
         flagImage.src = flagSrc;
         button.append(flagImage);
@@ -156,13 +158,13 @@ export default class Minefield {
   toggleFlag() {
     this.flagLeftClick = !this.flagLeftClick;
     if (this.flagLeftClick) {
-      this.layout.removeEventListener(this.BUTTON_DOWN_LEFT, this.revealHandler);
+      this.layout.removeEventListener('click', this.revealHandler);
       this.layout.addEventListener(this.BUTTON_DOWN_LEFT, this.flagDispatcher);
       this.layout.addEventListener(this.BUTTON_DOWN_LEFT, this.flagSetHandler);
     } else {
       this.layout.removeEventListener(this.BUTTON_DOWN_LEFT, this.flagDispatcher);
       this.layout.removeEventListener(this.BUTTON_DOWN_LEFT, this.flagSetHandler);
-      this.layout.addEventListener(this.BUTTON_DOWN_LEFT, this.revealDispatcher);
+      this.layout.addEventListener('click', this.revealHandler);
     }
   }
 

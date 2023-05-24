@@ -28,10 +28,13 @@ export default function addSoundHandlers(field) {
   document.body.addEventListener(field.LOSE, () => {
     if (sound) playSound(loseSound);
   });
-  document.body.addEventListener(field.BUTTON_DOWN_LEFT, () => {
-    if (sound) playSound(cellRevealSound);
+  document.body.addEventListener(field.BUTTON_DOWN_LEFT, (event) => {
+    if (sound && !event.flagSet) playSound(cellRevealSound);
   });
-  document.body.addEventListener(field.BUTTON_DOWN_RIGHT, () => {
+  document.body.addEventListener(field.FLAG_SET, () => {
+    if (sound) playSound(flagToggleSound);
+  });
+  document.body.addEventListener(field.FLAG_REMOVED, () => {
     if (sound) playSound(flagToggleSound);
   });
   const button = document.querySelector('.switch-sound-button');
