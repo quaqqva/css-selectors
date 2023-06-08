@@ -1,0 +1,37 @@
+$footer-font-size: 1.5rem;
+$footer-font-size-tablet: 1.25rem;
+
+.footer {
+  height: 75px;
+  background-color: rgba($additional-color-grey, 0.5);
+  
+  position: relative;
+  z-index: $header-footer-layer;
+}
+
+.footer__made-for {
+  width: 20rem;
+  
+  font-size: $footer-font-size;
+
+  @media (max-width: $tablet-width) {
+    font-size: $footer-font-size-tablet;
+  }
+  
+  position: relative;
+  left: calc(50% - 10rem);
+}
+
+.footer__course-logo {
+  height: min(2em, 36px);
+}
+  
+.footer__date {
+  position: relative;
+  right: 2rem;
+  font-size: $footer-font-size;
+
+  @media (max-width: $tablet-width) {
+    display: none;
+  }
+}

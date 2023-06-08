@@ -1,0 +1,141 @@
+@mixin shadow() {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+@mixin menu-button($top) {
+  transition: $hover-transition ease-in-out;
+
+  &:hover {
+    top: $top;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+@mixin smooth-button($translate: -20%) {
+  transition: $hover-transition ease-in-out;
+
+  &:hover {
+    @include shadow();
+    transform: translateY(-20%);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+@mixin scrollbar($track-color, $thumb-color, $width, $height: auto, $border-radius: 10px) {
+  border-radius: $border-radius;
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: $border-radius;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $track-color;
+    border-radius: $border-radius;
+  }
+}
+
+@mixin link-border($width, $height, $color, $transition) {
+  width: $width;
+  height: $height;
+  background: $color;
+  content: "";
+  position: absolute;
+  transition: ease-in-out $transition;
+}
+
+@mixin bg-image($path, $bg-width: 100%, $bg-height: 100%) {
+  background: url($path);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: $bg-width $bg-height;
+}
+
+@mixin furniture-top($offset: 0px) {
+    //Quadratic regression
+    top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px + $offset);
+}
+
+@mixin image-border($border-width, $border-color) {
+  filter: drop-shadow($border-width $border-width 0 $border-color)
+  drop-shadow((-$border-width) $border-width 0 $border-color)
+  drop-shadow($border-width (-$border-width) 0 $border-color)
+  drop-shadow((-$border-width) (-$border-width) 0 $border-color);
+}
+
+@mixin pet($bg-path, $actual-width, $actual-height, $width : max(10vw, 120px), $tablet-pet-width: min(120px, 15vw), $mobile-pet-width: 20vw) {
+  @include bg-image($bg-path);
+  aspect-ratio: calc($actual-width / $actual-height);
+  width: $width;
+
+  @media(max-width: $tablet-width) {
+    width: $tablet-pet-width;
+  }
+
+  @media (max-width: $mobile-width) {
+    width: $mobile-pet-width;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  & > * {
+    position: relative;
+    left: 5%;
+    bottom: 98%;
+  }
+
+  & > .guinea-pig.small {
+    bottom: 90%;
+  }
+
+  transition: filter $hover-transition ease-in-out;
+  @include image-border(0.5px, $additional-color-light);
+  @include pet-stand();
+}
+
+@mixin pet-stand($other-transforms: skew(0), $animation-name: pet-stand) {
+  transform-origin: bottom;
+  animation: $animation-name 1s ease-in-out infinite;
+
+  @keyframes #{$animation-name} {
+    0% {
+      transform: scaleY(1) $other-transforms;
+    }
+    50% {
+      transform: scaleY(0.9) $other-transforms;
+    }
+    100% {
+      transform: scaleY(1) $other-transforms;
+    }
+  }
+}
+
+@mixin target-pet-stand($other-transforms: skew(0), $animation-name: target-pet-stand) {
+  transform-origin: bottom;
+  animation: $animation-name 1s ease-in-out infinite !important;
+
+  @keyframes #{$animation-name} {
+    0% {
+      transform: scaleY(1) $other-transforms;
+    }
+    50% {
+      transform: scaleY(0.9) $other-transforms;
+      @include image-border($border-width: 4px, $border-color: $additional-color-yellow);
+    }
+    100% {
+      transform: scaleY(1) $other-transforms;
+    }
+  }
+}
+

@@ -1,0 +1,107 @@
+$panel-height: 30px;
+
+.draggable__minimize-button {
+  z-index: $drag-n-drop-close-layer;
+}
+
+.draggable {
+  background-color: $additional-color-dark;
+
+  z-index: $drag-n-drop-layer;
+  cursor: move;
+
+  @include shadow();
+
+  &_dragged {
+    z-index: $drag-n-drop-dragged-layer;
+
+    .draggable__minimize-button {
+      z-index: $drag-n-drop-dragged-close-layer;
+    }
+  }
+}
+
+.draggable__panel {
+  font-family: Consolas, sans-serif;
+  height: $panel-height;
+  
+  background-color: $additional-color-grey;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+}
+
+.css-input-wrapper {
+  width: 25vw;
+  height: 100px;
+
+  @media (max-width: $tablet-width) {
+    width: 40vw;
+  }
+
+  top: 85px;
+
+  .draggable__content {
+    height: 70px;
+    padding: 15px 10px;
+  }
+}
+
+$lines-count-width: 1.5em;
+
+.html-wrapper {
+  width: 20vw;
+  height: 400px;
+
+  @media (max-width: $tablet-width) {
+    width: 30vw;
+  }
+
+  @media (max-width: $mobile-width) {
+    width: 40vw;
+  }
+
+  top: 200px;
+
+  .draggable__content {
+    background-color: $accent-color-dark;
+    height: calc(400px * 0.8);
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    top: calc(0.065 * 400px);
+
+    display: flex;
+    flex-direction: column;
+
+    .markup {
+      padding:0 calc($lines-count-width + 4px);
+
+      &:first-of-type {
+        padding-top: 0.5em;
+      }
+    }
+
+    overflow: auto;
+    @include scrollbar($track-color: $additional-color-grey, $thumb-color: $additional-color-light, $width: 5px, $height: 5px, $border-radius: 0px);
+  }
+}
+
+.html-wrapper__lines {
+  width: $lines-count-width;
+  top: 0.5em;
+  border-right: 2px solid $additional-color-dark;
+
+  text-align: center;
+  padding-right: 4px;
+}
+
+.html-wrapper-lines__number {
+  color: $additional-color-dark;
+}
+
+.draggable_minimized {
+  height: $panel-height;
+}

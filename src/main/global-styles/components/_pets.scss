@@ -1,0 +1,112 @@
+.cat {
+  @include pet($bg-path: '../../assets/img/pets/cat.png', $actual-width: 486, $actual-height: 558);
+}
+
+.dog {
+  @include pet($bg-path: '../../assets/img/pets/dog.png', $actual-width: 497, $actual-height: 538);
+}
+
+.dog.corgy {
+  @include pet($bg-path: '../../assets/img/pets/corgy.png', $actual-width: 223, $actual-height: 279);
+}
+
+.dog.corgy[mood = "happy"] {
+  @include pet($bg-path: '../../assets/img/pets/corgy_happy.png', $actual-width: 214, $actual-height: 270);
+}
+
+.dog.corgy[mood = "hungry"] {
+  @include pet($bg-path: '../../assets/img/pets/corgy_hungry.png', 
+  $actual-width: 172, 
+  $actual-height: 264, 
+  $width: max(7.5vw, 100px),
+  $tablet-pet-width: 10vw,
+  $mobile-pet-width: 15vw);
+}
+
+.turtle {
+  @include pet($bg-path: '../../assets/img/pets/turtle.png', $actual-width: 311, $actual-height: 142);
+}
+
+.fish {
+  @include pet($bg-path: '../../assets/img/pets/fish.png', $actual-width: 194, $actual-height: 163);
+}
+
+.parrot {
+  @include pet($bg-path: '../../assets/img/pets/parrot.png', $actual-width: 466, $actual-height: 734);
+
+  & > * {
+    left: -5% !important;
+    bottom: 85% !important;
+    --other-transform: rotate(40deg);
+    @include pet-stand($other-transforms: rotate(40deg), $animation-name: pet-stand-on-parrot);
+
+    &.target {
+      @include target-pet-stand($other-transforms: rotate(40deg), $animation-name: pet-target-stand-on-parrot);
+    }
+  }
+}
+
+.guinea-pig {
+  @include pet($bg-path: '../../assets/img/pets/guinea-pig_2.png', $actual-width: 418, $actual-height: 276);
+}
+
+.guinea-pig.small {
+  @include pet($bg-path: '../../assets/img/pets/guinea-pig_1.png', $actual-width: 224, $actual-height: 124, 
+  $width: 3vw,
+  $tablet-pet-width: 4vw,
+  $mobile-pet-width: 5vw);
+}
+
+.dog.pug {
+  @include pet($bg-path: '../../assets/img/pets/pug.png', $actual-width: 1357, $actual-height: 1250);
+}
+
+.dog.pug#laying {
+  @include pet($bg-path: '../../assets/img/pets/pug_laying.png', $actual-width: 1618, $actual-height: 1012);
+}
+
+.hamster {
+  @include pet($bg-path: '../../assets/img/pets/hamster.png', 
+  $actual-width: 270, 
+  $actual-height: 368, 
+  $width: 4vw,
+  $tablet-pet-width: 6vw,
+  $mobile-pet-width: 10vw);
+}
+
+
+.small {
+  width: 6vw;
+
+  @media (max-width: $tablet-width) {
+    width: 10vw;
+  }
+}
+
+.super-extra-double-huge {
+  width: 20vw;
+  bottom: 225% !important;
+
+  @media (max-width: $tablet-width) {
+    width: 30vw;
+    bottom: 400% !important;
+  }
+
+  @media (max-width: $mobile-width) {
+    bottom: 320% !important;
+  }
+}
+
+.target {
+  @include target-pet-stand();
+}
+
+.highlighted, 
+.pug.highlighted, 
+.pug#laying.highlighted, 
+.corgy.highlighted,
+.corgy[mood = "happy"].highlighted,
+.corgy[mood = "hungry"].highlighted,
+.guinea-pig.small.highlighted {
+  @include image-border($border-width: 4px, $border-color: $additional-color-light);
+}

@@ -1,0 +1,317 @@
+[
+  {
+    "name": "Tag selector",
+    "task": "Select the guinea pig",
+    "description": "Element with tag **A** goes just by ```A```\n**Example**: ```p``` selects all paragraph (```&lt;p&gt;```) elements",
+    "solution": "guinea-pig",
+    "couchPets": [
+      {
+        "tag": "guinea-pig"
+      }
+    ],
+    "floorPets": [
+      {
+        "tag": "dog",
+        "classList": ["pug"]
+      }
+    ]
+  },
+  {
+    "name": "Descendant selector",
+    "task": "Select the cat\non a dog",
+    "description": "You can select descendant (any depth child) of ```A``` with selector ```B``` as ```A B```\n\n**Example**: ```ul li``` selects all elements of unordered list",
+    "solution": "dog cat",
+    "couchPets": [
+      {
+        "tag": "cat"
+      },
+      {
+        "tag": "dog",
+        "children": [
+          {
+            "tag": "cat",
+            "classList": ["small"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Class selector",
+    "task": "Select the corgy dog",
+    "description": "Elements with set class **A** can be selected by ```.A```.\n**Example**: ```.big``` will select all elements with **big** class",
+    "solution": ".corgy",
+    "couchPets": [
+      {
+        "tag": "dog",
+        "classList": ["corgy"]
+      }
+    ],
+    "floorPets": [
+      {
+        "tag": "dog"
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "parrot"
+      }
+    ]
+  },
+  {
+    "name": "ID selector",
+    "task": "Select the laying pug",
+    "description": "With selector ```#id``` you can select element **s.t.** it's ID = ```id```.\n**Hint**: selectors can be applied simultaniously as ```AB```",
+    "solution": ".pug#laying",
+    "couchPets": [
+      {
+        "tag": "guinea-pig"
+      },
+      {
+        "tag": "dog",
+        "classList": ["pug"],
+        "attributes": {
+          "id": "laying"
+        }
+      }
+    ],
+    "floorPets": [
+      {
+        "tag": "dog",
+        "classList": ["pug"]
+      }
+    ]
+  },
+  {
+    "name": "Attribute selector",
+    "task": "Select the\nhungry corgy!",
+    "description": "If you want to specify attribute values of element, you can do it as ```[attribute=\"value\"]```\n**Example**: ```input[type=\"text\"]``` selects all text inputs",
+    "solution": ".corgy[mood=\"hungry\"]",
+    "floorPets": [
+      {
+        "tag": "dog",
+        "classList": ["corgy"],
+        "attributes": {
+          "mood": "hungry"
+        }
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "fish"
+      }
+    ]
+  },
+  {
+    "name": "A little exercise!",
+    "task": "Select the corgy\non the couch",
+    "description": "It's time for **you** to shine! Show what you've learnt!\n**You can do it!**",
+    "solution": "couch .corgy[mood=\"happy\"]",
+    "couchPets": [
+      {
+        "tag": "dog",
+        "classList": ["corgy"],
+        "attributes": {
+          "mood": "happy"
+        }
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "hamster"
+      }
+    ],
+    "floorPets": [
+      {
+        "tag": "cat",
+        "classList": ["small"]
+      },
+      {
+        "tag": "dog",
+        "classList": ["corgy"],
+        "attributes": {
+          "mood": "happy"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Adjacent sibling",
+    "task": "Select the cat\nnext to a fish",
+    "description": "Selector ```A + B``` is meant for elements **B** that directly follow **A**\n**Example**: ```span + button``` selects every button that comes after ```&lt;span&gt;```",
+    "solution": "fish + cat",
+    "floorPets": [
+      {
+        "tag": "fish"
+      },
+      {
+        "tag": "cat"
+      }
+    ],
+    "tablePets":[
+      {
+        "tag": "cat"
+      }
+    ]
+  },
+  {
+    "name": ":only-child",
+    "task": "Select children\nturtles",
+    "description": "You can select elements that are the only ones within their parents with the ```:only-child``` pseudo-selector.\n**Example**: ```div:only-child``` selects **div**s that are the only children in their parents",
+    "solution": "turtle:only-child",
+    "couchPets":[
+      {
+        "tag": "dog",
+        "classList":["pug"],
+        "attributes": {
+          "id": "laying"
+        }
+      },
+      {
+        "tag": "cat",
+        "children": [
+          {
+            "tag": "guinea-pig",
+            "classList": ["small"],
+            "children": [
+              {
+                "tag": "turtle",
+                "classList":["small"]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "parrot",
+        "children": [
+          {
+            "tag": "turtle",
+            "classList": ["small"]
+          }
+        ]
+      }
+    ],
+    "floorPets": [
+      {
+        "tag": "turtle"
+      },
+      {
+        "tag": "dog"
+      }
+    ]
+  },
+  {
+    "name": ":nth-of-type",
+    "task": "Select the third dog\non the floor",
+    "description": "```A:nth-of-type``` pseudo-class is meant for selecting the nth **A** sibling.\n**Example**:```img:nth-of-type(3)``` with select all 3rd sibling images",
+    "solution": "dog:nth-of-type(3)",
+    "floorPets": [
+      {
+        "tag": "dog"
+      },
+      {
+        "tag": "dog",
+        "classList": ["pug"]
+      },
+      {
+        "tag": "dog",
+        "classList": ["corgy"],
+        "attributes": {
+          "mood": "happy"
+        }
+      }
+    ],
+    "couchPets": [
+      {
+        "tag": "guinea-pig"
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "fish"
+      }
+    ]
+  },
+  {
+    "name": "Comma combinator",
+    "task": "Select parrot\nand turtle",
+    "description": "You can combine multiple selectors for elements to match either one of specified as ```A, B```.\n**Example**: ```a, img``` selects both anchors and images",
+    "solution": "parrot, turtle",
+    "floorPets": [
+      {
+        "tag": "dog",
+        "children": [
+          {
+            "tag": "turtle",
+            "classList": ["small"]
+          }
+        ]
+      }
+    ],
+    "couchPets": [
+      {
+        "tag": "cat"
+      },
+      {
+        "tag": "dog",
+        "classList": ["pug"]
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "parrot"
+      }
+    ]
+  },
+  {
+    "name": "Universal selector",
+    "task": "Select every pet\nin the room!",
+    "description": "Universal selector ```*``` can help you select **every** element on the page.\n**Hint**: you can combine it with descendant operator to select all descendants. Use your already gained knowledge!",
+    "solution": "couch *, table *, floor *",
+    "couchPets": [
+      {
+        "tag": "cat"
+      },
+      {
+        "tag": "dog",
+        "classList": ["corgy"],
+        "attributes": {
+          "mood": "hungry"
+        }
+      },
+      {
+        "tag":"guinea-pig"
+      }
+    ],
+    "floorPets":[
+      {
+        "tag": "dog"
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "parrot"
+      }
+    ]
+  },
+  {
+    "name": "Final task",
+    "task": "Detect the anomaly!",
+    "description": "**Finally**, I've been waiting for this! Now you know **so much** about **CSS selectors** and you can help me to detect strange things in my room. I don't know what's wrong!! **Help me!!!** I can't sleep!",
+    "solution": ".super-extra-double-huge",
+    "floorPets": [
+      {
+        "tag": "hamster",
+        "classList": ["super-extra-double-huge"]
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "fish"
+      }
+    ]
+  }
+]
