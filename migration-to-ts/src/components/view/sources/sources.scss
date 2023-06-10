@@ -1,3 +1,21 @@
+$header-bg-color: #ffffff;
+$header-border-color: #30c5ff;
+
+.sources-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px;
+  overflow: hidden;
+  background-color: $header-bg-color;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  border: 3px solid $header-border-color;
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #3fcc59;
+  }
+}
+
 .sources {
     display: flex;
     flex-wrap: nowrap;

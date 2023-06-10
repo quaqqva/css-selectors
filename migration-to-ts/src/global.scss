@@ -6,6 +6,10 @@ body {
     color: $color-secondary;
     background: #17181c;
     font-family: sans-serif;
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #69db7e !important;
+    }
 }
 
 ::-webkit-scrollbar {

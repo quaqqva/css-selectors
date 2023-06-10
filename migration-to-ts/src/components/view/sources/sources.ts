@@ -1,4 +1,4 @@
-import './sources.css';
+import './sources.scss';
 import findElement from '../../../utils/find-element';
 
 export interface NewsSource {
