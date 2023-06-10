@@ -24,7 +24,6 @@ export default class News {
 
     news.forEach((item, idx) => {
       const newsClone: HTMLElement = newsItemTemp.content.cloneNode(true) as HTMLElement;
-      console.log(item);
 
       if (idx % 2) {
         findElement<HTMLDivElement>({
