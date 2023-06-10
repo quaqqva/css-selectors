@@ -24,6 +24,7 @@ export default class News {
 
     news.forEach((item, idx) => {
       const newsClone: HTMLElement = newsItemTemp.content.cloneNode(true) as HTMLElement;
+      console.log(item);
 
       if (idx % 2) {
         findElement<HTMLDivElement>({
@@ -43,7 +44,7 @@ export default class News {
         },
       });
 
-      findElement<HTMLHeadingElement>({
+      findElement<HTMLElement>({
         parent: newsClone,
         selector: '.news__meta-author',
         callback: (authorView) => {
@@ -61,7 +62,7 @@ export default class News {
 
       findElement<HTMLHeadingElement>({
         parent: newsClone,
-        selector: '.news__desciprtion-title',
+        selector: '.news__description-title',
         callback: (titleView) => {
           titleView.textContent = item.title;
         },
@@ -69,7 +70,7 @@ export default class News {
 
       findElement<HTMLHeadingElement>({
         parent: newsClone,
-        selector: '.news__desciprtion-source',
+        selector: '.news__description-source',
         callback: (sourceView) => {
           sourceView.textContent = item.source.name;
         },
@@ -77,7 +78,7 @@ export default class News {
 
       findElement<HTMLParagraphElement>({
         parent: newsClone,
-        selector: '.news__desciprtion-content',
+        selector: '.news__description-content',
         callback: (contentView) => {
           contentView.textContent = item.description;
         },
