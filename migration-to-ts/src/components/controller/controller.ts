@@ -1,7 +1,8 @@
 import AppLoader from './appLoader';
+import { NewsData, SourcesData } from '../view/appView';
 
 class AppController extends AppLoader {
-  getSources(callback: () => void): void {
+  public getSources(callback: (arg?: SourcesData) => void): void {
     super.getResp(
       {
         endpoint: 'sources',
@@ -10,14 +11,14 @@ class AppController extends AppLoader {
     );
   }
 
-  getNews(e: MouseEvent, callback: () => void): void {
+  public getNews(e: MouseEvent, callback: (arg?: NewsData) => void): void {
     let target = e.target as HTMLElement;
     const newsContainer = e.currentTarget as HTMLElement;
 
     while (target !== newsContainer) {
       if (target.classList.contains('source__item')) {
         const sourceId = target.getAttribute('data-source-id');
-        if (newsContainer.getAttribute('data-source') !== sourceId) {
+        if (sourceId && newsContainer.getAttribute('data-source') !== sourceId) {
           newsContainer.setAttribute('data-source', sourceId);
           super.getResp(
             {

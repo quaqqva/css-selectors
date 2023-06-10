@@ -3,11 +3,11 @@ import type { Article } from './news/news';
 import Sources from './sources/sources';
 import { NewsSource } from './sources/sources';
 
-interface NewsData {
+export interface NewsData {
   articles: Article[];
 }
 
-interface SourcesData {
+export interface SourcesData {
   sources: NewsSource[];
 }
 
@@ -19,12 +19,12 @@ export default class AppView {
     this.sources = new Sources();
   }
 
-  public drawNews(data: Partial<NewsData>): void {
+  public drawNews(data: Partial<NewsData> | undefined): void {
     const values = data?.articles ? data?.articles : [];
     this.news.draw(values);
   }
 
-  public drawSources(data: Partial<SourcesData>): void {
+  public drawSources(data: Partial<SourcesData> | undefined): void {
     const values = data?.sources ? data?.sources : [];
     this.sources.draw(values);
   }

@@ -13,7 +13,7 @@ export type Article = {
 
 interface ArticleSource {
   name: string;
-};
+}
 
 export default class News {
   public draw(data: Article[]): void {
@@ -29,54 +29,66 @@ export default class News {
         findElement<HTMLDivElement>({
           parent: newsClone,
           selector: '.news__item',
-          callback: (newsItem) => { newsItem.classList.add('alt'); }
+          callback: (newsItem) => {
+            newsItem.classList.add('alt');
+          },
         });
       }
 
       findElement<HTMLDivElement>({
         parent: newsClone,
         selector: '.news__meta-photo',
-        callback: (photo) => { photo.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`; }
+        callback: (photo) => {
+          photo.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
+        },
       });
 
       findElement<HTMLHeadingElement>({
         parent: newsClone,
         selector: '.news__meta-author',
-        callback: (authorView) => { authorView.textContent = item.author || item.source.name; }
+        callback: (authorView) => {
+          authorView.textContent = item.author || item.source.name;
+        },
       });
 
       findElement<HTMLElement>({
         parent: newsClone,
         selector: '.news__meta-date',
-        callback: (dateView) => { dateView.textContent = item.publishedAt
-          .slice(0, 10)
-          .split('-')
-          .reverse()
-          .join('-'); }
+        callback: (dateView) => {
+          dateView.textContent = item.publishedAt.slice(0, 10).split('-').reverse().join('-');
+        },
       });
 
       findElement<HTMLHeadingElement>({
         parent: newsClone,
         selector: '.news__desciprtion-title',
-        callback: (titleView) => { titleView.textContent = item.title; }
+        callback: (titleView) => {
+          titleView.textContent = item.title;
+        },
       });
 
       findElement<HTMLHeadingElement>({
         parent: newsClone,
         selector: '.news__desciprtion-source',
-        callback: (sourceView) => { sourceView.textContent = item.source.name; }
+        callback: (sourceView) => {
+          sourceView.textContent = item.source.name;
+        },
       });
-      
+
       findElement<HTMLParagraphElement>({
         parent: newsClone,
         selector: '.news__desciprtion-content',
-        callback: (contentView) => { contentView.textContent = item.description; }
+        callback: (contentView) => {
+          contentView.textContent = item.description;
+        },
       });
 
       findElement<HTMLAnchorElement>({
         parent: newsClone,
         selector: '.news__read-more a',
-        callback: (readMoreLink) => { readMoreLink.setAttribute('href', item.url); }
+        callback: (readMoreLink) => {
+          readMoreLink.setAttribute('href', item.url);
+        },
       });
 
       fragment.append(newsClone);
@@ -88,7 +100,7 @@ export default class News {
       callback: (newsWrapper) => {
         newsWrapper.innerHTML = '';
         newsWrapper.appendChild(fragment);
-      }
+      },
     });
   }
 }
