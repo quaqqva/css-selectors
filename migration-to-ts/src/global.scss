@@ -1,5 +1,6 @@
 $color-secondary: #fff;
 $header-link-color: #30c5ff;
+$scrollbar-color: #555;
 
 body {
     color: $color-secondary;
@@ -7,12 +8,27 @@ body {
     font-family: sans-serif;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: darken($scrollbar-color, 20);
+}
+
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-color;
+  border-radius: 10px;
+}
+
 main {
     border-bottom: 2px solid $color-secondary;
 }
 
 header {
-    padding: 10px 30px;
+    padding: 0 30px;
 
     h1 {
         font-size: 40px;
