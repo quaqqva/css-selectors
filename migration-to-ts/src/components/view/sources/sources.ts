@@ -1,20 +1,39 @@
 import './sources.css';
+import findElement from '../../../utils/find-element';
+
+export interface NewsSource {
+  id: string;
+  name: string;
+}
 
 class Sources {
-  draw(data) {
-    const fragment = document.createDocumentFragment();
-    const sourceItemTemp = document.querySelector('#sourceItemTemp');
+  draw(data: NewsSource[]) {
+    const fragment: DocumentFragment = document.createDocumentFragment();
+    const sourceItemTemp: HTMLTemplateElement = document.querySelector<HTMLTemplateElement>('#sourceItemTemp')!;
 
     data.forEach((item) => {
-      const sourceClone = sourceItemTemp.content.cloneNode(true);
+      const sourceClone: HTMLElement = sourceItemTemp.content.cloneNode(true) as HTMLElement;
 
-      sourceClone.querySelector('.source__item-name').textContent = item.name;
-      sourceClone.querySelector('.source__item').setAttribute('data-source-id', item.id);
+      findElement<HTMLSpanElement>({ 
+        parent: sourceClone,
+        selector: '.source__item-name',
+        callback: (sourceNameView) => { sourceNameView.textContent = item.name; }
+      });
+
+      findElement<HTMLDivElement>({ 
+        parent: sourceClone,
+        selector: '.source__item',
+        callback: (sourceItem) => { sourceItem.setAttribute('data-source-id', item.id); }
+      });
 
       fragment.append(sourceClone);
     });
 
-    document.querySelector('.sources').append(fragment);
+    findElement<HTMLDivElement>({ 
+      parent: document,
+      selector: '.sources',
+      callback: (sources) => { sources.append(fragment); }
+    });
   }
 }
 

@@ -1,5 +1,10 @@
+type Callback = {
+  (arg: string): void;
+}
 class Loader {
-  constructor(baseLink, options) {
+  private baseLink: string;
+  private options: ;
+  constructor(baseLink: string, options) {
     this.baseLink = baseLink;
     this.options = options;
   }
@@ -34,11 +39,11 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  load(method, endpoint, callback, options = {}) {
+  load(method, endpoint, callback: Callback, options = {}) {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res) => res.json())
-      .then((data) => callback(data))
+      .then((data: string) => callback(data))
       .catch((err) => console.error(err));
   }
 }
