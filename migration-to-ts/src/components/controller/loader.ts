@@ -1,6 +1,3 @@
-type Callback = {
-  (arg: string): void;
-}
 class Loader {
   private baseLink: string;
   private options: ;
@@ -39,7 +36,7 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  load(method, endpoint, callback: Callback, options = {}) {
+  load(method, endpoint, callback: () => void, options = {}) {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res) => res.json())

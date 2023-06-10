@@ -7,7 +7,7 @@ export interface NewsSource {
 }
 
 class Sources {
-  draw(data: NewsSource[]) {
+  public draw(data: NewsSource[]): void {
     const fragment: DocumentFragment = document.createDocumentFragment();
     const sourceItemTemp: HTMLTemplateElement = document.querySelector<HTMLTemplateElement>('#sourceItemTemp')!;
 
