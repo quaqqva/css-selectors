@@ -19,12 +19,12 @@ export default class AppView {
     this.sources = new Sources();
   }
 
-  public drawNews(data: NewsData): void {
+  public drawNews(data: Partial<NewsData>): void {
     const values = data?.articles ? data?.articles : [];
     this.news.draw(values);
   }
 
-  public drawSources(data: SourcesData): void {
+  public drawSources(data: Partial<SourcesData>): void {
     const values = data?.sources ? data?.sources : [];
     this.sources.draw(values);
   }
