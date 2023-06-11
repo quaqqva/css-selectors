@@ -6,10 +6,6 @@ body {
     color: $color-secondary;
     background: #17181c;
     font-family: sans-serif;
-
-    ::-webkit-scrollbar-thumb {
-        background-color: #69db7e !important;
-    }
 }
 
 ::-webkit-scrollbar {
@@ -53,13 +49,13 @@ footer {
     text-align: center;
 
     font-size: 14px;
-    color: #333;
+    color: darken($color-secondary, 10);
 
     a {
-        color: #444;
+        color: darken($color-secondary, 20);
         transition: color ease-in-out 0.3s;
         &:hover {
-            color: #555;
+            color: $color-secondary;
         }
     }
 
