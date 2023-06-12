@@ -1,7 +1,5 @@
 import AppController from '../controller/controller';
 import AppView from '../view/appView';
-import findElement from '../../utils/find-element';
-import BurgerMenu from '../burger-menu/burger-menu';
 
 export default class App {
   private controller: AppController;
