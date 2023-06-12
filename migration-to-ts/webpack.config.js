@@ -2,6 +2,7 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const postCSSPresetEnv = require('postcss-preset-env');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 
 const baseConfig = {
   entry: path.resolve(__dirname, './src/index.ts'),
@@ -10,6 +11,7 @@ const baseConfig = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/index.html'),
     }),
+    new MiniCSSExtractPlugin({ filename: 'styles.css' }),
   ],
   module: {
     rules: [
@@ -20,7 +22,7 @@ const baseConfig = {
       {
         test: /\.s?css$/i,
         use: [
-          'style-loader',
+          MiniCSSExtractPlugin.loader,
           'css-loader',
           {
             loader: 'postcss-loader',
