@@ -45,13 +45,13 @@ export default class BurgerMenu {
     document.body.append(this.backgroundElement);
     document.body.append(this.menuElement);
     this.isHidden = false;
+    const topCoord = `${document.documentElement.scrollTop}px`;
+    this.backgroundElement.style.top = topCoord;
+    this.menuElement.style.top = topCoord;
     setTimeout(() => {
       this.showButton.classList.add('header__burger-menu_shown');
       this.backgroundElement.classList.add('burger-menu__background_show');
       this.menuElement.classList.add('burger-menu_shown');
-      const topCoord = `${document.documentElement.scrollTop}px`;
-      this.backgroundElement.style.top = topCoord;
-      this.menuElement.style.top = topCoord;
     }, BurgerMenu.ADD_DELAY);
   }
 

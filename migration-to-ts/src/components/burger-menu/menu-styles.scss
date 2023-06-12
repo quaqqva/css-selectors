@@ -21,6 +21,15 @@ $show-transition-time: 500ms;
 
         transition: transform $show-transition-time ease-in-out;
     }
+
+    @media (max-width: 450px) {
+        left: 80vw;
+        top: 5.5vh;
+    }
+
+    @media (max-width: 330px) {
+        top: 4.5vh;
+    }
 }
 
 .header__burger-menu_shown {
