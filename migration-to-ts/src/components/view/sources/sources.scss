@@ -20,6 +20,27 @@ $header-border-color: #30c5ff;
   }
 }
 
+.sources-wrapper_modal {
+  margin: 30% auto 0;
+  width: 80%;
+  height: 75%;
+  border-radius: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 500px) {
+    display: block;
+  }
+  @media (max-width: 400px) {
+    margin-top: 40%;
+    height: 70%;
+  }
+}
+
 .sources {
     display: flex;
     flex-wrap: nowrap;
@@ -28,6 +49,12 @@ $header-border-color: #30c5ff;
     overflow: auto;
     align-items: center;
     font: 300 1em 'Fira Sans', sans-serif;
+}
+
+.sources_modal {
+  height: auto;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .source__item {

@@ -1,0 +1,71 @@
+$show-transition-time: 500ms;
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.header__burger-menu {
+    display: none;
+    z-index: 2;
+    @media (max-width: 500px) {
+        background: transparent;
+        border: none;
+        outline: none;
+
+        height: 30px;
+        width: 50px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        position: relative;
+        top: 5px;
+
+        transition: transform $show-transition-time ease-in-out;
+    }
+}
+
+.header__burger-menu_shown {
+    transform: rotate(90deg);
+}
+
+.burger-menu__line {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+}
+
+.burger-menu__background {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+    opacity: 0;
+    transition: opacity $show-transition-time ease-in-out;
+}
+
+.burger-menu__background_show {
+    opacity: 1;
+}
+
+.burger-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100vh;
+    z-index: 1;
+    background-color: #30c5ff;
+    border: 3px solid white;
+    transform: translateX(100%);
+    transition: transform $show-transition-time ease-in-out;
+    border-radius: 50px 0 0 50px;
+}
+
+.burger-menu_shown {
+    transform: none;
+}

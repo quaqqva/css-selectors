@@ -1,6 +1,7 @@
 import AppController from '../controller/controller';
 import AppView from '../view/appView';
 import findElement from '../../utils/find-element';
+import BurgerMenu from '../burger-menu/burger-menu';
 
 export default class App {
   private controller: AppController;
@@ -12,13 +13,9 @@ export default class App {
   }
 
   public start(): void {
-    findElement<HTMLDivElement>({
-      parent: document,
-      selector: '.sources',
-      callback: (sourcesView) => {
-        sourcesView.addEventListener('click', (e: MouseEvent) => this.controller.getNews(e, (data) => this.view.drawNews(data)));
-        this.controller.getSources((data) => this.view.drawSources(data));
-      }
-    })
+    document.body.addEventListener('click', (e: MouseEvent) =>
+      this.controller.getNews(e, (data) => this.view.drawNews(data))
+    );
+    this.controller.getSources((data) => this.view.drawSources(data));
   }
 }

@@ -26,6 +26,8 @@ export default class AppView {
 
   public drawSources(data: Partial<SourcesData> | undefined): void {
     const values = data?.sources ? data?.sources : [];
-    this.sources.draw(values);
+    const mobileQuery: MediaQueryList = window.matchMedia('(max-width: 500px)');
+    mobileQuery.addEventListener('change', this.sources.draw.bind(this.sources, values, mobileQuery));
+    this.sources.draw(values, mobileQuery);
   }
 }

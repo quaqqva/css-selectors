@@ -1,14 +1,22 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const postCSSPresetEnv = require('postcss-preset-env');
 
 const baseConfig = {
   entry: path.resolve(__dirname, './src/index.ts'),
   mode: 'development',
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/index.html'),
+    }),
+  ],
   module: {
     rules: [
+      {
+        test: /\.html/i,
+        loader: 'html-loader',
+      },
       {
         test: /\.s?css$/i,
         use: [
@@ -30,10 +38,6 @@ const baseConfig = {
         use: ['ts-loader'],
         exclude: /node_modules/,
       },
-      {
-        test: /\.html$/i,
-        use: ['html-loader'],
-      },
     ],
   },
   resolve: {
@@ -42,14 +46,8 @@ const baseConfig = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, '../dist'),
+    clean: true,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
-      filename: 'index.html',
-    }),
-    new CleanWebpackPlugin(),
-  ],
 };
 
 module.exports = ({ mode }) => {
