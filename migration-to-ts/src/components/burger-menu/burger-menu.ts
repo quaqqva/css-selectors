@@ -41,6 +41,9 @@ export default class BurgerMenu {
 
   public showMenu(): void {
     if (!this.isHidden) return;
+    const topCoord = `${document.documentElement.scrollTop}px`;
+    this.backgroundElement.style.top = topCoord;
+    this.menuElement.style.top = topCoord;
     document.body.append(this.backgroundElement);
     document.body.append(this.menuElement);
     document.body.classList.add('no-scroll');
