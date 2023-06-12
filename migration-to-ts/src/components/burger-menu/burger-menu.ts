@@ -19,7 +19,7 @@ export default class BurgerMenu {
       if (this.isHidden) this.showMenu();
       else this.hideMenu();
     });
-    document.querySelector('header')?.append(this.showButton);
+    document.body.append(this.showButton);
 
     this.backgroundElement = document.createElement('div');
     this.backgroundElement.classList.add('burger-menu__background');
@@ -41,23 +41,23 @@ export default class BurgerMenu {
 
   public showMenu(): void {
     if (!this.isHidden) return;
-    const topCoord = `${document.documentElement.scrollTop}px`;
-    this.backgroundElement.style.top = topCoord;
-    this.menuElement.style.top = topCoord;
+    document.documentElement.style.overflow = 'hidden';
     document.body.append(this.backgroundElement);
     document.body.append(this.menuElement);
-    document.body.classList.add('no-scroll');
     this.isHidden = false;
     setTimeout(() => {
       this.showButton.classList.add('header__burger-menu_shown');
       this.backgroundElement.classList.add('burger-menu__background_show');
       this.menuElement.classList.add('burger-menu_shown');
+      const topCoord = `${document.documentElement.scrollTop}px`;
+      this.backgroundElement.style.top = topCoord;
+      this.menuElement.style.top = topCoord;
     }, BurgerMenu.ADD_DELAY);
   }
 
   public hideMenu(): void {
     if (this.isHidden) return;
-    document.body.classList.remove('no-scroll');
+    document.documentElement.style.overflow = '';
     this.backgroundElement.classList.remove('burger-menu__background_show');
     this.menuElement.classList.remove('burger-menu_shown');
     this.showButton.classList.remove('header__burger-menu_shown');

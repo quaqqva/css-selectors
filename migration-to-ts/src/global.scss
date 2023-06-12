@@ -22,7 +22,6 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: 10px;
   background-color: darken($scrollbar-color, 20);
 }
 
@@ -39,7 +38,7 @@ main {
 }
 
 header {
-    width: 100%;
+    width:100vw;
     padding: 0 30px;
     background-color: #17181c;
 
@@ -49,13 +48,10 @@ header {
     }
 
     @media (max-width: 500px) {
-        height: 10vh;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        position: fixed;
+        height: 80px;
         top: 0;
         left: 0;
+        position: fixed;
         z-index: 2;
     }
 }
