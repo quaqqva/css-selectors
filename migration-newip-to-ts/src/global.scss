@@ -8,7 +8,7 @@ $scrollbar-color: #555;
 }
 
 html {
-    overflow: hidden;
+    overflow-x: clip;
 }
 
 body {
