@@ -40,6 +40,10 @@ const baseConfig = {
         use: ['ts-loader'],
         exclude: /node_modules/,
       },
+      {
+        test: /\.png$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   resolve: {

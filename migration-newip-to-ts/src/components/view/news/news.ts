@@ -1,5 +1,6 @@
 import './news.css';
 import findElement from '../../../utils/find-element';
+import placeholderPath from '../../../img/img-placeholder.png';
 
 export type Article = {
   author: string;
@@ -39,7 +40,7 @@ export default class News {
         parent: newsClone,
         selector: '.news__meta-photo',
         callback: (photo) => {
-          photo.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
+          photo.style.backgroundImage = `url(${item.urlToImage || placeholderPath})`;
         },
       });
 
