@@ -1,15 +1,6 @@
 import News from './news/news';
-import type { Article } from './news/news';
+import { NewsData, SourcesData } from '../../utils/data-types';
 import Sources from './sources/sources';
-import { NewsSource } from './sources/sources';
-
-export interface NewsData {
-  articles: Article[];
-}
-
-export interface SourcesData {
-  sources: NewsSource[];
-}
 
 export default class AppView {
   private news: News;

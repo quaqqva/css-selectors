@@ -1,16 +1,4 @@
-enum RequestMethod {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
-  OPTIONS = 'OPTIONS',
-}
-
-type GetResponse = Pick<Response, 'ok' | 'status' | 'statusText' | 'json'>;
-
-type RequestOptions = {
-  [option: string]: string;
-};
+import { RequestMethod, GetResponse, RequestOptions } from '../../utils/request-types';
 
 class Loader {
   private readonly baseLink: string;

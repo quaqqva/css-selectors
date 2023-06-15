@@ -1,20 +1,7 @@
 import './news.css';
 import findElement from '../../../utils/find-element';
 import placeholderPath from '../../../img/img-placeholder.png';
-
-export type Article = {
-  author: string;
-  title: string;
-  description: string;
-  urlToImage: string;
-  publishedAt: string;
-  url: string;
-  source: ArticleSource;
-};
-
-interface ArticleSource {
-  name: string;
-}
+import { Article } from '../../../utils/data-types';
 
 export default class News {
   public draw(data: Article[]): void {

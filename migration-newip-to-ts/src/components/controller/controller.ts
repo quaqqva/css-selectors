@@ -1,5 +1,5 @@
 import AppLoader from './appLoader';
-import { NewsData, SourcesData } from '../view/appView';
+import { NewsData, SourcesData } from '../../utils/data-types';
 
 class AppController extends AppLoader {
   public getSources(callback: (arg?: SourcesData) => void): void {

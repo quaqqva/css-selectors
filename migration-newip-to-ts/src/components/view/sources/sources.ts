@@ -1,11 +1,7 @@
 import './sources.scss';
 import findElement from '../../../utils/find-element';
 import BurgerMenu from '../../burger-menu/burger-menu';
-
-export interface NewsSource {
-  id: string;
-  name: string;
-}
+import { NewsSource } from '../../../utils/data-types';
 
 class Sources {
   private sourcesMenu: BurgerMenu;
