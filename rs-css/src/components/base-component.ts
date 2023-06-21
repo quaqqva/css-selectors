@@ -36,6 +36,10 @@ export default class BaseComponent<T extends HTMLElement> {
     return this.element.outerHTML;
   }
 
+  public set textContent(value: string) {
+    this.element.innerText = value;
+  }
+
   public append(...elements: (HTMLElement | BaseComponent<HTMLElement>)[]): void {
     elements.forEach((element) => {
       if (element instanceof BaseComponent) this.element.append(element.element);
