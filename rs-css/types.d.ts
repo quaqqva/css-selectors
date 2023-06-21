@@ -3,6 +3,11 @@ declare module '*.html' {
   export default content;
 }
 
+declare module '*.json' {
+  const parsed: object;
+  export default parsed;
+}
+
 declare module '*.png' {
   const path: string;
   export default path;
