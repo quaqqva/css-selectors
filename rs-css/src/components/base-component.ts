@@ -1,25 +1,24 @@
-type ComponentParameters = {
-  tag: string;
-  textContent?: string;
-  classes?: string[];
-  attributes?: Map<string, string>;
-  parentNode?: Node;
-};
+import { MarkupParameters } from '../types/default';
 
-export default class BaseComponent {
-  private element: HTMLElement;
+export default class BaseComponent<T extends HTMLElement> {
+  protected element: T;
 
-  public static From(html: string): BaseComponent {
+  public static From<T extends HTMLElement>(html: string): BaseComponent<T> {
     const template = document.createElement('template');
     template.insertAdjacentHTML('afterbegin', html);
-    const element = template.firstChild as HTMLElement;
-    const component = new BaseComponent({ tag: element.tagName });
+    const element = template.firstChild as T;
+    const component = new BaseComponent<T>({ tag: element.tagName });
     component.element = element;
     return component;
   }
 
-  public constructor({ tag = 'div', textContent, classes, attributes, parentNode }: ComponentParameters) {
-    this.element = document.createElement(tag);
+  public constructor({ tag = 'div', textContent, classes, attributes, parent }: Partial<MarkupParameters>) {
+    const candidate = document.createElement(tag);
+    try {
+      this.element = candidate as T;
+    } catch (e: unknown) {
+      throw Error('Error: wrong tag value passed');
+    }
 
     if (textContent) this.element.innerText = textContent;
 
@@ -29,14 +28,23 @@ export default class BaseComponent {
       for (const attribute in attributes) this.setAttribute(attribute, attributes.get(attribute) as string);
     }
 
-    if (parentNode) parentNode.appendChild(this.element);
+    if (parent instanceof Node) parent.appendChild(this.element);
+    if (parent instanceof BaseComponent) parent.append(this.element);
   }
 
-  public append(...elements: (HTMLElement | BaseComponent)[]): void {
+  public get HTML(): string {
+    return this.element.outerHTML;
+  }
+
+  public append(...elements: (HTMLElement | BaseComponent<HTMLElement>)[]): void {
     elements.forEach((element) => {
       if (element instanceof BaseComponent) this.element.append(element.element);
       else this.element.append(element);
     });
+  }
+
+  public clear(): void {
+    this.element.innerHTML = '';
   }
 
   public addClass(...classNames: string[]): void {
@@ -53,6 +61,10 @@ export default class BaseComponent {
 
   public removeAttribute(attributeName: string) {
     this.element.removeAttribute(attributeName);
+  }
+
+  public addEventListener(event: string, listener: (e: Event) => void) {
+    this.element.addEventListener(event, listener);
   }
 
   public destroy(): void {
