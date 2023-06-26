@@ -14,21 +14,24 @@ export default class App {
 
     this.controller = new AppController();
     this.view = new AppView(this.eventEmitter);
-
-    this.eventEmitter.subscribe(AppView.INPUT_EVENT, (data) => {
-      this.controller.validateSelector(
-        data,
-        () => {
-          this.controller.loadLevel(this.controller.levelIndex + 1, (level) => this.view.drawLevel(level));
-        },
-        () => {
-          this.view.signalWrongInput();
-        }
-      );
-    });
   }
 
   public start(): void {
+    this.eventEmitter.subscribe(AppView.INPUT_EVENT, (data) => {
+      this.controller.checkInput({
+        selector: data,
+        sucessCallback: () => {
+          this.controller.loadNextLevel((level) => this.view.drawLevel(level));
+        },
+        failCallback: () => {
+          this.view.signalWrongInput();
+        },
+        winCallback: () => {
+          this.view.signalWin();
+        },
+      });
+    });
+
     this.controller.loadLevel(0, (level) => this.view.drawLevel(level));
   }
 }

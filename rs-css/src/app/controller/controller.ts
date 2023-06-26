@@ -13,19 +13,31 @@ export default class AppController {
     this.currentLevelIndex = 0;
   }
 
-  public get levelIndex() {
-    return this.currentLevelIndex;
-  }
-
   public loadLevel(index: number, callback: (level: LevelData) => void): void {
     this.currentLevelIndex = index;
     callback(this.levels[this.currentLevelIndex]);
   }
 
-  public validateSelector(selector: unknown, sucessCallback: DefaultCallback, failCallback: DefaultCallback): void {
+  public loadNextLevel(callback: (level: LevelData) => void) {
+    this.loadLevel(this.currentLevelIndex + 1, callback);
+  }
+
+  public checkInput({
+    selector,
+    sucessCallback,
+    failCallback,
+    winCallback,
+  }: {
+    selector: unknown;
+    sucessCallback: DefaultCallback;
+    failCallback: DefaultCallback;
+    winCallback: DefaultCallback;
+  }): void {
     if (typeof selector !== 'string') throw Error('Wrong input data recieved');
-    const currentLevel = this.levels[this.levelIndex];
-    if (validateSelector(currentLevel.tableItems, selector, currentLevel.solution)) sucessCallback();
+    const currentLevel = this.levels[this.currentLevelIndex];
+    const isValid = validateSelector(currentLevel.tableItems, selector, currentLevel.solution);
+    if (isValid && this.currentLevelIndex === this.levels.length - 1) winCallback();
+    else if (isValid) sucessCallback();
     else failCallback();
   }
 }

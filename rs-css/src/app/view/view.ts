@@ -46,6 +46,10 @@ export default class AppView {
   }
 
   public signalWrongInput(): void {
+    throw Error('Not implemented');
+  }
 
+  public signalWin(): void {
+    throw Error('Not implemented');
   }
 }
