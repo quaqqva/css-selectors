@@ -13,6 +13,7 @@ export default class EventEmitter {
   }
 
   public subscribe(eventName: string, handler: Handler): void {
+    if (!this.events[eventName]) this.events[eventName] = [];
     this.events[eventName].push(handler);
   }
 
