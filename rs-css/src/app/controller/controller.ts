@@ -6,20 +6,26 @@ import validateSelector from '../../utils/validator';
 export default class AppController {
   private levels: LevelData[];
 
-  private currentLevel: LevelData;
+  private currentLevelIndex: number;
 
   public constructor() {
     this.levels = levels as LevelData[];
-    this.currentLevel = this.levels[0];
+    this.currentLevelIndex = 0;
+  }
+
+  public get levelIndex() {
+    return this.currentLevelIndex;
   }
 
   public loadLevel(index: number, callback: (level: LevelData) => void): void {
-    this.currentLevel = this.levels[index];
-    callback(this.currentLevel);
+    this.currentLevelIndex = index;
+    callback(this.levels[this.currentLevelIndex]);
   }
 
-  public validateSelector(selector: string, sucessCallback: DefaultCallback, failCallback: DefaultCallback): void {
-    if (validateSelector(this.currentLevel.tableItems, selector)) sucessCallback();
+  public validateSelector(selector: unknown, sucessCallback: DefaultCallback, failCallback: DefaultCallback): void {
+    if (typeof selector !== 'string') throw Error('Wrong input data recieved');
+    const currentLevel = this.levels[this.levelIndex];
+    if (validateSelector(currentLevel.tableItems, selector, currentLevel.solution)) sucessCallback();
     else failCallback();
   }
 }
