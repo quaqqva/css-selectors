@@ -9,8 +9,10 @@ export default class Table extends BaseComponent<HTMLDivElement> {
     this.items = [];
   }
 
-  public getTableMarkup(): string {
-    return this.items.reduce((cummulative, currentItem) => cummulative + currentItem.getMarkup(), '');
+  public getTableMarkup(): BaseComponent<HTMLDivElement> {
+    const markupContainer = new BaseComponent<HTMLDivElement>({ classes: ['table-markup'] });
+    markupContainer.append(...this.items.map((item) => item.getMarkup()));
+    return markupContainer;
   }
 
   public override append(...elements: TableItem[]): void {
