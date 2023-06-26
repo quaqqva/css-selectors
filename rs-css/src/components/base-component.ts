@@ -1,4 +1,4 @@
-import { MarkupParameters } from '../types/default';
+import { ElementParameters } from '../types/default';
 
 export default class BaseComponent<T extends HTMLElement> {
   protected element: T;
@@ -12,7 +12,7 @@ export default class BaseComponent<T extends HTMLElement> {
     return component;
   }
 
-  public constructor({ tag = 'div', textContent, classes, attributes, parent }: Partial<MarkupParameters>) {
+  public constructor({ tag = 'div', textContent, classes, attributes, parent }: Partial<ElementParameters>) {
     const candidate = document.createElement(tag);
     try {
       this.element = candidate as T;
@@ -25,7 +25,7 @@ export default class BaseComponent<T extends HTMLElement> {
     if (classes) this.addClass(...classes);
 
     if (attributes) {
-      for (const attribute in attributes) this.setAttribute(attribute, attributes.get(attribute) as string);
+      for (const attribute in attributes) this.setAttribute(attribute, attributes[attribute]);
     }
 
     if (parent instanceof Node) parent.appendChild(this.element);
