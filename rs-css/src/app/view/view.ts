@@ -39,9 +39,9 @@ export default class AppView {
         tag: 'div',
         classes,
         attributes: tableItem.attributes,
-        parent: this.table,
       };
       const item = new TableItem(markup, tableItem);
+      this.table.append(item);
     });
   }
 
