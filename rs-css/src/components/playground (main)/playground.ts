@@ -29,10 +29,6 @@ export default class Playground extends BaseComponent<HTMLElement> {
     });
   }
 
-  public addSelectorInputListener(handler: DefaultCallback): void {
-    this.cssInput.addEventListener('input', handler);
-  }
-
   public changeLevel(level: LevelData) {
     this.taskHeader.textContent = level.task;
     level.tableItems.forEach((tableItem) => {
