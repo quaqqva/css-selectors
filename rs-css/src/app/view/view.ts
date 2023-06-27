@@ -5,11 +5,13 @@ import { ElementParameters } from '../../types/default';
 import { LevelData } from '../../types/level-types';
 import CSSInput from '../../components/css-input/css-input';
 import EventEmitter from '../../utils/event-emitter';
+import Header from '../../components/header/header';
+import footer from '../../components/footer/footer';
 
 export default class AppView {
   public static INPUT_EVENT = 'selector-input';
 
-  private main: BaseComponent<HTMLElement>;
+  private body: BaseComponent<HTMLElement>;
 
   private taskHeader: BaseComponent<HTMLHeadingElement>;
 
@@ -18,15 +20,22 @@ export default class AppView {
   private table: Table;
 
   public constructor(emitter: EventEmitter) {
-    // Load components
-    this.main = new BaseComponent<HTMLElement>({ tag: 'main', parent: document.body });
-    this.taskHeader = new BaseComponent<HTMLHeadingElement>({ tag: 'h2', classes: ['level-task'], parent: this.main });
-    this.table = new Table(this.main);
+    // Create sections and Load components
+    this.body = BaseComponent.FromElement(document.body);
 
-    this.cssInput = new CSSInput(this.main);
+    const header = new Header();
+    this.body.append(header);
+
+    const main = new BaseComponent<HTMLElement>({ tag: 'main', parent: this.body });
+    this.taskHeader = new BaseComponent<HTMLHeadingElement>({ tag: 'h2', classes: ['level-task'], parent: main });
+    this.table = new Table(main);
+
+    this.cssInput = new CSSInput(main);
     this.cssInput.addEventListener('input', () => {
       emitter.emit(AppView.INPUT_EVENT, this.cssInput.text);
     });
+
+    this.body.append(footer);
   }
 
   public drawLevel(level: LevelData): void {

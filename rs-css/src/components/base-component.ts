@@ -3,11 +3,17 @@ import { ElementParameters } from '../types/default';
 export default class BaseComponent<T extends HTMLElement> {
   protected element: T;
 
-  public static From<T extends HTMLElement>(html: string): BaseComponent<T> {
+  public static FromHTML<T extends HTMLElement>(html: string): BaseComponent<T> {
     const template = document.createElement('template');
     template.insertAdjacentHTML('afterbegin', html);
     const element = template.firstChild as T;
     const component = new BaseComponent<T>({ tag: element.tagName });
+    component.element = element;
+    return component;
+  }
+
+  public static FromElement<T extends HTMLElement>(element: T): BaseComponent<T> {
+    const component = new BaseComponent<T>({});
     component.element = element;
     return component;
   }
