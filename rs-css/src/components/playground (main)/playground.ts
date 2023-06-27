@@ -5,6 +5,7 @@ import BaseComponent from '../base-component';
 import CSSInput from '../css-input/css-input';
 import Table from '../table/table';
 import TableItem from '../table/table-item';
+import './playground-styles.scss';
 
 export default class Playground extends BaseComponent<HTMLElement> {
   private static ELEMENT_PARAMS = {
