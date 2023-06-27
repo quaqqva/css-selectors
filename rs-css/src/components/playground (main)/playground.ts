@@ -1,4 +1,4 @@
-import { DefaultCallback, ElementParameters } from '../../types/default';
+import { ElementParameters } from '../../types/default';
 import { LevelData } from '../../types/level-types';
 import EventEmitter from '../../utils/event-emitter';
 import BaseComponent from '../base-component';
@@ -20,7 +20,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
 
   public constructor(parent: BaseComponent<HTMLElement>, emitter: EventEmitter) {
     super({ ...Playground.ELEMENT_PARAMS, parent });
-    this.taskHeader = new BaseComponent<HTMLHeadingElement>({ tag: 'h2', classes: ['playgroud-task'], parent: this });
+    this.taskHeader = new BaseComponent<HTMLHeadingElement>({ tag: 'h2', classes: ['playground-task'], parent: this });
     this.table = new Table(this);
     this.cssInput = new CSSInput(this);
 

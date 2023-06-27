@@ -1,5 +1,6 @@
 import headerLayout from './header-layout.html';
 import BaseComponent from '../base-component';
+import './header-styles.scss';
 
 export default class Header extends BaseComponent<HTMLElement> {
   private static ELEMENT_PARAMS = {
