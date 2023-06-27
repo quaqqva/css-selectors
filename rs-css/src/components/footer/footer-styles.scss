@@ -1,0 +1,34 @@
+@import "../../main/global-styles/abstracts/colors";
+
+$font-size: 1.5em;
+
+.footer {
+  height: 75px;
+  background-color: rgba($additional-color-grey, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__made-for {
+  width: 320px;
+  
+  font-size: $font-size;
+  
+  position: relative;
+  left: calc(50% - 160px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__course-logo {
+  height: 36px;
+}
+
+.footer__date {
+  position: relative;
+  right: 2rem;
+  font-size: $font-size;
+}
