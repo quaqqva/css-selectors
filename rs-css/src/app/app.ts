@@ -17,7 +17,7 @@ export default class App {
   }
 
   public start(): void {
-    this.eventEmitter.subscribe(AppView.INPUT_EVENT, (data) => {
+    this.eventEmitter.subscribe(this.view.SELECTOR_INPUT_EVENT, (data) => {
       this.controller.checkInput({
         selector: data,
         sucessCallback: () => {
