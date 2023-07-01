@@ -32,6 +32,7 @@
 
   @media (max-width: 600px) {
     width: 120px;
+    right: 0;
   }
 
   transition: border-width $active-transition ease-in-out, background-color $hover-transition ease-in-out,

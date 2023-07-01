@@ -1,0 +1,84 @@
+.side-menu {
+  z-index: $menu-layer;
+
+  background-color: $additional-color-light;
+  border: 16px solid $accent-color-2-dark;
+
+  color: $accent-color-2-dark;
+}
+
+.side-menu__label {
+  display: block;
+  margin: 10px auto 0;
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.side-menu__switch-content, .side-menu__close {
+  font-size: 2.5em;
+  position: absolute;
+}
+
+.side-menu__switch-content {
+  top: 20px;
+  left: 20px;
+}
+
+.side-menu__close {
+  width: 50px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+
+  top: 15px;
+  right: 20px;
+
+  color: inherit;
+
+  @include menu-button($top: 8px);
+
+  &:hover {
+    @include shadow();
+  }
+}
+
+.side-menu__content {
+  background-color: $additional-color-grey;
+  @include shadow();
+  
+  padding: 5%;
+  
+  font-size: 1.5em;
+
+  gap: 3rem;
+
+  @include scrollbar($track-color: $accent-color-2, $thumb-color: $additional-color-light, $width: 10px);
+}
+
+.side-menu__level {
+  width: 60%;
+  background: transparent;
+  border-bottom: 4px solid $additional-color-light;
+  transition: width $hover-transition ease-in-out, color $active-transition ease-in-out;
+
+  text-align: left;
+  font-size: 1.5em;
+  color: inherit;
+  
+  &::before {
+    content: '✱';
+    margin-right: 0.5em;
+    transition: color $hover-transition ease-in-out;
+  }
+
+  &:hover {
+    width: 90%;
+
+    &::before {
+      color: $additional-color-yellow;
+    }
+  }
+
+  &:active {
+    color: $accent-color-1;
+  }
+}

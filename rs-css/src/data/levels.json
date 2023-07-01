@@ -1,6 +1,7 @@
 [
   {
     "task": "Select a cat",
+    "solution": "cat",
     "tableItems": [
       {
         "tag": "Cat",
@@ -11,6 +12,119 @@
         },
         "children": []
       }
-    ]
+    ],
+    "description": "Element selector goes just by: <element>\nExample: p selects all paragraph elements"
+  },
+  {
+    "task": "Select a cat",
+    "solution": "cat",
+    "tableItems": [
+      {
+        "tag": "Cat",
+        "id": "cat-fancy",
+        "classes": ["Small"],
+        "attributes": {
+          "ear": "fancy"
+        },
+        "children": []
+      }
+    ],
+    "description": "Element selector goes just by: <element>\nExample: p selects all paragraph elements"
+  },
+  {
+    "task": "Select a cat",
+    "solution": "cat",
+    "tableItems": [
+      {
+        "tag": "Cat",
+        "id": "cat-fancy",
+        "classes": ["Small"],
+        "attributes": {
+          "ear": "fancy"
+        },
+        "children": []
+      }
+    ],
+    "description": "Element selector goes just by: <element>\nExample: p selects all paragraph elements"
+  },
+  {
+    "task": "Select a cat",
+    "solution": "cat",
+    "tableItems": [
+      {
+        "tag": "Cat",
+        "id": "cat-fancy",
+        "classes": ["Small"],
+        "attributes": {
+          "ear": "fancy"
+        },
+        "children": []
+      }
+    ],
+    "description": "Element selector goes just by: <element>\nExample: p selects all paragraph elements"
+  },
+  {
+    "task": "Select a cat",
+    "solution": "cat",
+    "tableItems": [
+      {
+        "tag": "Cat",
+        "id": "cat-fancy",
+        "classes": ["Small"],
+        "attributes": {
+          "ear": "fancy"
+        },
+        "children": []
+      }
+    ],
+    "description": "Element selector goes just by: <element>\nExample: p selects all paragraph elements"
+  },
+  {
+    "task": "Select a cat",
+    "solution": "cat",
+    "tableItems": [
+      {
+        "tag": "Cat",
+        "id": "cat-fancy",
+        "classes": ["Small"],
+        "attributes": {
+          "ear": "fancy"
+        },
+        "children": []
+      }
+    ],
+    "description": "Element selector goes just by: <element>\nExample: p selects all paragraph elements"
+  },
+  {
+    "task": "Select a cat",
+    "solution": "cat",
+    "tableItems": [
+      {
+        "tag": "Cat",
+        "id": "cat-fancy",
+        "classes": ["Small"],
+        "attributes": {
+          "ear": "fancy"
+        },
+        "children": []
+      }
+    ],
+    "description": "Element selector goes just by: <element>\nExample: p selects all paragraph elements"
+  },
+  {
+    "task": "Select a cat",
+    "solution": "cat",
+    "tableItems": [
+      {
+        "tag": "Cat",
+        "id": "cat-fancy",
+        "classes": ["Small"],
+        "attributes": {
+          "ear": "fancy"
+        },
+        "children": []
+      }
+    ],
+    "description": "Element selector goes just by: <element>\nExample: p selects all paragraph elements"
   }
 ]
