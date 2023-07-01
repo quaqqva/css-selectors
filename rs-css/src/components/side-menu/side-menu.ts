@@ -93,9 +93,13 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     });
 
     this.contentLabel = new BaseComponent<HTMLSpanElement>({ ...SideMenu.CONTENT_LABEL_PARAMS, parent: this });
-    this.description = new BaseComponent<HTMLParagraphElement>(SideMenu.DESCRIPTION_PARAMS);
 
     this.contentWrapper = new BaseComponent<HTMLDivElement>({ ...SideMenu.CONTENT_WRAPPER_PARAMS, parent: this });
+    this.description = new BaseComponent<HTMLParagraphElement>({
+      ...SideMenu.DESCRIPTION_PARAMS,
+      parent: this.contentWrapper,
+    });
+
     this.levelList = this.createLevelList(completedLevels);
   }
 
