@@ -53,6 +53,10 @@ $switch-time: 300ms;
   text-align: center;
 }
 
+.side-menu__description {
+  line-height: 1.8em;
+}
+
 .side-menu__level_completed::after {
   content: '✓';
 }

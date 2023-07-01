@@ -43,11 +43,6 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     classes: [MenuClasses.ContentWrapper],
   };
 
-  private static DESCRIPTION_PARAMS = {
-    tag: Tags.Paragraph,
-    classes: [MenuClasses.Description],
-  };
-
   private static LEVEL_BUTTON_PARAMS = {
     tag: Tags.Button,
     classes: [MenuClasses.LevelButton],
@@ -63,7 +58,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private currentLevel: number;
 
-  private description: BaseComponent<HTMLParagraphElement>;
+  private description?: BaseComponent<HTMLParagraphElement>;
 
   private switchButton: BaseComponent<HTMLButtonElement>;
 
@@ -95,10 +90,6 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     this.contentLabel = new BaseComponent<HTMLSpanElement>({ ...SideMenu.CONTENT_LABEL_PARAMS, parent: this });
 
     this.contentWrapper = new BaseComponent<HTMLDivElement>({ ...SideMenu.CONTENT_WRAPPER_PARAMS, parent: this });
-    this.description = new BaseComponent<HTMLParagraphElement>({
-      ...SideMenu.DESCRIPTION_PARAMS,
-      parent: this.contentWrapper,
-    });
 
     this.levelList = this.createLevelList(completedLevels);
   }
@@ -141,7 +132,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     setTimeout(() => {
       this.contentLabel.textContent = this.getLabelTemplate();
       this.contentWrapper.clear();
-      if (this.isDescription) this.contentWrapper.append(this.description);
+      if (this.isDescription && this.description) this.contentWrapper.append(this.description);
       else this.contentWrapper.append(...this.levelList);
 
       this.contentLabel.removeClass(MenuClasses.HideElement);
@@ -152,7 +143,11 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
   public loadLevel(level: NumeratedLevel): void {
     this.currentLevel = level.index;
     this.contentLabel.textContent = this.getLabelTemplate();
-    this.description.textContent = level.description;
+    if (this.description) this.description.destroy();
+    this.description = BaseComponent.FromHTML<HTMLParagraphElement>(
+      `<p class="${MenuClasses.Description}">${level.description}</p>`
+    );
+    this.contentWrapper.append(this.description);
   }
 
   public hide(): void {

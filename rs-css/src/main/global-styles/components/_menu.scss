@@ -52,6 +52,12 @@
   gap: 3rem;
 
   @include scrollbar($track-color: $accent-color-2, $thumb-color: $additional-color-light, $width: 10px);
+
+  code {
+    color: $additional-color-light;
+    background-color: $accent-color-2;
+    padding: 0.15em;
+  }
 }
 
 .side-menu__level {

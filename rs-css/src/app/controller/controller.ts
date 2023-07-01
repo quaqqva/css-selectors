@@ -3,6 +3,7 @@ import { DefaultCallback } from '../../types/default';
 import { LevelData, NumeratedLevel } from '../model/level-data';
 import validateSelector from '../../utils/validator';
 import { UserData } from '../model/level-data';
+import parseMarkdown from '../../utils/parse-markdown';
 
 export default class AppController {
   private levels: LevelData[];
@@ -15,6 +16,11 @@ export default class AppController {
 
   public constructor() {
     this.levels = levels as LevelData[];
+    this.levels.forEach((levelData) => {
+      const data = levelData;
+      data.description = parseMarkdown(data.description);
+    });
+
     this.userData = this.loadUserData();
     this.currentLevelIndex = this.userData.currentLevel;
   }
