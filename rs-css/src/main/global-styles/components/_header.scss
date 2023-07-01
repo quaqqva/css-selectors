@@ -1,0 +1,23 @@
+.header {
+  height: 75px;
+
+  border-right: 4px solid $additional-color-yellow;
+  border-bottom: 8px solid $additional-color-yellow;
+  border-left: 4px solid $additional-color-yellow;
+  background: $accent-color-1;
+  border-radius: 0px 0px 0px 20px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.header__icon {
+  aspect-ratio: 1/1;
+  height: 54px;
+}
+
+.header__name {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 3.84px;
+  color: $additional-color-light;
+}
+  
