@@ -1,11 +1,12 @@
 import { ElementParameters } from '../types/default';
+import { Tags, Events, InsertPositions } from '../types/dom-types';
 
 export default class BaseComponent<T extends HTMLElement> {
   protected element: T;
 
   public static FromHTML<T extends HTMLElement>(html: string): BaseComponent<T> {
-    const template = document.createElement('template');
-    template.insertAdjacentHTML('afterbegin', html);
+    const template = document.createElement(Tags.Template);
+    template.insertAdjacentHTML(InsertPositions.Prepend, html);
     const element = template.firstChild as T;
     const component = new BaseComponent<T>({ tag: element.tagName });
     component.element = element;
@@ -18,7 +19,7 @@ export default class BaseComponent<T extends HTMLElement> {
     return component;
   }
 
-  public constructor({ tag = 'div', textContent, classes, attributes, parent }: Partial<ElementParameters>) {
+  public constructor({ tag = Tags.Div, textContent, classes, attributes, parent }: Partial<ElementParameters>) {
     const candidate = document.createElement(tag);
     try {
       this.element = candidate as T;
@@ -73,7 +74,7 @@ export default class BaseComponent<T extends HTMLElement> {
     this.element.removeAttribute(attributeName);
   }
 
-  public addEventListener(event: string, listener: (e: Event) => void) {
+  public addEventListener(event: Events, listener: (e: Event) => void) {
     this.element.addEventListener(event, listener);
   }
 

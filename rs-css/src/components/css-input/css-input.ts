@@ -1,9 +1,13 @@
 import BaseComponent from '../base-component';
+import { Tags } from '../../types/dom-types';
 
+enum CSSInputClasses {
+  CSSInput = 'css-input',
+}
 export default class CSSInput extends BaseComponent<HTMLInputElement> {
   private static ELEMENT_PARAMS = {
-    tag: 'input',
-    classes: ['css-input'],
+    tag: Tags.Input,
+    classes: [CSSInputClasses.CSSInput],
     attributes: {
       type: 'text',
     },

@@ -1,5 +1,7 @@
 import BaseComponent from '../components/base-component';
 
+export type DefaultCallback = () => void;
+
 export type ElementParameters = {
   tag: string;
   textContent: string;
@@ -7,5 +9,3 @@ export type ElementParameters = {
   attributes: { [attribute: string]: string };
   parent: Node | BaseComponent<HTMLElement>;
 };
-
-export type DefaultCallback = () => void;
