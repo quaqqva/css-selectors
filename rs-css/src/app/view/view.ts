@@ -1,5 +1,5 @@
 import BaseComponent from '../../components/base-component';
-import { LevelData } from '../model/level-data';
+import { NumeratedLevel } from '../model/level-data';
 import EventEmitter from '../../utils/event-emitter';
 import Header from '../../components/header/header';
 import footer from '../../components/footer/footer';
@@ -12,6 +12,8 @@ export default class AppView {
   private header: Header;
 
   private main: Playground;
+
+  private sideMenu?: SideMenu;
 
   private emitter: EventEmitter;
 
@@ -32,14 +34,15 @@ export default class AppView {
     return Playground.INPUT_EVENT;
   }
 
-  public drawLevel(level: LevelData): void {
+  public drawLevel(level: NumeratedLevel): void {
     this.main.changeLevel(level);
+    if (this.sideMenu) this.sideMenu.loadLevel(level);
   }
 
-  public loadSideMenu(completedLevels: boolean[], descriptions: string[]) {
-    const sideMenu = new SideMenu(this.body, this.emitter, completedLevels, descriptions);
-    this.header.addMenuButton(sideMenu);
-    sideMenu.show();
+  public loadSideMenu(completedLevels: boolean[]) {
+    this.sideMenu = new SideMenu(this.body, this.emitter, completedLevels);
+    this.header.addMenuButton(this.sideMenu);
+    this.sideMenu.show();
   }
 
   public signalWrongInput(): void {

@@ -3,6 +3,7 @@ import EventEmitter from '../../utils/event-emitter';
 import { Tags, Events } from '../../types/dom-types';
 import { FontAwesome } from '../../types/font-awesome';
 import './menu-styles.scss';
+import { NumeratedLevel } from '../../app/model/level-data';
 
 enum MenuClasses {
   Menu = 'side-menu',
@@ -62,8 +63,6 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private currentLevel: number;
 
-  private descriptions: string[];
-
   private description: BaseComponent<HTMLParagraphElement>;
 
   private switchButton: BaseComponent<HTMLButtonElement>;
@@ -74,19 +73,13 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private levelList: BaseComponent<HTMLButtonElement>[];
 
-  public constructor(
-    parent: BaseComponent<HTMLElement>,
-    emitter: EventEmitter,
-    completedLevels: boolean[],
-    levelDescriptions: string[]
-  ) {
+  public constructor(parent: BaseComponent<HTMLElement>, emitter: EventEmitter, completedLevels: boolean[]) {
     super({ ...SideMenu.ELEMENT_PARAMS, parent });
 
     this.emitter = emitter;
 
-    this.currentLevel = 0;
-    this.descriptions = levelDescriptions;
     this.isDescription = true;
+    this.currentLevel = 0;
 
     this.switchButton = new BaseComponent<HTMLButtonElement>({ ...SideMenu.SWITCH_BUTTON_PARAMS, parent: this });
     this.switchButton.addEventListener(Events.Click, () => {
@@ -116,6 +109,10 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     return closeButton;
   }
 
+  private getLabelTemplate() {
+    return this.isDescription ? `Level ${this.currentLevel + 1} of ${this.levelList.length}` : 'Levels';
+  }
+
   private createLevelList(completedLevels: boolean[]): BaseComponent<HTMLButtonElement>[] {
     return completedLevels.map((levelCompleted, index) => {
       const button = new BaseComponent<HTMLButtonElement>(SideMenu.LEVEL_BUTTON_PARAMS);
@@ -130,7 +127,6 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private switchContent(): void {
     this.isDescription = !this.isDescription;
-    this.contentLabel.textContent = this.isDescription ? `Level ${this.currentLevel + 1}` : 'Levels';
 
     if (this.isDescription) this.switchButton.removeClass(MenuClasses.PressedSwitchButton);
     else this.switchButton.addClass(MenuClasses.PressedSwitchButton);
@@ -139,6 +135,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     this.contentWrapper.addClass(MenuClasses.HideElement);
 
     setTimeout(() => {
+      this.contentLabel.textContent = this.getLabelTemplate();
       this.contentWrapper.clear();
       if (this.isDescription) this.contentWrapper.append(this.description);
       else this.contentWrapper.append(...this.levelList);
@@ -148,9 +145,10 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     }, SideMenu.SWITCH_TRANSITION);
   }
 
-  public loadLevel(levelNumber: number): void {
-    this.currentLevel = levelNumber;
-    this.description.textContent = this.descriptions[this.currentLevel];
+  public loadLevel(level: NumeratedLevel): void {
+    this.currentLevel = level.index;
+    this.contentLabel.textContent = this.getLabelTemplate();
+    this.description.textContent = level.description;
   }
 
   public hide(): void {

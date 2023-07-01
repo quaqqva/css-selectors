@@ -5,6 +5,8 @@ export type LevelData = {
   description: string;
 };
 
+export type NumeratedLevel = LevelData & { index: number };
+
 export type TableItemData = {
   tag: string;
   id?: string;

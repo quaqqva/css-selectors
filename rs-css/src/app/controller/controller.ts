@@ -1,6 +1,6 @@
 import levels from '../../data/levels.json';
 import { DefaultCallback } from '../../types/default';
-import { LevelData } from '../model/level-data';
+import { LevelData, NumeratedLevel } from '../model/level-data';
 import validateSelector from '../../utils/validator';
 import { UserData } from '../model/level-data';
 
@@ -48,14 +48,17 @@ export default class AppController {
     return this.levels.map((levelData) => levelData.description);
   }
 
-  public loadLevel(index: number, callback: (level: LevelData) => void): void {
+  public loadLevel(index: number, callback: (level: NumeratedLevel) => void): void {
     this.currentLevelIndex = index;
     this.userData.currentLevel = this.currentLevelIndex;
     this.saveUserData();
-    callback(this.levels[this.currentLevelIndex]);
+
+    const level = this.levels[this.currentLevelIndex] as NumeratedLevel;
+    level.index = index;
+    callback(level);
   }
 
-  public loadNextLevel(callback: (level: LevelData) => void) {
+  public loadNextLevel(callback: (level: NumeratedLevel) => void) {
     this.loadLevel(this.currentLevelIndex + 1, callback);
   }
 
