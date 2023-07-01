@@ -4,7 +4,7 @@
   top: 0;
 
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -12,8 +12,19 @@
   display: flex;
   justify-content: space-between;
   width: 300px;
+
+  @media (max-width: 600px) {
+    width: 240px;
+  }
+  @media (max-width: 400px) {
+    width: 150px;
+  }
 }
 
 .header__name {
   text-align: center;
+}
+
+.header__open-menu {
+  outline: none;
 }
