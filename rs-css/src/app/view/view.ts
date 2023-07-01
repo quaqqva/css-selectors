@@ -9,6 +9,8 @@ import SideMenu from '../../components/side-menu/side-menu';
 export default class AppView {
   private body: BaseComponent<HTMLElement>;
 
+  private header: Header;
+
   private main: Playground;
 
   private emitter: EventEmitter;
@@ -18,8 +20,8 @@ export default class AppView {
     // Create sections
     this.body = BaseComponent.FromElement(document.body);
 
-    const header = new Header();
-    this.body.append(header);
+    this.header = new Header();
+    this.body.append(this.header);
 
     this.main = new Playground(this.body, emitter);
 
@@ -36,6 +38,7 @@ export default class AppView {
 
   public loadSideMenu(completedLevels: boolean[], descriptions: string[]) {
     const sideMenu = new SideMenu(this.body, this.emitter, completedLevels, descriptions);
+    this.header.addMenuButton(sideMenu);
     sideMenu.show();
   }
 
