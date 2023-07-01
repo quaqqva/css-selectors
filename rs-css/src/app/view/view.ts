@@ -34,8 +34,8 @@ export default class AppView {
     this.main.changeLevel(level);
   }
 
-  public loadSideMenu(completedLevels: boolean[]) {
-    const sideMenu = new SideMenu(this.body, this.emitter, completedLevels);
+  public loadSideMenu(completedLevels: boolean[], descriptions: string[]) {
+    const sideMenu = new SideMenu(this.body, this.emitter, completedLevels, descriptions);
     sideMenu.show();
   }
 
