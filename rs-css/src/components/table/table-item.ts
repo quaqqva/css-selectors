@@ -1,6 +1,6 @@
 import BaseComponent from '../base-component';
 import { ElementParameters } from '../../types/default';
-import { TableItemData, TableItemMarkup } from '../../types/level-types';
+import { TableItemData, TableItemMarkup } from '../../app/model/level-data';
 
 export default class TableItem extends BaseComponent<HTMLDivElement> {
   private children: TableItemMarkup[];

@@ -1,6 +1,6 @@
 import levels from '../../data/levels.json';
 import { DefaultCallback } from '../../types/default';
-import { LevelData } from '../../types/level-types';
+import { LevelData } from '../model/level-data';
 import validateSelector from '../../utils/validator';
 
 export default class AppController {

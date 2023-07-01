@@ -1,16 +1,20 @@
 import BaseComponent from '../../components/base-component';
-import { LevelData } from '../../types/level-types';
+import { LevelData } from '../model/level-data';
 import EventEmitter from '../../utils/event-emitter';
 import Header from '../../components/header/header';
 import footer from '../../components/footer/footer';
 import Playground from '../../components/playground (main)/playground';
+import SideMenu from '../../components/side-menu/side-menu';
 
 export default class AppView {
   private body: BaseComponent<HTMLElement>;
 
   private main: Playground;
 
+  private emitter: EventEmitter;
+
   public constructor(emitter: EventEmitter) {
+    this.emitter = emitter;
     // Create sections
     this.body = BaseComponent.FromElement(document.body);
 
@@ -28,6 +32,11 @@ export default class AppView {
 
   public drawLevel(level: LevelData): void {
     this.main.changeLevel(level);
+  }
+
+  public loadSideMenu(completedLevels: boolean[]) {
+    const sideMenu = new SideMenu(this.body, this.emitter, completedLevels);
+    sideMenu.show();
   }
 
   public signalWrongInput(): void {

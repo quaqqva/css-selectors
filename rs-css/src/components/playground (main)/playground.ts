@@ -1,5 +1,5 @@
 import { ElementParameters } from '../../types/default';
-import { LevelData } from '../../types/level-types';
+import { LevelData } from '../../app/model/level-data';
 import EventEmitter from '../../utils/event-emitter';
 import BaseComponent from '../base-component';
 import CSSInput from '../css-input/css-input';
