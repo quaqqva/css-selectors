@@ -25,7 +25,7 @@ export default class AppView {
     this.header = new Header();
     this.body.append(this.header);
 
-    this.main = new Playground(this.body, emitter);
+    this.main = new Playground({ parent: this.body, emitter });
 
     this.body.append(footer);
   }

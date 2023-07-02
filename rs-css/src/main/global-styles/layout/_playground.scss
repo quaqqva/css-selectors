@@ -1,5 +1,7 @@
+$header-footer-height: 75px;
+
 .playground {
-  margin: 75px 0 -75px;
+  margin: $header-footer-height 0 (-$header-footer-height);
   background: url('../../assets/img/furniture/background.png');
   background-repeat: no-repeat;
   background-position: center;

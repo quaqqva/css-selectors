@@ -6,7 +6,6 @@ import BaseComponent from '../base-component';
 import CSSInput from '../draggables/css-input/css-input';
 import Table from '../table/table';
 import TableItem from '../table/table-item';
-import './playground-styles.scss';
 
 enum PlaygroundClasses {
   Playground = 'playground',
@@ -30,7 +29,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
   private table: Table;
   private cssInput: CSSInput;
 
-  public constructor(parent: BaseComponent<HTMLElement>, emitter: EventEmitter) {
+  public constructor({ parent, emitter }: { parent: BaseComponent<HTMLElement>; emitter: EventEmitter }) {
     super({ ...Playground.ELEMENT_PARAMS, parent });
     this.taskHeader = new BaseComponent<HTMLHeadingElement>({ ...Playground.HEADING_PARAMS, parent: this });
     this.table = new Table(this);
