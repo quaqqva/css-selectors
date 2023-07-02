@@ -1,10 +1,11 @@
-import BaseComponent from '../base-component';
-import { Tags } from '../../types/dom-types';
+import BaseComponent from '../../base-component';
+import { Tags } from '../../../types/dom-types';
+import DragNDropComponent from '../drag-n-drop-component';
 
 enum CSSInputClasses {
   CSSInput = 'css-input',
 }
-export default class CSSInput extends BaseComponent<HTMLInputElement> {
+export default class CSSInput extends DragNDropComponent<HTMLInputElement> {
   private static ELEMENT_PARAMS = {
     tag: Tags.Input,
     classes: [CSSInputClasses.CSSInput],

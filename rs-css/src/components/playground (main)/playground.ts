@@ -3,7 +3,7 @@ import { LevelData } from '../../app/model/level-data';
 import { Tags, Events } from '../../types/dom-types';
 import EventEmitter from '../../utils/event-emitter';
 import BaseComponent from '../base-component';
-import CSSInput from '../css-input/css-input';
+import CSSInput from '../draggables/css-input/css-input';
 import Table from '../table/table';
 import TableItem from '../table/table-item';
 import './playground-styles.scss';
