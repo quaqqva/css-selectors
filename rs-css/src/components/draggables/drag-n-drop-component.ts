@@ -3,6 +3,8 @@ import { Events } from '../../types/dom-types';
 import BaseComponent from '../base-component';
 
 export default class DragNDropComponent<T extends HTMLElement> extends BaseComponent<T> {
+  private static MIN_BOTTOM_HEIGHT = 100;
+
   private static CLASS_NAME = 'draggable';
 
   private shiftX: number;
@@ -41,7 +43,10 @@ export default class DragNDropComponent<T extends HTMLElement> extends BaseCompo
   }
 
   private moveAt(x: number, y: number): void {
-    const top = Math.min(Math.max(0, y - this.shiftY), document.body.scrollHeight - this.element.offsetHeight);
+    const top = Math.min(
+      Math.max(0, y - this.shiftY),
+      document.body.scrollHeight + DragNDropComponent.MIN_BOTTOM_HEIGHT
+    );
     const left = Math.min(Math.max(0, x - this.shiftX), document.body.offsetWidth - this.element.offsetWidth);
     this.element.style.top = `${top}px`;
     this.element.style.left = `${left}px`;
