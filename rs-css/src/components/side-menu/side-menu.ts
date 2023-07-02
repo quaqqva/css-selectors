@@ -4,6 +4,7 @@ import { Tags, Events } from '../../types/dom-types';
 import { FontAwesome } from '../../types/font-awesome';
 import './menu-styles.scss';
 import { NumeratedLevel } from '../../app/model/level-data';
+import ToggleInput from '../toggle-input/toggle-input';
 
 enum MenuClasses {
   Menu = 'side-menu',
@@ -12,8 +13,6 @@ enum MenuClasses {
   Description = 'side-menu__description',
   LevelButton = 'side-menu__level',
   CompletedLevelButton = 'side-menu__level_completed',
-  SwitchButton = 'side-menu__switch-content',
-  PressedSwitchButton = 'side-menu__switch-content_switched',
   CloseButton = 'side-menu__close',
   ShowMenu = 'side-menu_shown',
   HideElement = 'side-menu__hidden',
@@ -22,11 +21,6 @@ enum MenuClasses {
 export default class SideMenu extends BaseComponent<HTMLDivElement> {
   private static ELEMENT_PARAMS = {
     classes: [MenuClasses.Menu],
-  };
-
-  private static SWITCH_BUTTON_PARAMS = {
-    tag: Tags.Icon,
-    classes: [MenuClasses.SwitchButton, FontAwesome.Solid, FontAwesome.Bars],
   };
 
   private static CLOSE_BUTTON_PARAMS = {
@@ -60,7 +54,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private description?: BaseComponent<HTMLParagraphElement>;
 
-  private switchButton: BaseComponent<HTMLButtonElement>;
+  private switchButton: ToggleInput;
 
   private contentLabel: BaseComponent<HTMLSpanElement>;
 
@@ -76,8 +70,8 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     this.isDescription = true;
     this.currentLevel = 0;
 
-    this.switchButton = new BaseComponent<HTMLButtonElement>({ ...SideMenu.SWITCH_BUTTON_PARAMS, parent: this });
-    this.switchButton.addEventListener(Events.Click, () => {
+    this.switchButton = new ToggleInput({ description: 'Switch content', parent: this });
+    this.switchButton.addInputListener(() => {
       this.switchContent();
     });
 
@@ -122,9 +116,6 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private switchContent(): void {
     this.isDescription = !this.isDescription;
-
-    if (this.isDescription) this.switchButton.removeClass(MenuClasses.PressedSwitchButton);
-    else this.switchButton.addClass(MenuClasses.PressedSwitchButton);
 
     this.contentLabel.addClass(MenuClasses.HideElement);
     this.contentWrapper.addClass(MenuClasses.HideElement);

@@ -17,15 +17,6 @@ $switch-time: 300ms;
   transform: none;
 }
 
-.side-menu__switch-content {
-  cursor: pointer;
-  transition: transform ease-in-out $switch-time;
-}
-
-.side-menu__switch-content_switched {
-  transform: rotate(90deg);
-}
-
 .side-menu__content {
   width: 80%;
   height: 80%;
@@ -58,5 +49,6 @@ $switch-time: 300ms;
 }
 
 .side-menu__level_completed::after {
-  content: '✓';
+  content: ' ✅';
+  font-size: 0.7em;
 }

@@ -61,7 +61,7 @@
 }
 
 .side-menu__level {
-  width: 60%;
+  width: 65%;
   background: transparent;
   border-bottom: 4px solid $additional-color-light;
   transition: width $hover-transition ease-in-out, color $active-transition ease-in-out;
@@ -72,6 +72,7 @@
   
   &::before {
     content: '✱';
+    font-size: 0.75em;
     margin-right: 0.5em;
     transition: color $hover-transition ease-in-out;
   }
