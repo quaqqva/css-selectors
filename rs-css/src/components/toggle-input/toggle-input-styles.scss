@@ -25,7 +25,7 @@ $switch-transition: 300ms;
 
   &:checked + .toggle-input__button {
     &::before {
-      transform: translateX(150%);
+      animation: button-switch-on $switch-transition ease-in-out forwards;
     }
   }
 }
@@ -39,12 +39,40 @@ $switch-transition: 300ms;
 
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
-    transition: transform ease-in-out $switch-transition;
+    animation: button-switch-off $switch-transition ease-in-out forwards;
     
     width: 40%;
     height:100%;
     
     background-color: white;
     border-radius: 20px;
+  }
+}
+
+@keyframes button-switch-on {
+  0% {
+    width: 40%;
+    transform: none;
+  }
+  50% {
+    width: 60%;
+  }
+  100% {
+    width: 40%;
+    transform: translateX(150%);
+  }
+}
+
+@keyframes button-switch-off {
+  0% {
+    width: 40%;
+    transform: translateX(150%);
+  }
+  50% {
+    width: 60%;
+  }
+  100% {
+    width: 40%;
+    transform: none;
   }
 }
