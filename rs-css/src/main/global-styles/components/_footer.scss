@@ -3,6 +3,9 @@ $footer-font-size: 1.5em;
 .footer {
   height: 75px;
   background-color: rgba($additional-color-grey, 0.5);
+  
+  position: relative;
+  z-index: $header-footer-layer;
 }
 
 .footer__made-for {
