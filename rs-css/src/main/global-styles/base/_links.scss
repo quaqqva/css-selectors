@@ -4,4 +4,48 @@ a, button {
 
 a {
   text-decoration: none;
+  color: $accent-color-1;
+  padding: 5px;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s ease-in-out 0.1s;
+  span{
+    &::before{
+      @include link-border($width: 100%, $height: 2px, $color: $additional-color-light, $transition: 0.1s);
+      left: 0;
+      top: 0;
+      transform: translateX(-100%);
+    }
+    &::after{
+      @include link-border($width: 100%, $height: 2px, $color: $additional-color-light, $transition: .1s .2s);
+      right: 0;
+			bottom: 0;
+      transform: translateX(100%);
+    }
+  }
+  &::before {
+    @include link-border($width: 2px, $height: 100%, $color: $additional-color-light, $transition: .1s .3s);
+    left: 0;
+    top: 0;
+    transform: translateY(100%);
+  }
+  &::after {
+    @include link-border($width: 2px, $height: 100%, $color: $additional-color-light, $transition: .1s .1s);
+    right: 0;
+		bottom: 0;
+    transform: translateY(-100%);
+  }
+  &:hover{
+    color: $additional-color-light;
+    &::before,
+    &::after {
+      transform: translateX(0);
+    }
+    span, img{
+      &::before,
+      &::after {
+        transform: translateX(0);
+      }
+    }
+  }
 }

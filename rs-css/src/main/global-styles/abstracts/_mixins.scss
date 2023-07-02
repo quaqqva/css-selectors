@@ -31,3 +31,12 @@
     border-radius: $border-radius;
   }
 }
+
+@mixin link-border($width, $height, $color, $transition) {
+  width: $width;
+  height: $height;
+  background: $color;
+  content: "";
+  position: absolute;
+  transition: ease-in-out $transition;
+}
