@@ -50,12 +50,13 @@
 
 @mixin furniture-top($offset: 0px) {
     //Cubic regression (kinda)
-    top: calc(0.0000007017 * 1000000vw - 0.0013356441  * 10000vw + 0.4950708679 * 100vw + 10px + $offset);
-
-    @media (max-width: 950px) {
+    //top: calc(0.0000007017 * 1000000vw - 0.0013356441  * 10000vw + 0.4950708679 * 100vw + 10px + $offset);
+    top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px + $offset);
+    
+    //@media (max-width: 950px) {
       //Quadratic regression
-      top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px + $offset);
-    }
+    //  top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px + $offset);
+    //}
 }
 
 @mixin pet($bg-path, $actual-width, $actual-height) {

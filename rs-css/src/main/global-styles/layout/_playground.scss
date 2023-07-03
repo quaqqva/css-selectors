@@ -3,16 +3,16 @@ $bg-full-width: 1920;
 $bg-full-height: 1080;
 
 .playground {
-  margin: calc($header-footer-height - 15px) 0 (-$header-footer-height);
-  background: url('../../assets/img/furniture/background.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  $top-offset: 15px;
+  $full-device-height: calc(100vh - $header-footer-height + $top-offset);
+  margin: calc($header-footer-height - $top-offset) 0 (-$header-footer-height);
+  @include bg-image($path: '../../assets/img/furniture/background.png');
   background-size: cover;
 
-  height: max(calc($bg-full-height / $bg-full-width * 100vw), 100vh);
+  height: max(calc($bg-full-height / $bg-full-width * 100vw), $full-device-height);
 
   @media (min-width: 1024px) {
-    height: calc(100vh - $header-footer-height + 15px);
+    height: $full-device-height;
   }
 }
 
@@ -64,28 +64,30 @@ $bg-full-height: 1080;
 .playground__couch {
   $width: 1510;
   $height: 761;
-  width: calc($width * 1vw / $bg-full-width * 100);
-  height: max(max(calc($height / $bg-full-width * 100vw), 708vh / $bg-full-height));
+  $element-width: max(200px, 40vw);
+  width: $element-width;
+  aspect-ratio: calc($width / $height);
   @include bg-image($path: '../../assets/img/furniture/couch.png');
-  @include furniture-top();
-  right: 30%;
+  @include furniture-top($offset: -50px);
+
+  right: calc(50% - $element-width / 2);
 
   & > * {
     flex-grow: 0;
     flex-shrink: 0;
-    transform: translateY(-5%);
+    transform: translateY(-10%);
   }
 }
 
 .playground__table { // Max 1 pet
   $width: 678;
   $height: 708;
-  width: calc($width * 1vw / $bg-full-width * 100);
-  height: max(max(calc($height / $bg-full-width * 100vw), 708vh / $bg-full-height));
+  width: max(150px, 15vw);
+  aspect-ratio: calc($width / $height);
   @include bg-image($path: '../../assets/img/furniture/shelf.png');
 
   right: 5%;
-  @include furniture-top();
+  @include furniture-top($offset: 60px);
 
   & > * {
     transform: translateX(50%) translateY(-98%);
@@ -96,6 +98,6 @@ $bg-full-height: 1080;
   width: 50vw;
   height: 20vh;
   left: 30%;
-  @include furniture-top($offset: 20vw);
+  @include furniture-top($offset: 12.5vw);
 }
 
