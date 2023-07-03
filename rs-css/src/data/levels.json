@@ -1,19 +1,18 @@
 [
   {
+    "name": "Tag selector",
     "task": "Select a cat",
     "solution": "cat",
     "tablePets": [
       {
-        "tag": "Cat",
-        "id": "cat-fancy",
-        "classes": ["Small"],
-        "attributes": {
-          "ear": "fancy"
-        },
-        "children": []
+        "tag": "cat"
       }
     ],
-    "couchPets": [],
+    "couchPets": [
+      {
+        "tag": "guinea-pig"
+      }
+    ],
     "description": "**Element** selector goes just by ```element tag```\nExample: ```p``` selects all **paragraph** elements"
   }
 ]

@@ -15,6 +15,7 @@ $bg-full-height: 2000;
 .playground__couch, .playground__floor {
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 .playground__couch {
@@ -25,6 +26,12 @@ $bg-full-height: 2000;
   @include bg-image($path: '../../assets/img/furniture/couch.png');
   @include furniture-top();
   right: 30%;
+
+  & > * {
+    flex-grow: 0;
+    flex-shrink: 0;
+    transform: translateY(-5%);
+  }
 }
 
 .playground__table { // Max 1 pet
@@ -36,5 +43,9 @@ $bg-full-height: 2000;
 
   right: 5%;
   @include furniture-top();
+
+  & > * {
+    transform: translateX(50%) translateY(-98%);
+  }
 }
 

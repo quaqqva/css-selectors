@@ -1,0 +1,57 @@
+.cat {
+  @include pet($bg-path: '../../assets/img/pets/cat.png', $actual-width: 486, $actual-height: 558);
+  width: 10vw;
+}
+
+.dog {
+  @include pet($bg-path: '../../assets/img/pets/dog.png', $actual-width: 497, $actual-height: 538);
+}
+
+.dog.corgy {
+  @include pet($bg-path: '../../assets/img/pets/corgy.png', $actual-width: 223, $actual-height: 279);
+}
+
+.dog.corgy[mood = "happy"] {
+  @include pet($bg-path: '../../assets/img/pets/corgy_happy.png', $actual-width: 214, $actual-height: 270);
+}
+
+.dog.corgy[mood = "hungry"] {
+  @include pet($bg-path: '../../assets/img/pets/corgy_hungry.png', $actual-width: 172, $actual-height: 264);
+}
+
+.turtle {
+  @include pet($bg-path: '../../assets/img/pets/turtle.png', $actual-width: 311, $actual-height: 142);
+}
+
+.dog {
+  @include pet($bg-path: '../../assets/img/pets/fish.png', $actual-width: 194, $actual-height: 163);
+}
+
+.parrot {
+  @include pet($bg-path: '../../assets/img/pets/parrot.png', $actual-width: 466, $actual-height: 734);
+}
+
+.guinea-pig {
+  @include pet($bg-path: '../../assets/img/pets/guinea-pig_2.png', $actual-width: 418, $actual-height: 276);
+}
+
+.guinea-pig.small {
+  @include pet($bg-path: '../../assets/img/pets/guinea-pig_1.png', $actual-width: 224, $actual-height: 124);
+}
+
+.mops {
+  @include pet($bg-path: '../../assets/img/pets/mops.png', $actual-width: 1357, $actual-height: 1250);
+}
+
+.mops#laying {
+  @include pet($bg-path: '../../assets/img/pets/mops_laying.png', $actual-width: 1618, $actual-height: 1012);
+}
+
+.hamster {
+  @include pet($bg-path: '../../assets/img/pets/hamster.png', $actual-width: 270, $actual-height: 368);
+}
+
+
+.small {
+  width: 5vw;
+}
