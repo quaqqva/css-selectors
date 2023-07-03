@@ -39,6 +39,7 @@ $panel-height: 30px;
   height: 100px;
 
   .draggable__content {
+    height: 70px;
     padding: 15px 10px;
   }
 }
@@ -51,11 +52,11 @@ $panel-height: 30px;
 
   .draggable__content {
     background-color: $accent-color-dark;
-    height: 80%;
+    height: calc(400px * 0.8);
     width: 90%;
     margin: 0 auto;
     position: relative;
-    top: 6.5%;
+    top: calc(0.065 * 400px);
   }
 }
 

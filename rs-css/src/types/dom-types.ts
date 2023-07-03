@@ -21,6 +21,7 @@ export enum Events {
   MouseDown = 'mousedown',
   MouseUp = 'mouseup',
   MouseMove = 'mousemove',
+  KeyDown = 'keydown',
 }
 
 export enum InsertPositions {

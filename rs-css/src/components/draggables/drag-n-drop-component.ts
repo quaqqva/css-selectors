@@ -36,7 +36,7 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
     classes: [DragNDropClasses.MinimizeButton, FontAwesome.Regular, FontAwesome.WindowMinimize],
   };
 
-  private static MIN_BOTTOM_HEIGHT = 100;
+  private static MIN_BOTTOM_HEIGHT = 75;
 
   private shiftX: number;
 
@@ -72,7 +72,6 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
       this.shiftX = mouseEvent.clientX - this.element.getBoundingClientRect().left;
       this.shiftY = mouseEvent.clientY - this.element.getBoundingClientRect().top;
 
-      this.element.style.position = 'absolute';
       this.addClass(DragNDropClasses.WrapperDragged);
 
       const mouseMoveHandler: (event: Event) => void = (event) => {
@@ -94,7 +93,7 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
   private moveAt(x: number, y: number): void {
     const top = Math.min(
       Math.max(0, y - this.shiftY),
-      document.body.scrollHeight + DragNDropComponent.MIN_BOTTOM_HEIGHT
+      document.body.scrollHeight - this.element.offsetHeight + DragNDropComponent.MIN_BOTTOM_HEIGHT
     );
     const left = Math.min(Math.max(0, x - this.shiftX), document.body.offsetWidth - this.element.offsetWidth);
     this.element.style.top = `${top}px`;

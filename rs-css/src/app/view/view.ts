@@ -31,7 +31,7 @@ export default class AppView {
   }
 
   public get SELECTOR_INPUT_EVENT() {
-    return Playground.INPUT_EVENT;
+    return this.main.INPUT_EVENT;
   }
 
   public drawLevel(level: NumeratedLevel): void {

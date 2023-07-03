@@ -1,9 +1,9 @@
 import { ElementParameters } from '../../types/default';
 import { LevelData } from '../../app/model/level-data';
-import { Tags, Events } from '../../types/dom-types';
+import { Tags } from '../../types/dom-types';
 import EventEmitter from '../../utils/event-emitter';
 import BaseComponent from '../base-component';
-import CSSInput from '../css-input/css-input';
+import CSSInput from '../text-input/css-input/css-input';
 import Table from '../table/table';
 import TableItem from '../table/table-item';
 import DragNDropComponent from '../draggables/drag-n-drop-component';
@@ -26,8 +26,6 @@ export default class Playground extends BaseComponent<HTMLElement> {
     classes: [PlaygroundClasses.TaskHeading],
   };
 
-  public static INPUT_EVENT = 'selector-input';
-
   private taskHeader: BaseComponent<HTMLHeadingElement>;
   private table: Table;
   private cssInput: CSSInput;
@@ -40,17 +38,17 @@ export default class Playground extends BaseComponent<HTMLElement> {
 
     const CSSDraggable = new DragNDropComponent({ parent: this, panelTitle: 'styles.css' });
     CSSDraggable.addClass(PlaygroundClasses.CSSDraggable);
-    this.cssInput = new CSSInput(CSSDraggable);
-
-    this.cssInput.addEventListener(Events.Input, () => {
-      emitter.emit(Playground.INPUT_EVENT, this.cssInput.text);
-    });
+    this.cssInput = new CSSInput({ parent: CSSDraggable, emitter });
 
     this.htmlView = new DragNDropComponent({ parent: this, panelTitle: 'index.html' });
     this.htmlView.addClass(PlaygroundClasses.HTMLDraggable);
   }
 
-  public changeLevel(level: LevelData) {
+  public get INPUT_EVENT(): string {
+    return CSSInput.INPUT_EVENT;
+  }
+
+  public changeLevel(level: LevelData): void {
     this.taskHeader.textContent = level.task;
     level.tableItems.forEach((tableItem) => {
       const classes = structuredClone(tableItem.classes);
