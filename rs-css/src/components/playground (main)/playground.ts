@@ -11,6 +11,8 @@ import DragNDropComponent from '../draggables/drag-n-drop-component';
 enum PlaygroundClasses {
   Playground = 'playground',
   TaskHeading = 'playground__task',
+  CSSDraggable = 'css-input-wrapper',
+  HTMLDraggable = 'html-wrapper',
 }
 
 export default class Playground extends BaseComponent<HTMLElement> {
@@ -29,18 +31,23 @@ export default class Playground extends BaseComponent<HTMLElement> {
   private taskHeader: BaseComponent<HTMLHeadingElement>;
   private table: Table;
   private cssInput: CSSInput;
+  private htmlView: DragNDropComponent;
 
   public constructor({ parent, emitter }: { parent: BaseComponent<HTMLElement>; emitter: EventEmitter }) {
     super({ ...Playground.ELEMENT_PARAMS, parent });
     this.taskHeader = new BaseComponent<HTMLHeadingElement>({ ...Playground.HEADING_PARAMS, parent: this });
     this.table = new Table(this);
 
-    const cssInputWrapper = new DragNDropComponent(this);
-    this.cssInput = new CSSInput(cssInputWrapper);
+    const CSSDraggable = new DragNDropComponent({ parent: this, panelTitle: 'styles.css' });
+    CSSDraggable.addClass(PlaygroundClasses.CSSDraggable);
+    this.cssInput = new CSSInput(CSSDraggable);
 
     this.cssInput.addEventListener(Events.Input, () => {
       emitter.emit(Playground.INPUT_EVENT, this.cssInput.text);
     });
+
+    this.htmlView = new DragNDropComponent({ parent: this, panelTitle: 'index.html' });
+    this.htmlView.addClass(PlaygroundClasses.HTMLDraggable);
   }
 
   public changeLevel(level: LevelData) {

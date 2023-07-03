@@ -5,19 +5,26 @@ import BaseComponent from '../base-component';
 import './drag-n-drop-styles.scss';
 
 enum DragNDropClasses {
-  WRAPPER = 'draggable',
+  Wrapper = 'draggable',
+  WrapperDragged = 'draggable_dragged',
+  WrapperMinimized = 'draggable_minimized',
   TopPanel = 'draggable__panel',
-  MinimizeButton = 'draggable__minimize',
+  PanelTitle = 'panel__title',
+  MinimizeButton = 'draggable__minimize-button',
   Content = 'draggable__content',
-  ContentMinimized = 'draggable__content_minimized',
 }
 export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
   private static WRAPPER_PARAMS = {
-    classes: [DragNDropClasses.WRAPPER],
+    classes: [DragNDropClasses.Wrapper],
   };
 
   private static TOP_PANEL_PARAMS = {
     classes: [DragNDropClasses.TopPanel],
+  };
+
+  private static TITLE_PARAMS = {
+    tag: Tags.Span,
+    classes: [DragNDropClasses.PanelTitle],
   };
 
   private static CONTENT_PARAMS = {
@@ -39,13 +46,18 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
 
   private contentWrapper: BaseComponent<HTMLDivElement>;
 
-  public constructor(parent: BaseComponent<HTMLElement>) {
+  public constructor({ parent, panelTitle }: { parent: BaseComponent<HTMLElement>; panelTitle?: string }) {
     super({ ...DragNDropComponent.WRAPPER_PARAMS, parent });
     this.shiftX = 0;
     this.shiftY = 0;
     this.addDragHandler();
 
     this.panel = new BaseComponent<HTMLDivElement>({ ...DragNDropComponent.TOP_PANEL_PARAMS, parent: this.element });
+    if (panelTitle)
+      this.panel.append(
+        new BaseComponent<HTMLSpanElement>({ ...DragNDropComponent.TITLE_PARAMS, textContent: panelTitle })
+      );
+
     this.addMinimizeButton();
     this.contentWrapper = new BaseComponent<HTMLDivElement>({
       ...DragNDropComponent.CONTENT_PARAMS,
@@ -61,6 +73,7 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
       this.shiftY = mouseEvent.clientY - this.element.getBoundingClientRect().top;
 
       this.element.style.position = 'absolute';
+      this.addClass(DragNDropClasses.WrapperDragged);
 
       const mouseMoveHandler: (event: Event) => void = (event) => {
         const mouseEvent = event as MouseEvent;
@@ -70,6 +83,7 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
       const mouseUpHandler: DefaultCallback = () => {
         this.removeEventListener(Events.MouseMove, mouseMoveHandler);
         this.removeEventListener(Events.MouseUp, mouseUpHandler);
+        this.removeClass(DragNDropClasses.WrapperDragged);
       };
 
       this.addEventListener(Events.MouseMove, mouseMoveHandler);
@@ -93,14 +107,14 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
       parent: this.panel,
     });
     const minimizeHandler: DefaultCallback = () => {
-      this.contentWrapper.addClass(DragNDropClasses.ContentMinimized);
+      this.addClass(DragNDropClasses.WrapperMinimized);
       minimizeButton.removeEventListener(Events.Click, minimizeHandler);
       minimizeButton.addEventListener(Events.Click, maximizeHandler);
       minimizeButton.addClass(FontAwesome.WindowMaximize);
       minimizeButton.removeClass(FontAwesome.WindowMinimize);
     };
     const maximizeHandler: DefaultCallback = () => {
-      this.contentWrapper.removeClass(DragNDropClasses.ContentMinimized);
+      this.removeClass(DragNDropClasses.WrapperMinimized);
       minimizeButton.removeEventListener(Events.Click, maximizeHandler);
       minimizeButton.addEventListener(Events.Click, minimizeHandler);
       minimizeButton.removeClass(FontAwesome.WindowMaximize);

@@ -1,9 +1,10 @@
 $minimize-time: 500ms;
 
-.draggable__content {
+.draggable {
   transition: height ease-in-out $minimize-time;
+  overflow: hidden;
 }
 
-.draggable__content_minimized {
-  height: 0;
+.draggable__minimize-button {
+  cursor: pointer;
 }

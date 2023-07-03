@@ -1,4 +1,63 @@
+$panel-height: 30px;
+
+.draggable__minimize-button {
+  z-index: $drag-n-drop-close-layer;
+}
+
 .draggable {
+  font-family: Consolas, sans-serif;
+
+  background-color: $additional-color-dark;
+
   z-index: $drag-n-drop-layer;
   cursor: move;
+
+  @include shadow();
+
+  &_dragged {
+    z-index: $drag-n-drop-dragged-layer;
+
+    .draggable__minimize-button {
+      z-index: $drag-n-drop-dragged-close-layer;
+    }
+  }
+}
+
+.draggable__panel {
+  height: $panel-height;
+  
+  background-color: $additional-color-grey;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+}
+
+.css-input-wrapper {
+  width: 20vw;
+  height: 100px;
+  margin-bottom: 20px;
+
+  .draggable__content {
+    padding: 15px 10px;
+  }
+}
+
+.html-wrapper {
+  width: 20vw;
+  height: 400px;
+
+  .draggable__content {
+    background-color: $accent-color-dark;
+    height: 80%;
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    top: 6.5%;
+  }
+}
+
+.draggable_minimized {
+  height: $panel-height;
 }

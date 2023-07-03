@@ -1,8 +1,11 @@
 // Z-index layers
 $default-layer: 0;
 $drag-n-drop-layer: 1;
-$header-footer-layer: 2;
-$menu-layer: 3;
+$drag-n-drop-close-layer: 2;
+$drag-n-drop-dragged-layer: 3;
+$drag-n-drop-dragged-close-layer: 4;
+$header-footer-layer: 5;
+$menu-layer: 6;
 
 // Transition duration
 $hover-transition: 250ms;
