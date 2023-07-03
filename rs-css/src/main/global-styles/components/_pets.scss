@@ -54,3 +54,20 @@
 .small {
   width: 5vw;
 }
+
+.target {
+  transform-origin: bottom;
+  animation: pet-target 750ms ease-in-out infinite;
+}
+
+@keyframes pet-target {
+  0% {
+    transform: none;
+  }
+  50% {
+    transform: scaleY(0.9);
+  }
+  100% {
+    transform: none;
+  }
+}
