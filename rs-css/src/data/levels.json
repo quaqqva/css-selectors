@@ -13,6 +13,7 @@
         "children": []
       }
     ],
+    "couchPets": [],
     "description": "**Element** selector goes just by ```element tag```\nExample: ```p``` selects all **paragraph** elements"
   }
 ]

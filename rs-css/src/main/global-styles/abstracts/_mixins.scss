@@ -40,3 +40,20 @@
   position: absolute;
   transition: ease-in-out $transition;
 }
+
+@mixin bg-image($path, $bg-width: 100%, $bg-height: 100%) {
+  background: url($path);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: $bg-width $bg-height;
+}
+
+@mixin furniture-top() {
+    //Cubic regression (kinda)
+    top: calc(0.0000007017 * 1000000vw - 0.0013356441  * 10000vw + 0.4950708679 * 100vw + 10px);
+
+    @media (max-width: 950px) {
+      //Quadratic regression
+      top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px);
+    }
+}

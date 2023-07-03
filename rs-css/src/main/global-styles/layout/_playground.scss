@@ -1,10 +1,40 @@
 $header-footer-height: 75px;
+$bg-full-width: 3000;
+$bg-full-height: 2000;
 
 .playground {
   margin: $header-footer-height 0 (-$header-footer-height);
-  background: url('../../assets/img/furniture/background.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100vw 100%;
-  height: calc(2 / 3 * 100vw);
+  @include bg-image($path: '../../assets/img/furniture/background.png', $bg-width: 100vw);
+  height: max(calc($bg-full-height / $bg-full-width * 100vw), 100vh);
 }
+
+.playground__couch, .playground__floor, .playground__table {
+  position: absolute;
+}
+
+.playground__couch, .playground__floor {
+  display: flex;
+  justify-content: space-around;
+}
+
+.playground__couch {
+  $width: 1510;
+  $height: 761;
+  width: calc($width * 1vw / $bg-full-width * 100);
+  height: max(max(calc($height / $bg-full-width * 100vw), 708vh / $bg-full-height));
+  @include bg-image($path: '../../assets/img/furniture/couch.png');
+  @include furniture-top();
+  right: 30%;
+}
+
+.playground__table { // Max 1 pet
+  $width: 678;
+  $height: 708;
+  width: calc($width * 1vw / $bg-full-width * 100);
+  height: max(max(calc($height / $bg-full-width * 100vw), 708vh / $bg-full-height));
+  @include bg-image($path: '../../assets/img/furniture/shelf.png');
+
+  right: 5%;
+  @include furniture-top();
+}
+
