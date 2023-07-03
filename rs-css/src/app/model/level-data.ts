@@ -1,21 +1,24 @@
 export type LevelData = {
+  name: string;
   task: string;
   solution: string;
-  tableItems: TableItemData[];
+  couchPets: PetElement[];
+  floorPets: PetElement[];
+  tablePets: PetElement[];
   description: string;
 };
 
 export type NumeratedLevel = LevelData & { index: number };
 
-export type TableItemData = {
+export type PetElement = {
   tag: string;
   id?: string;
   classes?: string[];
   attributes?: { [attribute: string]: string };
-  children?: TableItemData[];
+  children?: PetElement[];
 };
 
-export type TableItemMarkup = Omit<TableItemData, 'children'>;
+export type PetMarkup = Omit<PetElement, 'children'>;
 
 export type UserData = {
   currentLevel: number;
