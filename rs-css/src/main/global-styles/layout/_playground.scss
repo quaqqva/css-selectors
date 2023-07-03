@@ -75,7 +75,8 @@ $bg-full-height: 1080;
   & > * {
     flex-grow: 0;
     flex-shrink: 0;
-    transform: translateY(-10%);
+    position: relative;
+    bottom: 5%;
   }
 }
 

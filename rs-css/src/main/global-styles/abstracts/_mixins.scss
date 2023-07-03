@@ -49,22 +49,41 @@
 }
 
 @mixin furniture-top($offset: 0px) {
-    //Cubic regression (kinda)
-    //top: calc(0.0000007017 * 1000000vw - 0.0013356441  * 10000vw + 0.4950708679 * 100vw + 10px + $offset);
+    //Quadratic regression
     top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px + $offset);
-    
-    //@media (max-width: 950px) {
-      //Quadratic regression
-    //  top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px + $offset);
-    //}
+}
+
+@mixin image-border($border-width, $border-color) {
+  filter: drop-shadow($border-width $border-width 0 $border-color)
+  drop-shadow((-$border-width) $border-width 0 $border-color)
+  drop-shadow($border-width (-$border-width) 0 $border-color)
+  drop-shadow((-$border-width) (-$border-width) 0 $border-color);
 }
 
 @mixin pet($bg-path, $actual-width, $actual-height) {
   @include bg-image($bg-path);
   aspect-ratio: calc($actual-width / $actual-height);
   width: 10vw;
+
   & > * {
     transform: translateX(50%) translateY(-99%);
+  }
+
+  @include image-border(0.5px, $additional-color-light);
+  
+  transform-origin: bottom;
+  animation: pet-stand 1s ease-in-out infinite;
+
+  @keyframes pet-stand {
+    0% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.9);
+    }
+    100% {
+      transform: scaleY(1);
+    }
   }
 }
 
