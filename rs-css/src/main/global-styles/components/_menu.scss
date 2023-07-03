@@ -1,3 +1,5 @@
+$max-levels: 20;
+
 .side-menu {
   z-index: $menu-layer;
 
@@ -49,7 +51,7 @@
   
   font-size: 1.5em;
 
-  gap: 3rem;
+  gap: 1.5rem;
 
   @include scrollbar($track-color: $accent-color-2, $thumb-color: $additional-color-light, $width: 10px);
 
@@ -61,31 +63,33 @@
 }
 
 .side-menu__level {
-  width: 65%;
+  width: 70%;
   background: transparent;
-  border-bottom: 4px solid $additional-color-light;
+  border-bottom: 2px solid $additional-color-light;
   transition: width $hover-transition ease-in-out, color $active-transition ease-in-out;
 
   text-align: left;
-  font-size: 1.5em;
+  font-size: 0.85em;
   color: inherit;
   
-  &::before {
-    content: '✱';
-    font-size: 0.75em;
-    margin-right: 0.5em;
-    transition: color $hover-transition ease-in-out;
+  @for $i from 1 through $max-levels {
+    &:nth-of-type(#{$i})::before {
+      content: '#{$i}.';
+      font-size: 0.7em;
+      margin-right: 0.5em;
+      transition: color $hover-transition ease-in-out;
+    }
   }
 
   &:hover {
     width: 90%;
 
     &::before {
-      color: $additional-color-yellow;
+      color: $accent-color-1;
     }
   }
 
   &:active {
-    color: $accent-color-1;
+    color: $additional-color-yellow;
   }
 }

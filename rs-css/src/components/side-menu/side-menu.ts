@@ -62,7 +62,12 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private levelList: BaseComponent<HTMLButtonElement>[];
 
-  public constructor(parent: BaseComponent<HTMLElement>, emitter: EventEmitter, completedLevels: boolean[]) {
+  public constructor(
+    parent: BaseComponent<HTMLElement>,
+    emitter: EventEmitter,
+    completedLevels: boolean[],
+    levelNames: string[]
+  ) {
     super({ ...SideMenu.ELEMENT_PARAMS, parent });
 
     this.emitter = emitter;
@@ -85,7 +90,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
     this.contentWrapper = new BaseComponent<HTMLDivElement>({ ...SideMenu.CONTENT_WRAPPER_PARAMS, parent: this });
 
-    this.levelList = this.createLevelList(completedLevels);
+    this.levelList = this.createLevelList(completedLevels, levelNames);
   }
 
   private static createCloseButton(): BaseComponent<HTMLButtonElement> {
@@ -102,10 +107,10 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     return this.isDescription ? `Level ${this.currentLevel + 1} of ${this.levelList.length}` : 'Levels';
   }
 
-  private createLevelList(completedLevels: boolean[]): BaseComponent<HTMLButtonElement>[] {
+  private createLevelList(completedLevels: boolean[], levelNames: string[]): BaseComponent<HTMLButtonElement>[] {
     return completedLevels.map((levelCompleted, index) => {
       const button = new BaseComponent<HTMLButtonElement>(SideMenu.LEVEL_BUTTON_PARAMS);
-      button.textContent = `Level ${index + 1}`;
+      button.textContent = levelNames[index];
       if (levelCompleted) button.addClass(MenuClasses.CompletedLevelButton);
       button.addEventListener(Events.Click, () => {
         this.emitter.emit(SideMenu.LEVEL_CHOSEN, index);

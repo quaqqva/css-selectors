@@ -14,7 +14,7 @@
         "id": "laying"
       }
     ],
-    "description": "Element with tag **A** goes just by ```A```\n**Example**: ```p``` selects all paragraph elements"
+    "description": "Element with tag **A** goes just by ```A```\n**Example**: ```p``` selects all paragraph (&lt;p&gt;) elements"
   },
   {
     "name": "Descendant selector",
@@ -33,6 +33,6 @@
         "tag": "dog"
       }
     ],
-    "description": "You can select descendant (any depth child) of ```A``` with selector ```B``` as ```A B```\n**Example**: ```ul li``` selects all elements of unordered list"
+    "description": "You can select descendant (any depth child) of ```A``` with selector ```B``` as ```A B```\n\n**Example**: ```ul li``` selects all elements of unordered list"
   }
 ]

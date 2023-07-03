@@ -50,6 +50,10 @@ export default class AppController {
     return this.userData.completedLevels;
   }
 
+  public get names(): string[] {
+    return this.levels.map((levelData) => levelData.name);
+  }
+
   public get descriptions(): string[] {
     return this.levels.map((levelData) => levelData.description);
   }

@@ -39,8 +39,8 @@ export default class AppView {
     if (this.sideMenu) this.sideMenu.loadLevel(level);
   }
 
-  public loadSideMenu(completedLevels: boolean[]) {
-    this.sideMenu = new SideMenu(this.body, this.emitter, completedLevels);
+  public loadSideMenu(completedLevels: boolean[], names: string[]) {
+    this.sideMenu = new SideMenu(this.body, this.emitter, completedLevels, names);
     this.header.addMenuButton(this.sideMenu);
     this.sideMenu.show();
   }

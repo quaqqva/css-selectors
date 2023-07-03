@@ -32,7 +32,7 @@ export default class App {
       });
     });
 
-    this.view.loadSideMenu(this.controller.completedLevels);
+    this.view.loadSideMenu(this.controller.completedLevels, this.controller.names);
     this.controller.loadLevel(this.controller.currentLevel, (level) => this.view.drawLevel(level));
   }
 }
