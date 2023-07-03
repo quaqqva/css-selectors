@@ -37,7 +37,6 @@ $panel-height: 30px;
 .css-input-wrapper {
   width: 20vw;
   height: 100px;
-  margin-bottom: 20px;
 
   .draggable__content {
     padding: 15px 10px;
@@ -47,6 +46,8 @@ $panel-height: 30px;
 .html-wrapper {
   width: 20vw;
   height: 400px;
+
+  top: 250px;
 
   .draggable__content {
     background-color: $accent-color-dark;

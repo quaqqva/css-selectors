@@ -1,6 +1,8 @@
 $minimize-time: 500ms;
 
 .draggable {
+  position: absolute;
+
   transition: height ease-in-out $minimize-time;
   overflow: hidden;
 }
