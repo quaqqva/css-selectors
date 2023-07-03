@@ -22,7 +22,7 @@
   @include pet($bg-path: '../../assets/img/pets/turtle.png', $actual-width: 311, $actual-height: 142);
 }
 
-.dog {
+.fish {
   @include pet($bg-path: '../../assets/img/pets/fish.png', $actual-width: 194, $actual-height: 163);
 }
 

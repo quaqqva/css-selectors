@@ -62,6 +62,8 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private levelList: BaseComponent<HTMLButtonElement>[];
 
+  private completedLevels: boolean[];
+
   public constructor(
     parent: BaseComponent<HTMLElement>,
     emitter: EventEmitter,
@@ -71,6 +73,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     super({ ...SideMenu.ELEMENT_PARAMS, parent });
 
     this.emitter = emitter;
+    this.completedLevels = completedLevels;
 
     this.isDescription = true;
     this.currentLevel = 0;
@@ -104,7 +107,11 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
   }
 
   private getLabelTemplate() {
-    return this.isDescription ? `Level ${this.currentLevel + 1} of ${this.levelList.length}` : 'Levels';
+    return this.isDescription
+      ? `Level ${this.currentLevel + 1} of ${this.levelList.length} ${
+          this.completedLevels[this.currentLevel] ? '✅' : ''
+        }`
+      : 'Levels';
   }
 
   private createLevelList(completedLevels: boolean[], levelNames: string[]): BaseComponent<HTMLButtonElement>[] {
