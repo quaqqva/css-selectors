@@ -70,12 +70,16 @@ export default class BaseComponent<T extends HTMLElement> {
     this.element.setAttribute(attributeName, attributeValue);
   }
 
-  public removeAttribute(attributeName: string) {
+  public removeAttribute(attributeName: string): void {
     this.element.removeAttribute(attributeName);
   }
 
-  public addEventListener(event: Events, listener: (e: Event) => void) {
+  public addEventListener(event: Events, listener: (e: Event) => void): void {
     this.element.addEventListener(event, listener);
+  }
+
+  public removeEventListener(event: Events, listener: (e: Event) => void): void {
+    this.element.removeEventListener(event, listener);
   }
 
   public destroy(): void {
