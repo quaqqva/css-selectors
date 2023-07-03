@@ -125,4 +125,8 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
   public override append(...elements: (HTMLElement | BaseComponent<HTMLElement>)[]): void {
     this.contentWrapper.append(...elements);
   }
+
+  public override clear() {
+    this.contentWrapper.clear();
+  }
 }

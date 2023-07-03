@@ -2,9 +2,9 @@ export type LevelData = {
   name: string;
   task: string;
   solution: string;
-  couchPets: PetElement[];
-  floorPets: PetElement[];
-  tablePets: PetElement[];
+  couchPets?: PetElement[];
+  floorPets?: PetElement[];
+  tablePets?: PetElement[];
   description: string;
 };
 
@@ -17,8 +17,6 @@ export type PetElement = {
   attributes?: { [attribute: string]: string };
   children?: PetElement[];
 };
-
-export type PetMarkup = Omit<PetElement, 'children'>;
 
 export type UserData = {
   currentLevel: number;

@@ -1,5 +1,19 @@
-import { TableItemData } from '../app/model/level-data';
+import { PetElement } from '../app/model/level-data';
 
-export default function validateSelector(markup: TableItemData[], selector: string, solution: string): boolean {
+type InputParams = {
+  couchPets?: PetElement[];
+  tablePets?: PetElement[];
+  floorPets?: PetElement[];
+  selector: string;
+  solution: string;
+};
+
+export default function validateSelector({
+  couchPets,
+  tablePets,
+  floorPets,
+  selector,
+  solution,
+}: InputParams): boolean {
   return true;
 }

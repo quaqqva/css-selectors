@@ -2,7 +2,7 @@
   {
     "task": "Select a cat",
     "solution": "cat",
-    "tableItems": [
+    "tablePets": [
       {
         "tag": "Cat",
         "id": "cat-fancy",

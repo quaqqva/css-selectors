@@ -81,7 +81,7 @@ export default class AppController {
   }): void {
     if (typeof selector !== 'string') throw Error('Wrong input data recieved');
     const currentLevel = this.levels[this.currentLevelIndex];
-    const isValid = validateSelector(currentLevel.tableItems, selector, currentLevel.solution);
+    const isValid = validateSelector({ ...currentLevel, selector, solution: currentLevel.solution });
     if (isValid) {
       this.userData.completedLevels[this.currentLevelIndex] = true;
       this.saveUserData();
