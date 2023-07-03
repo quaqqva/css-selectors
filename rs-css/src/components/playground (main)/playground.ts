@@ -3,9 +3,10 @@ import { LevelData } from '../../app/model/level-data';
 import { Tags, Events } from '../../types/dom-types';
 import EventEmitter from '../../utils/event-emitter';
 import BaseComponent from '../base-component';
-import CSSInput from '../draggables/css-input/css-input';
+import CSSInput from '../css-input/css-input';
 import Table from '../table/table';
 import TableItem from '../table/table-item';
+import DragNDropComponent from '../draggables/drag-n-drop-component';
 
 enum PlaygroundClasses {
   Playground = 'playground',
@@ -33,7 +34,9 @@ export default class Playground extends BaseComponent<HTMLElement> {
     super({ ...Playground.ELEMENT_PARAMS, parent });
     this.taskHeader = new BaseComponent<HTMLHeadingElement>({ ...Playground.HEADING_PARAMS, parent: this });
     this.table = new Table(this);
-    this.cssInput = new CSSInput(this);
+
+    const cssInputWrapper = new DragNDropComponent(this);
+    this.cssInput = new CSSInput(cssInputWrapper);
 
     this.cssInput.addEventListener(Events.Input, () => {
       emitter.emit(Playground.INPUT_EVENT, this.cssInput.text);

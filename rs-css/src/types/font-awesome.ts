@@ -1,6 +1,8 @@
 export enum FontAwesome {
   Brand = 'fab',
+  Regular = 'fa',
   Solid = 'fas',
-  Bars = 'fa-bars',
   Times = 'fa-times',
+  WindowMinimize = 'fa-window-minimize',
+  WindowMaximize = 'fa-window-maximize',
 }

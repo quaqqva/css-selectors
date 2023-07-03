@@ -1,0 +1,9 @@
+$minimize-time: 500ms;
+
+.draggable__content {
+  transition: height ease-in-out $minimize-time;
+}
+
+.draggable__content_minimized {
+  height: 0;
+}
