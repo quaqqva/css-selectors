@@ -49,3 +49,10 @@ $bg-full-height: 2000;
   }
 }
 
+.playground__floor {
+  width: 50vw;
+  height: 20vh;
+  left: 30%;
+  @include furniture-top($offset: 20vw);
+}
+

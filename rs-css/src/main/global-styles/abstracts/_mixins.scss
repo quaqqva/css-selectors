@@ -48,13 +48,13 @@
   background-size: $bg-width $bg-height;
 }
 
-@mixin furniture-top() {
+@mixin furniture-top($offset: 0px) {
     //Cubic regression (kinda)
-    top: calc(0.0000007017 * 1000000vw - 0.0013356441  * 10000vw + 0.4950708679 * 100vw + 10px);
+    top: calc(0.0000007017 * 1000000vw - 0.0013356441  * 10000vw + 0.4950708679 * 100vw + 10px + $offset);
 
     @media (max-width: 950px) {
       //Quadratic regression
-      top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px);
+      top: calc(-0.0001103128 * 10000vw - 0.1616403806 * 100vw + 570px + $offset);
     }
 }
 

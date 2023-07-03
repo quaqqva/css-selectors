@@ -1,8 +1,25 @@
 [
   {
     "name": "Tag selector",
-    "task": "Select a cat",
-    "solution": "cat",
+    "task": "Select a guinea-pig",
+    "solution": "guinea-pig",
+    "couchPets": [
+      {
+        "tag": "guinea-pig"
+      }
+    ],
+    "floorPets": [
+      {
+        "tag": "pug",
+        "id": "laying"
+      }
+    ],
+    "description": "Element with tag **A** goes just by ```A```\n**Example**: ```p``` selects all paragraph elements"
+  },
+  {
+    "name": "Descendant selector",
+    "task": "Select a cat on the table",
+    "solution": "table cat",
     "tablePets": [
       {
         "tag": "cat"
@@ -10,9 +27,12 @@
     ],
     "couchPets": [
       {
-        "tag": "guinea-pig"
+        "tag": "cat"
+      },
+      {
+        "tag": "dog"
       }
     ],
-    "description": "**Element** selector goes just by ```element tag```\nExample: ```p``` selects all **paragraph** elements"
+    "description": "You can select descendant (any depth child) of ```A``` with selector ```B``` as ```A B```\n**Example**: ```ul li``` selects all elements of unordered list"
   }
 ]
