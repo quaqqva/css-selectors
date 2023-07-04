@@ -21,6 +21,8 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
   public constructor(fakeMarkup: PetElement, markup?: Partial<ElementParameters>) {
     super(markup || Pet.createMarkup(fakeMarkup));
     this.fakeMarkupParams = fakeMarkup;
+
+    fakeMarkup.children?.forEach((child) => this.append(new Pet(child)));
   }
 
   public getMarkup(indentLevel: number): BaseComponent<HTMLSpanElement> {

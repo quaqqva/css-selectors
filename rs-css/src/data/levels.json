@@ -18,19 +18,20 @@
   },
   {
     "name": "Descendant selector",
-    "task": "Select a cat on the table",
-    "solution": "table cat",
-    "tablePets": [
-      {
-        "tag": "cat"
-      }
-    ],
+    "task": "Select a cat on a dog",
+    "solution": "dog cat",
     "couchPets": [
       {
         "tag": "cat"
       },
       {
-        "tag": "dog"
+        "tag": "dog",
+        "children": [
+          {
+            "tag": "cat",
+            "classes": ["small"]
+          }
+        ]
       }
     ],
     "description": "You can select descendant (any depth child) of ```A``` with selector ```B``` as ```A B```\n\n**Example**: ```ul li``` selects all elements of unordered list"
