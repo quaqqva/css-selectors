@@ -63,8 +63,11 @@ $panel-height: 30px;
     flex-direction: column;
 
     .markup {
-      padding-top: 0.5em;
-      padding-left: 1em;
+      padding-left: 1.5em;
+
+      &:first-of-type {
+        padding-top: 0.5em;
+      }
     }
   }
 }

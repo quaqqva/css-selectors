@@ -5,10 +5,7 @@
     "solution": "guinea-pig",
     "couchPets": [
       {
-        "tag": "guinea-pig",
-        "attributes": {
-          "ear": "fancy"
-        }
+        "tag": "guinea-pig"
       }
     ],
     "floorPets": [

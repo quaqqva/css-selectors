@@ -1,5 +1,6 @@
 import { ElementParameters } from '../../types/default';
 import BaseComponent from '../base-component';
+import wrapInSpan from '../../utils/wrap-in-span';
 import './highlight-theme.scss';
 
 type Replacer = (match: string) => string;
@@ -33,7 +34,7 @@ export default class HighlightableComponent<T extends HTMLElement> extends BaseC
 
   private highlight(): void {
     const content = this.element.innerText;
-    if (content.includes('<')) this.element.innerHTML = this.highlightHTML();
+    this.element.innerHTML = content.includes('<') ? this.highlightHTML() : this.highlightCSS();
   }
 
   private highlightHTML(): string {
@@ -53,15 +54,24 @@ export default class HighlightableComponent<T extends HTMLElement> extends BaseC
       else tagName = tagName.substring(1);
       if (isClosing) tagName = tagName.substring(1);
 
-      return `&lt;${isClosing ? '/' : ''}<span class="${HighlightClasses.TagSpan}">${tagName}</span>${rest}&gt;`;
+      return `&lt;${isClosing ? '/' : ''}${wrapInSpan(tagName, HighlightClasses.TagSpan)}${rest}&gt;`;
     };
 
     const attributeValueReplacer: Replacer = (attributeValue) => {
       if (attributeValue === `class="${HighlightClasses.TagSpan}"`) return attributeValue;
       const [attribute, value] = attributeValue.split('=');
-      return `<span class="${HighlightClasses.AttributeSpan}">${attribute}</span>=<span class="${HighlightClasses.ValueSpan}">${value}</span>`;
+      return `${wrapInSpan(attribute, HighlightClasses.AttributeSpan)}=${wrapInSpan(
+        value,
+        HighlightClasses.ValueSpan
+      )}`;
     };
 
     return content.replace(/<[^<]+>/g, tagReplacer).replace(/\w+="\w+"/g, attributeValueReplacer);
+  }
+
+  private highlightCSS(): string {
+    const content = this.element.innerText;
+
+    return content;
   }
 }
