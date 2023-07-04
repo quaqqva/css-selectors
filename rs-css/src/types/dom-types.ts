@@ -13,6 +13,7 @@ export enum Tags {
   Heading2 = 'h2',
   Heading3 = 'h3',
   Label = 'label',
+  Code = 'code',
 }
 
 export enum Events {

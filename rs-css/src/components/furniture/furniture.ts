@@ -9,6 +9,7 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
   private name: string;
 
   private static MARKUP_PARAMS = {
+    tag: Tags.Code,
     classes: ['markup'],
   };
 
@@ -18,10 +19,10 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
     this.pets = [];
   }
 
-  public getMarkup(): BaseComponent<HTMLDivElement> {
-    const markupComponent = new BaseComponent<HTMLDivElement>(Furniture.MARKUP_PARAMS);
-    markupComponent.append(new BaseComponent<HTMLSpanElement>({ tag: Tags.Span, textContent: `<${this.name}>` }));
-    markupComponent.append(...this.pets.map((pet) => pet.getMarkup()));
+  public getMarkup(): BaseComponent<HTMLElement> {
+    const markupComponent = new BaseComponent<HTMLElement>(Furniture.MARKUP_PARAMS);
+    markupComponent.append(new BaseComponent<HTMLSpanElement>({ tag: Tags.Span, textContent: `<${this.name}>\n` }));
+    markupComponent.append(...this.pets.map((pet) => pet.getMarkup(1)));
     markupComponent.append(new BaseComponent<HTMLSpanElement>({ tag: Tags.Span, textContent: `</${this.name}>` }));
     return markupComponent;
   }

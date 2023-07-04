@@ -23,10 +23,24 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
     this.fakeMarkupParams = fakeMarkup;
   }
 
-  public getMarkup(): BaseComponent<HTMLSpanElement> {
-    const fakeComponent = new BaseComponent(this.fakeMarkupParams);
+  public getMarkup(indentLevel: number): BaseComponent<HTMLSpanElement> {
+    const component = new BaseComponent(this.fakeMarkupParams);
+    const componentHTML = component.HTML.replace(/<\/.+>/, '');
+
+    let indents = '';
+    for (let i = 0; i < indentLevel; i += 1) indents += '  ';
+
+    const resultComponent = new BaseComponent<HTMLSpanElement>({
+      tag: Tags.Span,
+      textContent: `${indents}${componentHTML}\n`,
+    });
+
     if (this.fakeMarkupParams.children)
-      fakeComponent.append(...this.fakeMarkupParams.children.map((child) => new BaseComponent(child)));
-    return new BaseComponent<HTMLSpanElement>({ tag: 'span', textContent: fakeComponent.HTML });
+      resultComponent.append(
+        ...this.fakeMarkupParams.children.map((child) => new Pet(child, child).getMarkup(indentLevel + 1))
+      );
+
+    resultComponent.addText(`${indents}</${this.fakeMarkupParams.tag}>\n`);
+    return resultComponent;
   }
 }

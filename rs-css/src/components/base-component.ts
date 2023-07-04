@@ -82,6 +82,10 @@ export default class BaseComponent<T extends HTMLElement> {
     this.element.removeEventListener(event, listener);
   }
 
+  public addText(text: string) {
+    this.element.append(document.createTextNode(text));
+  }
+
   public destroy(): void {
     this.element.remove();
   }

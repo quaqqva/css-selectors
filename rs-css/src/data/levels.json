@@ -11,7 +11,12 @@
     "floorPets": [
       {
         "tag": "pug",
-        "id": "laying"
+        "id": "laying",
+        "children": [
+          {
+            "tag": "turtle"
+          }
+        ]
       }
     ],
     "description": "Element with tag **A** goes just by ```A```\n**Example**: ```p``` selects all paragraph (```&lt;p&gt;```) elements"

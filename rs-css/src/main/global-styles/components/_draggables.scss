@@ -5,8 +5,6 @@ $panel-height: 30px;
 }
 
 .draggable {
-  font-family: Consolas, sans-serif;
-
   background-color: $additional-color-dark;
 
   z-index: $drag-n-drop-layer;
@@ -24,6 +22,7 @@ $panel-height: 30px;
 }
 
 .draggable__panel {
+  font-family: Consolas, sans-serif;
   height: $panel-height;
   
   background-color: $additional-color-grey;
@@ -59,6 +58,9 @@ $panel-height: 30px;
     margin: 0 auto;
     position: relative;
     top: calc(0.065 * 400px);
+
+    display: flex;
+    flex-direction: column;
   }
 }
 
