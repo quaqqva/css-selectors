@@ -34,6 +34,10 @@ export default class AppView {
     return this.main.INPUT_EVENT;
   }
 
+  public get LEVEL_CHOOSE_EVENT() {
+    return SideMenu.LEVEL_CHOSEN;
+  }
+
   public drawLevel(level: NumeratedLevel): void {
     this.main.changeLevel(level);
     if (this.sideMenu) this.sideMenu.loadLevel(level);

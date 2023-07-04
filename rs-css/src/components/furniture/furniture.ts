@@ -36,4 +36,9 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
     super.append(...elements);
     this.pets.push(...elements);
   }
+
+  public override clear(): void {
+    super.clear();
+    this.pets = [];
+  }
 }

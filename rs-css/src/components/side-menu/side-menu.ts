@@ -150,7 +150,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     this.description = BaseComponent.FromHTML<HTMLParagraphElement>(
       `<p class="${MenuClasses.Description}">${level.description}</p>`
     );
-    this.contentWrapper.append(this.description);
+    if (this.isDescription) this.contentWrapper.append(this.description);
   }
 
   public hide(): void {

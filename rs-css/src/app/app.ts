@@ -32,6 +32,10 @@ export default class App {
       });
     });
 
+    this.eventEmitter.subscribe(this.view.LEVEL_CHOOSE_EVENT, (index) =>
+      this.controller.loadLevel(index as number, (level) => this.view.drawLevel(level))
+    );
+
     this.view.loadSideMenu(this.controller.completedLevels, this.controller.names);
     this.controller.loadLevel(this.controller.currentLevel, (level) => this.view.drawLevel(level));
   }
