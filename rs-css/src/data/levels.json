@@ -5,18 +5,16 @@
     "solution": "guinea-pig",
     "couchPets": [
       {
-        "tag": "guinea-pig"
+        "tag": "guinea-pig",
+        "attributes": {
+          "ear": "fancy"
+        }
       }
     ],
     "floorPets": [
       {
         "tag": "pug",
-        "id": "laying",
-        "children": [
-          {
-            "tag": "turtle"
-          }
-        ]
+        "id": "laying"
       }
     ],
     "description": "Element with tag **A** goes just by ```A```\n**Example**: ```p``` selects all paragraph (```&lt;p&gt;```) elements"

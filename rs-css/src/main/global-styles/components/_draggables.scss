@@ -61,6 +61,11 @@ $panel-height: 30px;
 
     display: flex;
     flex-direction: column;
+
+    .markup {
+      padding-top: 0.5em;
+      padding-left: 1em;
+    }
   }
 }
 

@@ -2,6 +2,11 @@ import { ElementParameters } from '../../types/default';
 import { Tags } from '../../types/dom-types';
 import BaseComponent from '../base-component';
 import Pet from './pet';
+import HighlightableComponent from '../highlight/highlightable';
+
+enum FurnitureClasses {
+  Markup = 'markup',
+}
 
 export default class Furniture extends BaseComponent<HTMLDivElement> {
   private pets: Pet[];
@@ -10,7 +15,7 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
 
   private static MARKUP_PARAMS = {
     tag: Tags.Code,
-    classes: ['markup'],
+    classes: [FurnitureClasses.Markup],
   };
 
   public constructor(params: Partial<ElementParameters> & { name: string }) {
@@ -19,11 +24,11 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
     this.pets = [];
   }
 
-  public getMarkup(): BaseComponent<HTMLElement> {
-    const markupComponent = new BaseComponent<HTMLElement>(Furniture.MARKUP_PARAMS);
-    markupComponent.append(new BaseComponent<HTMLSpanElement>({ tag: Tags.Span, textContent: `<${this.name}>\n` }));
+  public getMarkup(): HighlightableComponent<HTMLElement> {
+    const markupComponent = new HighlightableComponent<HTMLElement>(Furniture.MARKUP_PARAMS);
+    markupComponent.addText(`<${this.name}>\n`);
     markupComponent.append(...this.pets.map((pet) => pet.getMarkup(1)));
-    markupComponent.append(new BaseComponent<HTMLSpanElement>({ tag: Tags.Span, textContent: `</${this.name}>` }));
+    markupComponent.addText(`</${this.name}>`);
     return markupComponent;
   }
 

@@ -32,8 +32,10 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
 
     const resultComponent = new BaseComponent<HTMLSpanElement>({
       tag: Tags.Span,
-      textContent: `${indents}${componentHTML}\n`,
+      textContent: `${indents}${componentHTML}`,
     });
+
+    resultComponent.addText('\n');
 
     if (this.fakeMarkupParams.children)
       resultComponent.append(

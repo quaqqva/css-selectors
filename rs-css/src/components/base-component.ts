@@ -43,6 +43,10 @@ export default class BaseComponent<T extends HTMLElement> {
     return this.element.outerHTML;
   }
 
+  public get textContent(): string {
+    return this.element.innerText;
+  }
+
   public set textContent(value: string) {
     this.element.innerText = value;
   }
