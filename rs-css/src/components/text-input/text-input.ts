@@ -24,4 +24,8 @@ export default class TextInput extends BaseComponent<HTMLInputElement> {
       if (keyEvent.key === 'Enter') handler();
     });
   }
+
+  public focus(): void {
+    this.element.focus();
+  }
 }

@@ -6,9 +6,13 @@ import './highlight-theme.scss';
 type Replacer = (match: string) => string;
 
 enum HighlightClasses {
-  TagSpan = 'tag-highlight',
+  TagSpan = 'html-tag-highlight',
   AttributeSpan = 'attribute-highlight',
   ValueSpan = 'value-highlight',
+  IdSpan = 'css-id-highlight',
+  BracketSpan = 'css-bracket-highlight',
+  ClassSpan = 'css-class-highlight',
+  PseudoSpan = 'css-pseudo-highlight',
 }
 
 export default class HighlightableComponent<T extends HTMLElement> extends BaseComponent<T> {
@@ -72,6 +76,33 @@ export default class HighlightableComponent<T extends HTMLElement> extends BaseC
   private highlightCSS(): string {
     const content = this.element.innerText;
 
-    return content;
+    const attributeValueReplacer: Replacer = (attributeValue) => {
+      const [attribute, value] = attributeValue.split('=');
+      return `${wrapInSpan(attribute, HighlightClasses.AttributeSpan)}=${wrapInSpan(
+        value,
+        HighlightClasses.ValueSpan
+      )}`;
+    };
+
+    const cropReplacer = (wrapClass: HighlightClasses, match: string) => {
+      let cropped = match;
+      const lastSymbol = cropped[cropped.length - 1];
+      if (lastSymbol === '.' || lastSymbol === '[' || lastSymbol === ':')
+        cropped = cropped.substring(0, cropped.length - 1);
+      return wrapInSpan(cropped, wrapClass);
+    };
+
+    const idReplacer: Replacer = cropReplacer.bind(null, HighlightClasses.IdSpan);
+    const classReplacer: Replacer = cropReplacer.bind(null, HighlightClasses.ClassSpan);
+    const pseudoReplacer: Replacer = cropReplacer.bind(null, HighlightClasses.PseudoSpan);
+
+    const bracketReplacer: Replacer = (bracket) => wrapInSpan(bracket, HighlightClasses.BracketSpan);
+
+    return content
+      .replace(/\w+="\w+"/g, attributeValueReplacer)
+      .replace(/#\w+(\.|\[|:)?/g, idReplacer)
+      .replace(/\[|\]/g, bracketReplacer)
+      .replace(/\.\w+(\.|\[|:)?/g, classReplacer)
+      .replace(/::?(\w|-)+(\.|\[|:)?/g, pseudoReplacer);
   }
 }

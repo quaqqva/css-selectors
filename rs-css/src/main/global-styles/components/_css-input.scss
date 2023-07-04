@@ -19,7 +19,8 @@
 .css-input__input {
   width: 70%;
   background: transparent;
-  color: $additional-color-light;
+  color: transparent;
+  caret-color: $additional-color-light;
   padding: 0 0.5em;
 
   &::placeholder {
@@ -37,4 +38,12 @@
   left: 12%;
   height: 70%;
   width: 50px;
+}
+
+.css-input__text-view {
+  cursor: text;
+  position: absolute;
+  left: calc(0.5em + 10px);
+  max-width: 55%;
+  overflow: hidden;
 }

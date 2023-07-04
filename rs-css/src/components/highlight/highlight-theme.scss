@@ -1,4 +1,4 @@
-.tag-highlight {
+.html-tag-highlight {
   color: #ca59ca;
 }
 
@@ -6,6 +6,18 @@
   color: #0fbad8;
 }
 
-.value-highlight {
+.value-highlight, .css-id-highlight {
   color: #df5b0e;
+}
+
+.css-class-highlight {
+  color: #0a2b95;
+}
+
+.css-pseudo-highlight {
+  color: #941047;
+}
+
+.css-bracket-highlight {
+  color: #ffbf00;
 }
