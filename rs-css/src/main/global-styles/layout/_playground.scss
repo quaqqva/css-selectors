@@ -19,7 +19,7 @@ $bg-full-height: 1080;
 .playground__task {
   text-align: center;
   position: relative;
-  top:10%;
+  top:7%;
 
   user-select: none;
   
@@ -55,10 +55,9 @@ $bg-full-height: 1080;
   position: absolute;
 }
 
-.playground__couch, .playground__floor {
+.playground__couch, .playground__floor, .playground__table {
   display: flex;
   justify-content: space-around;
-  align-items: center;
 }
 
 .playground__couch {
@@ -68,37 +67,100 @@ $bg-full-height: 1080;
   width: $element-width;
   aspect-ratio: calc($width / $height);
   @include bg-image($path: '../../assets/img/furniture/couch.png');
-  @include furniture-top($offset: -50px);
+  @include furniture-top($offset: -52px);
+
+  @media (max-width: 1200px) {
+    @include furniture-top($offset: -120px);
+  }
 
   right: calc(50% - $element-width / 2);
+
+  align-items: flex-start;
+  padding: 0 4%;
 
   & > * {
     flex-grow: 0;
     flex-shrink: 0;
     position: relative;
-    bottom: 5%;
+    top: 5%;
+
+    @media (max-width: 500px) {
+      top: 10%;
+    }
+  }
+
+  & > .dog, & > .corgy[mood = "hungry"] {
+    top: 7.5%;
+  }
+
+  & > .corgy {
+    top: 0;
+  }
+
+  & > .pug {
+    top: 15%;
+  }
+
+  & > .guinea-pig, & > .pug#laying {
+    top: 30%;
   }
 }
 
 .playground__table { // Max 1 pet
   $width: 678;
   $height: 708;
-  width: max(150px, 15vw);
+  width: max(100px, 15vw);
   aspect-ratio: calc($width / $height);
   @include bg-image($path: '../../assets/img/furniture/shelf.png');
+
+  z-index: $table-furniture-layer;
 
   right: 5%;
   @include furniture-top($offset: 60px);
 
+  @media (max-width: 950px) {
+    @include furniture-top($offset: 1vw);
+  }
+
+  align-items: flex-end;
+
   & > * {
-    transform: translateX(50%) translateY(-98%);
+    margin: 0 auto;
+    position: relative;
+    bottom: 99%;
   }
 }
 
 .playground__floor {
+  $width: 1772;
+  $height: 176;
   width: 50vw;
-  height: 20vh;
-  left: 30%;
-  @include furniture-top($offset: 12.5vw);
+  height: calc(50vw * $height / $width);
+  left: calc(50% - 25vw);
+  @include bg-image($path: '../../assets/img/furniture/carpet.png');
+
+  @include furniture-top($offset: 15vw);
+  @media (max-width: 850px) {
+    @include furniture-top($offset: 5vw);
+  }
+
+  align-items: center;
+
+  & > * {
+    position: relative;
+    bottom: 100%;
+  }
+
+  & > .pug {
+    bottom: 90%;
+  }
+
+  & > .fish {
+    bottom: 75%;
+  }
+
+  & > .turtle, & > .small {
+    bottom: 50%;
+  }
 }
 

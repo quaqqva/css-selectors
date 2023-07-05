@@ -188,7 +188,8 @@
         "tag": "parrot",
         "children": [
           {
-            "tag": "turtle"
+            "tag": "turtle",
+            "classes": ["small"]
           }
         ]
       }
@@ -241,7 +242,8 @@
         "tag": "dog",
         "children": [
           {
-            "tag": "turtle"
+            "tag": "turtle",
+            "classes": ["small"]
           }
         ]
       }
@@ -253,6 +255,11 @@
       {
         "tag": "dog",
         "classes": ["pug"]
+      }
+    ],
+    "tablePets": [
+      {
+        "tag": "parrot"
       }
     ]
   },

@@ -7,15 +7,15 @@
 @import "base/typography";
 @import "base/scrollbar";
 
-@import "layout/header";
-@import "layout/footer";
-@import "layout/playground";
-
 @import "components/toggle-input";
 @import "components/menu";
 @import "components/draggables";
 @import "components/code-highlight";
 @import "components/css-input";
 @import "components/pets";
+
+@import "layout/header";
+@import "layout/footer";
+@import "layout/playground";
 
 @import "vendors/normalize.css";
