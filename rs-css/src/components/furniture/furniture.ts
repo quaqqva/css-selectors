@@ -1,5 +1,5 @@
 import { ElementParameters } from '../../types/default';
-import { Tags } from '../../types/dom-types';
+import { AnimationParams, Tags } from '../../types/dom-types';
 import BaseComponent from '../base-component';
 import Pet from '../pet/pet';
 import HighlightableComponent from '../highlight/highlightable';
@@ -30,6 +30,10 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
     markupComponent.append(...this.pets.map((pet) => pet.getMarkup(1)));
     markupComponent.addText(`</${this.name}>`);
     return markupComponent;
+  }
+
+  public showPets(animation: AnimationParams): void {
+    this.pets.forEach((pet) => pet.showAnimation(animation));
   }
 
   public override append(...elements: Pet[]): void {

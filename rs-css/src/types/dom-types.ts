@@ -31,3 +31,9 @@ export enum InsertPositions {
   Append = 'beforeend',
   After = 'afterend',
 }
+
+export type AnimationParams = {
+  name: string;
+  duration: number;
+  timingFunction?: string;
+};

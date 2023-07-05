@@ -7,6 +7,7 @@ import DragNDropComponent from '../draggables/drag-n-drop-component';
 import Furniture from '../furniture/furniture';
 import Pet from '../pet/pet';
 import { AppEvents } from '../../types/app-events';
+import './appear-animation.scss';
 
 enum PlaygroundClasses {
   Playground = 'playground',
@@ -49,6 +50,11 @@ export default class Playground extends BaseComponent<HTMLElement> {
     name: 'floor',
   };
 
+  private static SHOW_ANIMATION_PARAMS = {
+    name: 'pet-appear',
+    duration: 100,
+  };
+
   private taskHeader: BaseComponent<HTMLHeadingElement>;
   private couch: Furniture;
   private table: Furniture;
@@ -89,6 +95,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
     furnitureDataPairs.set(this.floor, level.floorPets);
 
     this.updateFurniture(furnitureDataPairs);
+    this.showPets(furnitureDataPairs);
   }
 
   private updateFurniture(data: Map<Furniture, PetElement[]>): void {
@@ -100,6 +107,12 @@ export default class Playground extends BaseComponent<HTMLElement> {
         furniture.append(...pets.map((pet) => new Pet(pet)));
         this.htmlView.append(furniture.getMarkup());
       } else furniture.destroy();
+    });
+  }
+
+  private showPets(data: Map<Furniture, PetElement[]>): void {
+    data.forEach((_, furniture) => {
+      furniture.showPets(Playground.SHOW_ANIMATION_PARAMS);
     });
   }
 }
