@@ -12,6 +12,14 @@ export default function validateSelector({ markup, selector, solution }: InputPa
   const userSelect = template.querySelectorAll(selector);
   const solutionSelect = template.querySelectorAll(solution);
 
-  console.log(userSelect, solutionSelect);
-  return userSelect === solutionSelect;
+  return compareLists(userSelect, solutionSelect);
+}
+
+function compareLists(list1: NodeListOf<Element>, list2: NodeListOf<Element>): boolean {
+  const array1 = Array.from(list1);
+  const array2 = Array.from(list2);
+
+  if (array1.length !== array2.length) return false;
+  for (let i = 0; i < array1.length; i++) if (array1[i] !== array2[i]) return false;
+  return true;
 }
