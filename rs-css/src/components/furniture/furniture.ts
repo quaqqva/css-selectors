@@ -1,7 +1,7 @@
 import { ElementParameters } from '../../types/default';
 import { Tags } from '../../types/dom-types';
 import BaseComponent from '../base-component';
-import Pet from './pet';
+import Pet from '../pet/pet';
 import HighlightableComponent from '../highlight/highlightable';
 
 enum FurnitureClasses {

@@ -5,7 +5,7 @@ import BaseComponent from '../base-component';
 import CSSInput from '../text-input/css-input/css-input';
 import DragNDropComponent from '../draggables/drag-n-drop-component';
 import Furniture from '../furniture/furniture';
-import Pet from '../furniture/pet';
+import Pet from '../pet/pet';
 import { AppEvents } from '../../types/app-events';
 
 enum PlaygroundClasses {
