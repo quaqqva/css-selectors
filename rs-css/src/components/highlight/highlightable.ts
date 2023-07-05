@@ -69,7 +69,7 @@ export default class HighlightableComponent<T extends HTMLElement> extends BaseC
       )}`;
     };
 
-    return content.replace(/<[^<]+>/g, tagReplacer).replace(/\w+="\w+"/g, attributeValueReplacer);
+    return content.replace(/<[^<]+>/g, tagReplacer).replace(/(\w|-)+="(\w|-)+"/g, attributeValueReplacer);
   }
 
   private highlightCSS(): string {
@@ -98,10 +98,10 @@ export default class HighlightableComponent<T extends HTMLElement> extends BaseC
     const bracketReplacer: Replacer = (bracket) => wrapInSpan(bracket, HighlightClasses.BracketSpan);
 
     return content
-      .replace(/\w+="\w+"/g, attributeValueReplacer)
+      .replace(/(\w|-)+="(\w|-)+"/g, attributeValueReplacer)
       .replace(/#\w+(\.|\[|:)?/g, idReplacer)
       .replace(/\[|\]/g, bracketReplacer)
-      .replace(/\.\w+(\.|\[|:)?/g, classReplacer)
+      .replace(/\.(\w|-)+(\.|\[|:)?/g, classReplacer)
       .replace(/::?(\w|-)+(\.|\[|:)?/g, pseudoReplacer);
   }
 }
