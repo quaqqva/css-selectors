@@ -1,4 +1,5 @@
-$footer-font-size: 1.5em;
+$footer-font-size: 1.5rem;
+$footer-font-size-tablet: 1.25rem;
 
 .footer {
   height: 75px;
@@ -9,20 +10,28 @@ $footer-font-size: 1.5em;
 }
 
 .footer__made-for {
-  width: 320px;
+  width: 20rem;
   
   font-size: $footer-font-size;
+
+  @media (max-width: $tablet-width) {
+    font-size: $footer-font-size-tablet;
+  }
   
   position: relative;
-  left: calc(50% - 160px);
+  left: calc(50% - 10rem);
 }
 
 .footer__course-logo {
-  height: 36px;
+  height: min(2em, 36px);
 }
   
 .footer__date {
   position: relative;
   right: 2rem;
   font-size: $footer-font-size;
+
+  @media (max-width: $tablet-width) {
+    display: none;
+  }
 }

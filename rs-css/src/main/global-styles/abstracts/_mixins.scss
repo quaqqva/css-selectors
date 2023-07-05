@@ -61,10 +61,18 @@
   drop-shadow((-$border-width) (-$border-width) 0 $border-color);
 }
 
-@mixin pet($bg-path, $actual-width, $actual-height, $width : 10vw) {
+@mixin pet($bg-path, $actual-width, $actual-height, $width : max(10vw, 120px), $tablet-pet-width: min(120px, 15vw), $mobile-pet-width: 20vw) {
   @include bg-image($bg-path);
   aspect-ratio: calc($actual-width / $actual-height);
   width: $width;
+
+  @media(max-width: $tablet-width) {
+    width: $tablet-pet-width;
+  }
+
+  @media (max-width: $mobile-width) {
+    width: $mobile-pet-width;
+  }
 
   display: flex;
   justify-content: center;

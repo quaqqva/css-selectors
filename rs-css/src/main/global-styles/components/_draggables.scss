@@ -34,8 +34,12 @@ $panel-height: 30px;
 }
 
 .css-input-wrapper {
-  width: 20vw;
+  width: 25vw;
   height: 100px;
+
+  @media (max-width: $tablet-width) {
+    width: 40vw;
+  }
 
   top: 85px;
 
@@ -48,6 +52,14 @@ $panel-height: 30px;
 .html-wrapper {
   width: 20vw;
   height: 400px;
+
+  @media (max-width: $tablet-width) {
+    width: 30vw;
+  }
+
+  @media (max-width: $mobile-width) {
+    width: 40vw;
+  }
 
   top: 200px;
 

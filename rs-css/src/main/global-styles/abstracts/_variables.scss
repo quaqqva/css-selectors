@@ -1,6 +1,5 @@
 // Z-index layers
 $default-layer: 0;
-$table-furniture-layer: 1;
 $drag-n-drop-layer: 2;
 $drag-n-drop-close-layer: 3;
 $drag-n-drop-dragged-layer: 4;
@@ -11,3 +10,6 @@ $menu-layer: 7;
 // Transition duration
 $hover-transition: 250ms;
 $active-transition: 150ms;
+
+$tablet-width: 800px;
+$mobile-width: 500px;

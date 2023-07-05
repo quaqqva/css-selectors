@@ -28,8 +28,13 @@ $bg-full-height: 1080;
   font-weight: 600;
   text-shadow: 4px 4px rgba(0, 0, 0, 0.25);
 
-  font-size: 64px;
-  letter-spacing: 8px;
+  font-size: 4rem;
+
+  @media (max-width: $mobile-width) {
+    font-size: 3rem;
+  }
+
+  letter-spacing: 0.5rem;
 
   animation: title 1000ms ease-in-out infinite;
   transition: text-shadow $hover-transition ease-in-out;
@@ -63,7 +68,8 @@ $bg-full-height: 1080;
 .playground__couch {
   $width: 1510;
   $height: 761;
-  $element-width: max(200px, 40vw);
+  $element-width: max(450px, 40vw);
+
   width: $element-width;
   aspect-ratio: calc($width / $height);
   @include bg-image($path: '../../assets/img/furniture/couch.png');
@@ -73,21 +79,16 @@ $bg-full-height: 1080;
     @include furniture-top($offset: -120px);
   }
 
+  @media (max-width: 800px) {
+    $element-width-tablet: max(300px, 50vw);
+    width: $element-width-tablet;
+    right: calc(50% - $element-width-tablet / 2);
+  }
+
   right: calc(50% - $element-width / 2);
 
   align-items: flex-start;
   padding: 0 4%;
-
-  & > * {
-    flex-grow: 0;
-    flex-shrink: 0;
-    position: relative;
-    top: 5%;
-
-    @media (max-width: 500px) {
-      top: 10%;
-    }
-  }
 
   & > .dog, & > .corgy[mood = "hungry"] {
     top: 7.5%;
@@ -104,22 +105,84 @@ $bg-full-height: 1080;
   & > .guinea-pig, & > .pug#laying {
     top: 30%;
   }
+
+
+  & > * {
+    flex-grow: 0;
+    flex-shrink: 0;
+    position: relative;
+    top: 5%;
+  }
+
+  @media (max-width: 1200px) {
+    & > .corgy[mood = "hungry"] {
+      top: 2.5%;
+    }
+  }
+
+  @media (max-width: $tablet-width) {
+    & > *, & > .dog {
+      top: -5%;
+    }
+
+    & > .corgy[mood = "hungry"] {
+      top: -40%;
+    }
+
+    & > .corgy {
+      top: -10%;
+    }
+  
+    & > .pug {
+      top: 15%;
+    }
+  
+    & > .guinea-pig, & > .pug#laying {
+      top: 22.5%;
+    }
+  }
+
+  @media (max-width: $mobile-width) {
+    & > *, & > .dog {
+      top: 0;
+    }
+
+    & > .corgy[mood = "hungry"] {
+      top: -40%;
+    }
+
+    & > .corgy {
+      top: 0;
+    }
+  
+    & > .pug {
+      top: 15%;
+    }
+  
+    & > .guinea-pig, & > .pug#laying {
+      top: 27.5%;
+    }
+  }
 }
 
 .playground__table { // Max 1 pet
   $width: 678;
   $height: 708;
-  width: max(100px, 15vw);
-  aspect-ratio: calc($width / $height);
-  @include bg-image($path: '../../assets/img/furniture/shelf.png');
+  $element-width: max(100px, 15vw);
 
-  z-index: $table-furniture-layer;
+  width: max(100px, 15vw);
+  height: calc($element-width * $height / $width);
+  @include bg-image($path: '../../assets/img/furniture/shelf.png');
 
   right: 5%;
   @include furniture-top($offset: 60px);
 
   @media (max-width: 950px) {
     @include furniture-top($offset: 1vw);
+  }
+
+  @media (max-width: $mobile-width) {
+    @include furniture-top($offset: -50px);
   }
 
   align-items: flex-end;
@@ -134,14 +197,16 @@ $bg-full-height: 1080;
 .playground__floor {
   $width: 1772;
   $height: 176;
-  width: 50vw;
-  height: calc(50vw * $height / $width);
-  left: calc(50% - 25vw);
+  $element-width: max(50vw, 300px);
+
+  width: $element-width;
+  height: calc($element-width * $height / $width);
+  left: calc(50% - $element-width / 2);
   @include bg-image($path: '../../assets/img/furniture/carpet.png');
 
   @include furniture-top($offset: 15vw);
-  @media (max-width: 850px) {
-    @include furniture-top($offset: 5vw);
+  @media (max-width: $tablet-width) {
+    @include furniture-top($offset: 10vw);
   }
 
   align-items: center;
@@ -161,6 +226,17 @@ $bg-full-height: 1080;
 
   & > .turtle, & > .small {
     bottom: 50%;
+  }
+
+  @media(max-width: $tablet-width) {
+    & > * {
+      position: relative;
+      bottom: 130%;
+    }
+
+    & > .turtle, & > .small {
+      bottom: 35%;
+    }
   }
 }
 

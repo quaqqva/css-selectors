@@ -15,7 +15,12 @@
 }
 
 .dog.corgy[mood = "hungry"] {
-  @include pet($bg-path: '../../assets/img/pets/corgy_hungry.png', $actual-width: 172, $actual-height: 264, $width: 7.5vw);
+  @include pet($bg-path: '../../assets/img/pets/corgy_hungry.png', 
+  $actual-width: 172, 
+  $actual-height: 264, 
+  $width: max(7.5vw, 100px),
+  $tablet-pet-width: 10vw,
+  $mobile-pet-width: 15vw);
 }
 
 .turtle {
@@ -41,7 +46,10 @@
 }
 
 .guinea-pig.small {
-  @include pet($bg-path: '../../assets/img/pets/guinea-pig_1.png', $actual-width: 224, $actual-height: 124, $width: 3vw);
+  @include pet($bg-path: '../../assets/img/pets/guinea-pig_1.png', $actual-width: 224, $actual-height: 124, 
+  $width: 3vw,
+  $tablet-pet-width: 4vw,
+  $mobile-pet-width: 5vw);
 }
 
 .dog.pug {
@@ -53,17 +61,35 @@
 }
 
 .hamster {
-  @include pet($bg-path: '../../assets/img/pets/hamster.png', $actual-width: 270, $actual-height: 368, $width: 4vw);
+  @include pet($bg-path: '../../assets/img/pets/hamster.png', 
+  $actual-width: 270, 
+  $actual-height: 368, 
+  $width: 4vw,
+  $tablet-pet-width: 6vw,
+  $mobile-pet-width: 10vw);
 }
 
 
 .small {
   width: 6vw;
+
+  @media (max-width: $tablet-width) {
+    width: 10vw;
+  }
 }
 
 .super-extra-double-huge {
   width: 20vw;
   bottom: 225% !important;
+
+  @media (max-width: $tablet-width) {
+    width: 30vw;
+    bottom: 400% !important;
+  }
+
+  @media (max-width: $mobile-width) {
+    bottom: 320% !important;
+  }
 }
 
 .target {
