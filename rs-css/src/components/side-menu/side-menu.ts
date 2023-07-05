@@ -12,6 +12,7 @@ enum MenuClasses {
   ContentLabel = 'side-menu__label',
   Description = 'side-menu__description',
   LevelButton = 'side-menu__level',
+  CurrentLevelButton = 'side-menu__level_current',
   CompletedLevelButton = 'side-menu__level_completed',
   CloseButton = 'side-menu__close',
   ShowMenu = 'side-menu_shown',
@@ -144,7 +145,10 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
   }
 
   public loadLevel(level: NumeratedLevel): void {
+    this.levelList[this.currentLevel].removeClass(MenuClasses.CurrentLevelButton);
     this.currentLevel = level.index;
+    this.levelList[this.currentLevel].addClass(MenuClasses.CurrentLevelButton);
+
     this.contentLabel.textContent = this.getLabelTemplate();
     if (this.description) this.description.destroy();
     this.description = BaseComponent.FromHTML<HTMLParagraphElement>(
