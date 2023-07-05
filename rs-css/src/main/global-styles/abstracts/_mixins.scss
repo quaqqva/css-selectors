@@ -15,10 +15,12 @@
   }
 }
 
-@mixin scrollbar($track-color, $thumb-color, $width, $border-radius: 10px) {
+@mixin scrollbar($track-color, $thumb-color, $width, $height: auto, $border-radius: 10px) {
   border-radius: $border-radius;
   &::-webkit-scrollbar {
+    cursor: default;
     width: $width;
+    height: $height;
   }
 
   &::-webkit-scrollbar-thumb {

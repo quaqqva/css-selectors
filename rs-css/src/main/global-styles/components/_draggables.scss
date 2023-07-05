@@ -69,6 +69,9 @@ $panel-height: 30px;
         padding-top: 0.5em;
       }
     }
+
+    overflow: auto;
+    @include scrollbar($track-color: $additional-color-grey, $thumb-color: $additional-color-light, $width: 5px, $height: 5px, $border-radius: 0px);
   }
 }
 
