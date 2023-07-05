@@ -44,7 +44,7 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
 
   private panel: BaseComponent<HTMLDivElement>;
 
-  private contentWrapper: BaseComponent<HTMLDivElement>;
+  protected contentWrapper: BaseComponent<HTMLDivElement>;
 
   public constructor({ parent, panelTitle }: { parent: BaseComponent<HTMLElement>; panelTitle?: string }) {
     super({ ...DragNDropComponent.WRAPPER_PARAMS, parent });

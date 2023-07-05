@@ -8,12 +8,12 @@ import Furniture from '../furniture/furniture';
 import Pet from '../pet/pet';
 import { AppEvents } from '../../types/app-events';
 import './appear-animation.scss';
+import HTMLView from '../draggables/html-view/html-view';
 
 enum PlaygroundClasses {
   Playground = 'playground',
   TaskHeading = 'playground__task',
   CSSDraggable = 'css-input-wrapper',
-  HTMLDraggable = 'html-wrapper',
   Couch = 'playground__couch',
   Table = 'playground__table',
   Floor = 'playground__floor',
@@ -60,7 +60,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
   private table: Furniture;
   private floor: Furniture;
   private cssInput: CSSInput;
-  private htmlView: DragNDropComponent;
+  private htmlView: HTMLView;
 
   public constructor({ parent, emitter }: { parent: BaseComponent<HTMLElement>; emitter: EventEmitter }) {
     super({ ...Playground.ELEMENT_PARAMS, parent });
@@ -74,8 +74,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
     CSSDraggable.addClass(PlaygroundClasses.CSSDraggable);
     this.cssInput = new CSSInput({ parent: CSSDraggable, emitter });
 
-    this.htmlView = new DragNDropComponent({ parent: this, panelTitle: 'index.html' });
-    this.htmlView.addClass(PlaygroundClasses.HTMLDraggable);
+    this.htmlView = new HTMLView(this);
 
     emitter.subscribe(CSSInput.INPUT_EVENT, (selector) => {
       emitter.emit(Playground.INPUT_EVENT, [this.htmlView.textContent, selector]);
