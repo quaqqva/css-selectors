@@ -48,7 +48,15 @@ $switch-time: 300ms;
   line-height: 1.8em;
 }
 
+.side-menu__level_completed-with-help::after,
+.side-menu__level_completed::after {
+  font-size: 0.7em;
+}
+
 .side-menu__level_completed::after {
   content: ' ✅';
-  font-size: 0.7em;
+}
+
+.side-menu__level_completed-with-help::after {
+  content: '☑️';
 }

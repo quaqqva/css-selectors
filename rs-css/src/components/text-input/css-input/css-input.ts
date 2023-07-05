@@ -66,6 +66,18 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
     });
   }
 
+  public async inputText(text: string): Promise<void> {
+    const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    this.input.text = '';
+    this.textView.textContent = '';
+    for (let i = 0; i < text.length; i += 1) {
+      const char = text[i];
+      this.input.text += char;
+      this.textView.textContent = text.substring(0, i + 1);
+      await delay(40);
+    }
+  }
+
   public clearInput(): void {
     this.textView.textContent = '';
     this.input.text = '';

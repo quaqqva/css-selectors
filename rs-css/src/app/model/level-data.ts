@@ -19,5 +19,11 @@ export type PetElement = {
 
 export type UserData = {
   currentLevel: number;
-  completedLevels: boolean[];
+  completedLevels: CompletionState[];
 };
+
+export enum CompletionState {
+  Completed = 'completed',
+  CompletedWithHelp = 'completed-with-help',
+  NotCompleted = 'not-completed',
+}

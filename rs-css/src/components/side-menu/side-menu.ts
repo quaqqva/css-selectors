@@ -3,7 +3,7 @@ import EventEmitter from '../../utils/event-emitter';
 import { Tags, Events } from '../../types/dom-types';
 import { FontAwesome } from '../../types/font-awesome';
 import './menu-styles.scss';
-import { NumeratedLevel } from '../../app/model/level-data';
+import { CompletionState, NumeratedLevel } from '../../app/model/level-data';
 import ToggleInput from '../toggle-input/toggle-input';
 import { AppEvents } from '../../types/app-events';
 
@@ -14,6 +14,7 @@ enum MenuClasses {
   Description = 'side-menu__description',
   LevelButton = 'side-menu__level',
   CurrentLevelButton = 'side-menu__level_current',
+  CompletedWithHelpLevelButton = 'side-menu__level_completed-with-help',
   CompletedLevelButton = 'side-menu__level_completed',
   CloseButton = 'side-menu__close',
   ShowMenu = 'side-menu_shown',
@@ -73,12 +74,12 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private levelList: BaseComponent<HTMLButtonElement>[];
 
-  private completedLevels: boolean[];
+  private completedLevels: CompletionState[];
 
   public constructor(
     parent: BaseComponent<HTMLElement>,
     emitter: EventEmitter,
-    completedLevels: boolean[],
+    completedLevels: CompletionState[],
     levelNames: string[]
   ) {
     super({ ...SideMenu.ELEMENT_PARAMS, parent });
@@ -106,10 +107,12 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
     this.levelList = this.createLevelList(completedLevels, levelNames);
 
-    this.emitter.subscribe(AppEvents.LevelCompleted, (levelIndex) => {
-      const index = levelIndex as number;
-      this.completedLevels[index] = true;
-      this.levelList[index].addClass(MenuClasses.CompletedLevelButton);
+    this.emitter.subscribe(AppEvents.LevelCompleted, (levelData) => {
+      const [index, helpUsed] = levelData as [number, boolean];
+      this.completedLevels[index] = helpUsed ? CompletionState.CompletedWithHelp : CompletionState.Completed;
+      this.levelList[index].addClass(
+        helpUsed ? MenuClasses.CompletedWithHelpLevelButton : MenuClasses.CompletedLevelButton
+      );
     });
 
     this.resetProgressButton = new BaseComponent(SideMenu.RESET_BUTTON_PARAMS);
@@ -134,18 +137,28 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
   }
 
   private getLabelTemplate() {
+    const completionState = this.completedLevels[this.currentLevel];
     return this.isDescription
       ? `Level ${this.currentLevel + 1} of ${this.levelList.length} ${
-          this.completedLevels[this.currentLevel] ? '✅' : ''
+          completionState === CompletionState.Completed
+            ? '✅'
+            : completionState === CompletionState.CompletedWithHelp
+            ? '☑️'
+            : ''
         }`
       : 'Levels';
   }
 
-  private createLevelList(completedLevels: boolean[], levelNames: string[]): BaseComponent<HTMLButtonElement>[] {
+  private createLevelList(
+    completedLevels: CompletionState[],
+    levelNames: string[]
+  ): BaseComponent<HTMLButtonElement>[] {
     return completedLevels.map((levelCompleted, index) => {
       const button = new BaseComponent<HTMLButtonElement>(SideMenu.LEVEL_BUTTON_PARAMS);
       button.textContent = levelNames[index];
-      if (levelCompleted) button.addClass(MenuClasses.CompletedLevelButton);
+      if (levelCompleted === CompletionState.Completed) button.addClass(MenuClasses.CompletedLevelButton);
+      else if (levelCompleted === CompletionState.CompletedWithHelp)
+        button.addClass(MenuClasses.CompletedWithHelpLevelButton);
       button.addEventListener(Events.Click, () => {
         this.emitter.emit(SideMenu.LEVEL_CHOSEN, index);
       });

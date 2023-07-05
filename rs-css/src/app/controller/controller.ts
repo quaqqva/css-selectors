@@ -1,6 +1,6 @@
 import levels from '../../data/levels.json';
 import { DefaultCallback } from '../../types/default';
-import { LevelData, NumeratedLevel } from '../model/level-data';
+import { CompletionState, LevelData, NumeratedLevel } from '../model/level-data';
 import validateSelector from '../../utils/validator';
 import { UserData } from '../model/level-data';
 import parseMarkdown from '../../utils/parse-markdown';
@@ -11,6 +11,8 @@ export default class AppController {
   private currentLevelIndex: number;
 
   private userData: UserData;
+
+  private helpUsed: boolean;
 
   private static STORAGE_KEY = 'css-pets-quaqva';
 
@@ -23,6 +25,8 @@ export default class AppController {
 
     this.userData = this.loadUserData();
     this.currentLevelIndex = this.userData.currentLevel;
+
+    this.helpUsed = false;
   }
 
   private loadUserData(): UserData {
@@ -41,7 +45,7 @@ export default class AppController {
   public clearUserData(): void {
     const emptyData: UserData = {
       currentLevel: 0,
-      completedLevels: new Array(this.levels.length).fill(false),
+      completedLevels: new Array(this.levels.length).fill(CompletionState.NotCompleted),
     };
     localStorage.setItem(AppController.STORAGE_KEY, JSON.stringify(emptyData));
     this.currentLevelIndex = emptyData.currentLevel;
@@ -52,7 +56,7 @@ export default class AppController {
     return this.currentLevelIndex;
   }
 
-  public get completedLevels(): boolean[] {
+  public get completedLevels(): CompletionState[] {
     return this.userData.completedLevels;
   }
 
@@ -64,7 +68,18 @@ export default class AppController {
     return this.levels.map((levelData) => levelData.description);
   }
 
+  public get currentSolution(): string {
+    this.helpUsed = true;
+    return this.levels[this.currentLevelIndex].solution;
+  }
+
+  public get helped(): boolean {
+    return this.helpUsed;
+  }
+
   public loadLevel(index: number, callback: (level: NumeratedLevel) => void): void {
+    this.helpUsed = false;
+
     this.currentLevelIndex = index;
     this.userData.currentLevel = this.currentLevelIndex;
     this.saveUserData();
@@ -92,7 +107,9 @@ export default class AppController {
     const [markup, selector] = viewData as [markup: string, selector: string];
     const isValid = validateSelector({ markup, selector, solution: this.levels[this.currentLevelIndex].solution });
     if (isValid) {
-      this.userData.completedLevels[this.currentLevelIndex] = true;
+      this.userData.completedLevels[this.currentLevelIndex] = this.helpUsed
+        ? CompletionState.CompletedWithHelp
+        : CompletionState.Completed;
       this.saveUserData();
       if (this.currentLevelIndex === this.levels.length - 1) winCallback();
       else sucessCallback();

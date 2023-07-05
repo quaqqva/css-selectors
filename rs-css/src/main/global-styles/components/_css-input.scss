@@ -45,7 +45,7 @@
   height: 70%;
   width: 50px;
 
-  @include smooth-button();
+  @include smooth-button($translate: -5%);
 
   @media (max-width: 1000px) {
     left:0;

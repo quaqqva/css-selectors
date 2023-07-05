@@ -22,8 +22,8 @@ export default class App {
       this.controller.checkInput({
         viewData: data,
         sucessCallback: () => {
+          this.eventEmitter.emit(AppEvents.LevelCompleted, [this.controller.currentLevel, this.controller.helped]);
           this.controller.loadNextLevel((level) => this.view.drawLevel(level));
-          this.eventEmitter.emit(AppEvents.LevelCompleted, this.controller.currentLevel - 1);
         },
         failCallback: () => {
           this.view.signalWrongInput();
@@ -41,6 +41,10 @@ export default class App {
     this.eventEmitter.subscribe(AppEvents.ResetProgress, () => {
       this.controller.clearUserData();
       this.controller.loadLevel(this.controller.currentLevel, (level) => this.view.drawLevel(level));
+    });
+
+    this.eventEmitter.subscribe(AppEvents.GetSelector, () => {
+      this.eventEmitter.emit(AppEvents.PostSelector, this.controller.currentSolution);
     });
 
     this.view.loadSideMenu(this.controller.completedLevels, this.controller.names);

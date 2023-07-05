@@ -1,5 +1,5 @@
 import BaseComponent from '../../components/base-component';
-import { NumeratedLevel } from '../model/level-data';
+import { CompletionState, NumeratedLevel } from '../model/level-data';
 import EventEmitter from '../../utils/event-emitter';
 import Header from '../../components/header/header';
 import footer from '../../components/footer/footer';
@@ -43,7 +43,7 @@ export default class AppView {
     if (this.sideMenu) this.sideMenu.loadLevel(level);
   }
 
-  public loadSideMenu(completedLevels: boolean[], names: string[]) {
+  public loadSideMenu(completedLevels: CompletionState[], names: string[]) {
     this.sideMenu = new SideMenu(this.body, this.emitter, completedLevels, names);
     this.header.addMenuButton(this.sideMenu);
     this.sideMenu.show();

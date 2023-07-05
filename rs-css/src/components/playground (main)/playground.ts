@@ -1,5 +1,5 @@
 import { LevelData, PetElement } from '../../app/model/level-data';
-import { Tags } from '../../types/dom-types';
+import { Events, Tags } from '../../types/dom-types';
 import EventEmitter from '../../utils/event-emitter';
 import BaseComponent from '../base-component';
 import CSSInput from '../text-input/css-input/css-input';
@@ -13,6 +13,7 @@ import HTMLView from '../draggables/html-view/html-view';
 enum PlaygroundClasses {
   Playground = 'playground',
   TaskHeading = 'playground__task',
+  HelpButton = 'playground__help',
   CSSDraggable = 'css-input-wrapper',
   Couch = 'playground__couch',
   Table = 'playground__table',
@@ -30,6 +31,12 @@ export default class Playground extends BaseComponent<HTMLElement> {
   private static HEADING_PARAMS = {
     tag: Tags.Heading2,
     classes: [PlaygroundClasses.TaskHeading],
+  };
+
+  private static HELP_BUTTON_PARAMS = {
+    tag: Tags.Button,
+    classes: [PlaygroundClasses.HelpButton],
+    textContent: "Help, I'm stuck!",
   };
 
   private static COUCH_PARAMS = {
@@ -56,15 +63,27 @@ export default class Playground extends BaseComponent<HTMLElement> {
   };
 
   private taskHeader: BaseComponent<HTMLHeadingElement>;
+
+  private helpButton: BaseComponent<HTMLButtonElement>;
+
   private couch: Furniture;
+
   private table: Furniture;
+
   private floor: Furniture;
+
   private cssInput: CSSInput;
+
   private htmlView: HTMLView;
 
   public constructor({ parent, emitter }: { parent: BaseComponent<HTMLElement>; emitter: EventEmitter }) {
     super({ ...Playground.ELEMENT_PARAMS, parent });
     this.taskHeader = new BaseComponent<HTMLHeadingElement>({ ...Playground.HEADING_PARAMS, parent: this });
+
+    this.helpButton = new BaseComponent<HTMLButtonElement>({ ...Playground.HELP_BUTTON_PARAMS, parent: this });
+    this.helpButton.addEventListener(Events.Click, () => {
+      emitter.emit(AppEvents.GetSelector, null);
+    });
 
     this.table = new Furniture(Playground.TABLE_PARAMS);
     this.couch = new Furniture(Playground.COUCH_PARAMS);
@@ -82,6 +101,12 @@ export default class Playground extends BaseComponent<HTMLElement> {
 
     emitter.subscribe(AppEvents.LevelCompleted, () => {
       this.cssInput.clearInput();
+    });
+
+    emitter.subscribe(AppEvents.PostSelector, async (selector) => {
+      this.helpButton.setAttribute('disabled', 'true');
+      await this.cssInput.inputText(selector as string);
+      this.helpButton.removeAttribute('disabled');
     });
   }
 

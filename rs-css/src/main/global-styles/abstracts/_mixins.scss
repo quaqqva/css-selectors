@@ -15,13 +15,14 @@
   }
 }
 
-@mixin smooth-button {
-  transition: color $hover-transition ease-in-out, 
-  background-color $hover-transition ease-in-out,
-  border-color $hover-transition ease-in-out, 
-  transform $hover-transition ease-in-out;
+@mixin smooth-button($translate: -20%) {
+  transition: $hover-transition ease-in-out;
 
-  &active {
+  &:hover {
+    @include shadow();
+    transform: translateY(-20%);
+  }
+  &:active {
     transform: scale(0.9);
   }
 }
