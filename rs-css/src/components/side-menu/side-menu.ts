@@ -18,6 +18,7 @@ enum MenuClasses {
   CloseButton = 'side-menu__close',
   ShowMenu = 'side-menu_shown',
   HideElement = 'side-menu__hidden',
+  ResetButton = 'side-menu__reset-progress',
 }
 
 export default class SideMenu extends BaseComponent<HTMLDivElement> {
@@ -44,6 +45,12 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     classes: [MenuClasses.LevelButton],
   };
 
+  private static RESET_BUTTON_PARAMS = {
+    tag: Tags.Button,
+    classes: [MenuClasses.ResetButton],
+    textContent: 'Reset progress',
+  };
+
   private static SWITCH_TRANSITION = 300;
 
   public static LEVEL_CHOSEN = 'choose-level';
@@ -57,6 +64,8 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
   private description?: BaseComponent<HTMLParagraphElement>;
 
   private switchButton: ToggleInput;
+
+  private resetProgressButton: BaseComponent<HTMLButtonElement>;
 
   private contentLabel: BaseComponent<HTMLSpanElement>;
 
@@ -102,6 +111,16 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
       this.completedLevels[index] = true;
       this.levelList[index].addClass(MenuClasses.CompletedLevelButton);
     });
+
+    this.resetProgressButton = new BaseComponent(SideMenu.RESET_BUTTON_PARAMS);
+    this.resetProgressButton.addEventListener(Events.Click, () => {
+      this.emitter.emit(AppEvents.ResetProgress, null);
+    });
+
+    this.emitter.subscribe(AppEvents.ResetProgress, () => {
+      this.completedLevels = new Array(this.completedLevels.length).fill(false);
+      this.levelList.forEach((button) => button.removeClass(MenuClasses.CompletedLevelButton));
+    });
   }
 
   private static createCloseButton(): BaseComponent<HTMLButtonElement> {
@@ -144,7 +163,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
       this.contentLabel.textContent = this.getLabelTemplate();
       this.contentWrapper.clear();
       if (this.isDescription && this.description) this.contentWrapper.append(this.description);
-      else this.contentWrapper.append(...this.levelList);
+      else this.contentWrapper.append(...this.levelList, this.resetProgressButton);
 
       this.contentLabel.removeClass(MenuClasses.HideElement);
       this.contentWrapper.removeClass(MenuClasses.HideElement);

@@ -28,18 +28,24 @@ export default class AppController {
   private loadUserData(): UserData {
     const data: string | null = localStorage.getItem(AppController.STORAGE_KEY);
     if (!data) {
-      const emptyData: UserData = {
-        currentLevel: 0,
-        completedLevels: new Array(this.levels.length).fill(false),
-      };
-      localStorage.setItem(AppController.STORAGE_KEY, JSON.stringify(emptyData));
-      return emptyData;
+      this.clearUserData();
+      return this.userData;
     }
     return JSON.parse(data);
   }
 
   public saveUserData(): void {
     localStorage.setItem(AppController.STORAGE_KEY, JSON.stringify(this.userData));
+  }
+
+  public clearUserData(): void {
+    const emptyData: UserData = {
+      currentLevel: 0,
+      completedLevels: new Array(this.levels.length).fill(false),
+    };
+    localStorage.setItem(AppController.STORAGE_KEY, JSON.stringify(emptyData));
+    this.currentLevelIndex = emptyData.currentLevel;
+    this.userData = emptyData;
   }
 
   public get currentLevel(): number {

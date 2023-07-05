@@ -38,6 +38,11 @@ export default class App {
       this.controller.loadLevel(index as number, (level) => this.view.drawLevel(level))
     );
 
+    this.eventEmitter.subscribe(AppEvents.ResetProgress, () => {
+      this.controller.clearUserData();
+      this.controller.loadLevel(this.controller.currentLevel, (level) => this.view.drawLevel(level));
+    });
+
     this.view.loadSideMenu(this.controller.completedLevels, this.controller.names);
     this.controller.loadLevel(this.controller.currentLevel, (level) => this.view.drawLevel(level));
   }

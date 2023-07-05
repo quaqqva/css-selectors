@@ -15,6 +15,17 @@
   }
 }
 
+@mixin smooth-button {
+  transition: color $hover-transition ease-in-out, 
+  background-color $hover-transition ease-in-out,
+  border-color $hover-transition ease-in-out, 
+  transform $hover-transition ease-in-out;
+
+  &active {
+    transform: scale(0.9);
+  }
+}
+
 @mixin scrollbar($track-color, $thumb-color, $width, $height: auto, $border-radius: 10px) {
   border-radius: $border-radius;
   &::-webkit-scrollbar {

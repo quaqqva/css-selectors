@@ -45,7 +45,7 @@
   height: 70%;
   width: 50px;
 
-  transition: color $hover-transition ease-in-out, background-color $hover-transition ease-in-out;
+  @include smooth-button();
 
   @media (max-width: 1000px) {
     left:0;
