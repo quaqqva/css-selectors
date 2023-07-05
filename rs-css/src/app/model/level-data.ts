@@ -12,7 +12,6 @@ export type NumeratedLevel = LevelData & { index: number };
 
 export type PetElement = {
   tag: string;
-  id?: string;
   classes?: string[];
   attributes?: { [attribute: string]: string };
   children?: PetElement[];

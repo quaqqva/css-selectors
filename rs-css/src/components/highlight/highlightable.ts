@@ -43,7 +43,6 @@ export default class HighlightableComponent<T extends HTMLElement> extends BaseC
 
   private highlightHTML(): string {
     const content = this.element.innerText;
-    console.log(content);
     const tagReplacer: Replacer = (tag) => {
       const components = tag.split(' ');
       let tagName = components[0];

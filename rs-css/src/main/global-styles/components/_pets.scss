@@ -38,11 +38,11 @@
   @include pet($bg-path: '../../assets/img/pets/guinea-pig_1.png', $actual-width: 224, $actual-height: 124);
 }
 
-.pug {
+.dog.pug {
   @include pet($bg-path: '../../assets/img/pets/pug.png', $actual-width: 1357, $actual-height: 1250);
 }
 
-.pug#laying {
+.dog.pug#laying {
   @include pet($bg-path: '../../assets/img/pets/pug_laying.png', $actual-width: 1618, $actual-height: 1012);
 }
 
