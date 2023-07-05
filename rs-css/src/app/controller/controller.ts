@@ -88,7 +88,7 @@ export default class AppController {
     if (isValid) {
       this.userData.completedLevels[this.currentLevelIndex] = true;
       this.saveUserData();
-      if (this.userData.completedLevels.every((levelCompleted) => levelCompleted)) winCallback();
+      if (this.currentLevelIndex === this.levels.length - 1) winCallback();
       else sucessCallback();
     } else failCallback();
   }
