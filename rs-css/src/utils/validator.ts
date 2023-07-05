@@ -1,19 +1,17 @@
-import { PetElement } from '../app/model/level-data';
-
 type InputParams = {
-  couchPets?: PetElement[];
-  tablePets?: PetElement[];
-  floorPets?: PetElement[];
+  markup: string;
   selector: string;
   solution: string;
 };
 
-export default function validateSelector({
-  couchPets,
-  tablePets,
-  floorPets,
-  selector,
-  solution,
-}: InputParams): boolean {
-  return true;
+export default function validateSelector({ markup, selector, solution }: InputParams): boolean {
+  if (selector === solution) return true;
+  const template = document.createElement('template');
+  template.insertAdjacentHTML('afterbegin', markup);
+
+  const userSelect = template.querySelectorAll(selector);
+  const solutionSelect = template.querySelectorAll(solution);
+
+  console.log(userSelect, solutionSelect);
+  return userSelect === solutionSelect;
 }

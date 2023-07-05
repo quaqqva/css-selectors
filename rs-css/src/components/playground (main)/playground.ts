@@ -18,6 +18,8 @@ enum PlaygroundClasses {
 }
 
 export default class Playground extends BaseComponent<HTMLElement> {
+  public static INPUT_EVENT = 'selector-entered';
+
   private static ELEMENT_PARAMS = {
     tag: Tags.Main,
     classes: [PlaygroundClasses.Playground],
@@ -67,10 +69,10 @@ export default class Playground extends BaseComponent<HTMLElement> {
 
     this.htmlView = new DragNDropComponent({ parent: this, panelTitle: 'index.html' });
     this.htmlView.addClass(PlaygroundClasses.HTMLDraggable);
-  }
 
-  public get INPUT_EVENT(): string {
-    return CSSInput.INPUT_EVENT;
+    emitter.subscribe(CSSInput.INPUT_EVENT, (selector) => {
+      emitter.emit(Playground.INPUT_EVENT, [this.htmlView.textContent, selector]);
+    });
   }
 
   public changeLevel(level: LevelData): void {

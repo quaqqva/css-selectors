@@ -31,7 +31,7 @@ export default class AppView {
   }
 
   public get SELECTOR_INPUT_EVENT() {
-    return this.main.INPUT_EVENT;
+    return Playground.INPUT_EVENT;
   }
 
   public get LEVEL_CHOOSE_EVENT() {

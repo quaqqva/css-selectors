@@ -73,19 +73,18 @@ export default class AppController {
   }
 
   public checkInput({
-    selector,
+    viewData,
     sucessCallback,
     failCallback,
     winCallback,
   }: {
-    selector: unknown;
+    viewData: unknown;
     sucessCallback: DefaultCallback;
     failCallback: DefaultCallback;
     winCallback: DefaultCallback;
   }): void {
-    if (typeof selector !== 'string') throw Error('Wrong input data recieved');
-    const currentLevel = this.levels[this.currentLevelIndex];
-    const isValid = validateSelector({ ...currentLevel, selector, solution: currentLevel.solution });
+    const [markup, selector] = viewData as [markup: string, selector: string];
+    const isValid = validateSelector({ markup, selector, solution: this.levels[this.currentLevelIndex].solution });
     if (isValid) {
       this.userData.completedLevels[this.currentLevelIndex] = true;
       this.saveUserData();

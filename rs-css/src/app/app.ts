@@ -19,7 +19,7 @@ export default class App {
   public start(): void {
     this.eventEmitter.subscribe(this.view.SELECTOR_INPUT_EVENT, (data) => {
       this.controller.checkInput({
-        selector: data,
+        viewData: data,
         sucessCallback: () => {
           this.controller.loadNextLevel((level) => this.view.drawLevel(level));
         },
