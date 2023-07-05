@@ -91,9 +91,10 @@
   @include pet-stand();
 }
 
-@mixin pet-stand($other-transforms: scaleX(1), $animation-name: pet-stand) {
+@mixin pet-stand($other-transforms: skew(0), $animation-name: pet-stand) {
   transform-origin: bottom;
   animation: $animation-name 1s ease-in-out infinite;
+
   @keyframes #{$animation-name} {
     0% {
       transform: scaleY(1) $other-transforms;

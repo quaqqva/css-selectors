@@ -65,4 +65,9 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
       this.input.focus();
     });
   }
+
+  public clearInput(): void {
+    this.textView.textContent = '';
+    this.input.text = '';
+  }
 }

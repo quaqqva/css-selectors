@@ -5,6 +5,7 @@ import { FontAwesome } from '../../types/font-awesome';
 import './menu-styles.scss';
 import { NumeratedLevel } from '../../app/model/level-data';
 import ToggleInput from '../toggle-input/toggle-input';
+import { AppEvents } from '../../types/app-events';
 
 enum MenuClasses {
   Menu = 'side-menu',
@@ -95,6 +96,12 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     this.contentWrapper = new BaseComponent<HTMLDivElement>({ ...SideMenu.CONTENT_WRAPPER_PARAMS, parent: this });
 
     this.levelList = this.createLevelList(completedLevels, levelNames);
+
+    this.emitter.subscribe(AppEvents.LevelCompleted, (levelIndex) => {
+      const index = levelIndex as number;
+      this.completedLevels[index] = true;
+      this.levelList[index].addClass(MenuClasses.CompletedLevelButton);
+    });
   }
 
   private static createCloseButton(): BaseComponent<HTMLButtonElement> {

@@ -1,3 +1,4 @@
+import { AppEvents } from '../types/app-events';
 import EventEmitter from '../utils/event-emitter';
 import AppController from './controller/controller';
 import AppView from './view/view';
@@ -22,6 +23,7 @@ export default class App {
         viewData: data,
         sucessCallback: () => {
           this.controller.loadNextLevel((level) => this.view.drawLevel(level));
+          this.eventEmitter.emit(AppEvents.LevelCompleted, this.controller.currentLevel - 1);
         },
         failCallback: () => {
           this.view.signalWrongInput();

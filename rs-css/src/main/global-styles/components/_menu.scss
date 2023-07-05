@@ -12,7 +12,7 @@ $max-levels: 20;
 .side-menu__label {
   display: block;
   margin: 10px auto 0;
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: 500;
 
   @media (max-width: 400px) {
@@ -67,7 +67,7 @@ $max-levels: 20;
 }
 
 .side-menu__level {
-  width: 70%;
+  width: 75%;
   background: transparent;
   border-bottom: 2px solid $additional-color-light;
   transition: width $hover-transition ease-in-out, color $active-transition ease-in-out, border-width $active-transition ease-in-out;

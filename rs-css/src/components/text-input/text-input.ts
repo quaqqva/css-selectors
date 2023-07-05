@@ -18,6 +18,10 @@ export default class TextInput extends BaseComponent<HTMLInputElement> {
     return this.element.value;
   }
 
+  public set text(value: string) {
+    this.element.value = value;
+  }
+
   public addEnterListener(handler: DefaultCallback): void {
     this.addEventListener(Events.KeyDown, (event) => {
       const keyEvent = event as KeyboardEvent;

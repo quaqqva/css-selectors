@@ -6,6 +6,7 @@ import CSSInput from '../text-input/css-input/css-input';
 import DragNDropComponent from '../draggables/drag-n-drop-component';
 import Furniture from '../furniture/furniture';
 import Pet from '../furniture/pet';
+import { AppEvents } from '../../types/app-events';
 
 enum PlaygroundClasses {
   Playground = 'playground',
@@ -72,6 +73,10 @@ export default class Playground extends BaseComponent<HTMLElement> {
 
     emitter.subscribe(CSSInput.INPUT_EVENT, (selector) => {
       emitter.emit(Playground.INPUT_EVENT, [this.htmlView.textContent, selector]);
+    });
+
+    emitter.subscribe(AppEvents.LevelCompleted, () => {
+      this.cssInput.clearInput();
     });
   }
 
