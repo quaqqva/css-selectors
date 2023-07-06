@@ -115,4 +115,9 @@ export default class AppController {
       else sucessCallback();
     } else failCallback();
   }
+
+  public getUserInput(viewData: unknown) {
+    const [_, selector] = viewData as [markup: string, selector: string];
+    return selector;
+  }
 }

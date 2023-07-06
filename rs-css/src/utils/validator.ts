@@ -5,6 +5,7 @@ type InputParams = {
 };
 
 export default function validateSelector({ markup, selector, solution }: InputParams): boolean {
+  if (!selector) return false;
   if (selector === solution) return true;
   const template = document.createElement('template');
   template.insertAdjacentHTML('afterbegin', markup);

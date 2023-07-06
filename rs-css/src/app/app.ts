@@ -27,7 +27,7 @@ export default class App {
           this.controller.loadNextLevel((level) => this.view.drawLevel(level));
         },
         failCallback: () => {
-          this.view.signalWrongInput();
+          this.view.signalWrongInput(this.controller.getUserInput(data));
         },
         winCallback: () => {
           this.view.signalWin();

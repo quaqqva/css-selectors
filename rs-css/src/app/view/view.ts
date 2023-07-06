@@ -5,6 +5,7 @@ import Header from '../../components/header/header';
 import footer from '../../components/footer/footer';
 import Playground from '../../components/playground (main)/playground';
 import SideMenu from '../../components/side-menu/side-menu';
+import { AnimationParams } from '../../types/dom-types';
 
 export default class AppView {
   private body: BaseComponent<HTMLElement>;
@@ -16,6 +17,12 @@ export default class AppView {
   private sideMenu?: SideMenu;
 
   private emitter: EventEmitter;
+
+  private static LOSE_ANIMATION_PARAMS: AnimationParams = {
+    name: 'lose',
+    duration: 500,
+    repeatCount: 3,
+  };
 
   public constructor(emitter: EventEmitter) {
     this.emitter = emitter;
@@ -50,11 +57,12 @@ export default class AppView {
   }
 
   public async signalLevelWin(selector: string) {
-    await this.main.signalLevelWin(selector);
+    await this.main.animate(selector, Playground.WIN_ANIMATION_PARAMS);
   }
 
-  public signalWrongInput(): void {
-    throw Error('Not implemented');
+  public async signalWrongInput(input: string) {
+    this.main.animateCSSInput(AppView.LOSE_ANIMATION_PARAMS);
+    await this.main.animate(input, AppView.LOSE_ANIMATION_PARAMS);
   }
 
   public signalWin(): void {

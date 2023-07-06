@@ -71,6 +71,7 @@ export default class BaseComponent<T extends HTMLElement> {
   }
 
   public checkSelectorMatch(selector: string): boolean {
+    if (!selector) return false;
     return this.element.matches(selector);
   }
 
@@ -98,13 +99,14 @@ export default class BaseComponent<T extends HTMLElement> {
     this.element.remove();
   }
 
-  public showAnimation({ name, duration, timingFunction = 'ease-in-out' }: AnimationParams): void {
+  public showAnimation({ name, duration, timingFunction = 'ease-in-out', repeatCount = 1 }: AnimationParams): void {
     this.element.setAttribute(
       'style',
-      `animation: ${name} ${duration}ms ${timingFunction} !important; transform-origin: center`
+      `${this.element.style.cssText} animation-name: ${name} !important; animation-duration: ${duration}ms !important; animation-timing-function: ${timingFunction} !important; animation-iteration-count: ${repeatCount} !important;  transform-origin: center;`
     );
     setTimeout(() => {
       this.element.style.animation = '';
+      this.element.style.animationIterationCount = '';
       this.element.style.transformOrigin = '';
     }, duration);
   }

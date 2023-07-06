@@ -1,5 +1,5 @@
 import { LevelData, PetElement } from '../../app/model/level-data';
-import { Events, Tags } from '../../types/dom-types';
+import { AnimationParams, Events, Tags } from '../../types/dom-types';
 import EventEmitter from '../../utils/event-emitter';
 import BaseComponent from '../base-component';
 import CSSInput from '../text-input/css-input/css-input';
@@ -62,7 +62,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
     duration: 100,
   };
 
-  private static WIN_ANIMATION_PARAMS = {
+  public static WIN_ANIMATION_PARAMS = {
     name: 'pet-win',
     duration: 500,
   };
@@ -76,6 +76,8 @@ export default class Playground extends BaseComponent<HTMLElement> {
   private table: Furniture;
 
   private floor: Furniture;
+
+  private cssInputWrapper: DragNDropComponent;
 
   private cssInput: CSSInput;
 
@@ -98,9 +100,9 @@ export default class Playground extends BaseComponent<HTMLElement> {
     this.couch = new Furniture(Playground.COUCH_PARAMS);
     this.floor = new Furniture(Playground.FLOOR_PARAMS);
 
-    const CSSDraggable = new DragNDropComponent({ parent: this, panelTitle: 'styles.css' });
-    CSSDraggable.addClass(PlaygroundClasses.CSSDraggable);
-    this.cssInput = new CSSInput({ parent: CSSDraggable, emitter });
+    this.cssInputWrapper = new DragNDropComponent({ parent: this, panelTitle: 'styles.css' });
+    this.cssInputWrapper.addClass(PlaygroundClasses.CSSDraggable);
+    this.cssInput = new CSSInput({ parent: this.cssInputWrapper, emitter });
 
     this.htmlView = new HTMLView(this);
 
@@ -129,12 +131,16 @@ export default class Playground extends BaseComponent<HTMLElement> {
     this.showPets(level.solution);
   }
 
-  public async signalLevelWin(selector: string): Promise<void> {
+  public async animate(selector: string, animationParams: AnimationParams): Promise<void> {
     const bodyEnviroment = new BaseComponent<HTMLElement>({ tag: Tags.Body });
     this.furniturePetPairs.forEach((_, furniture) => {
-      furniture.animatePets(Playground.WIN_ANIMATION_PARAMS, { selector, body: bodyEnviroment });
+      furniture.animatePets(animationParams, { selector, body: bodyEnviroment });
     });
-    await new Promise((resolve) => setTimeout(resolve, Playground.WIN_ANIMATION_PARAMS.duration));
+    await new Promise((resolve) => setTimeout(resolve, animationParams.duration));
+  }
+
+  public animateCSSInput(animationParams: AnimationParams): void {
+    this.cssInputWrapper.showAnimation(animationParams);
   }
 
   private updateFurniture(): void {
