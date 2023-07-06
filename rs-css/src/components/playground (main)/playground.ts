@@ -13,6 +13,7 @@ import HTMLView from '../draggables/html-view/html-view';
 enum PlaygroundClasses {
   Playground = 'playground',
   TaskHeading = 'playground__task',
+  WinHeading = 'playground__task_win',
   HelpButton = 'playground__help',
   CSSDraggable = 'css-input-wrapper',
   Couch = 'playground__couch',
@@ -122,6 +123,11 @@ export default class Playground extends BaseComponent<HTMLElement> {
   }
 
   public changeLevel(level: LevelData): void {
+    this.append(this.cssInputWrapper);
+    this.append(this.htmlView);
+    this.append(this.helpButton);
+    this.taskHeader.removeClass(PlaygroundClasses.WinHeading);
+
     this.taskHeader.textContent = level.task;
 
     this.furniturePetPairs.set(this.couch, level.couchPets);
@@ -141,6 +147,18 @@ export default class Playground extends BaseComponent<HTMLElement> {
 
   public animateCSSInput(animationParams: AnimationParams): void {
     this.cssInputWrapper.showAnimation(animationParams);
+  }
+
+  public signalWin(): void {
+    this.furniturePetPairs.forEach((_, furniture) => {
+      furniture.destroy();
+    });
+    this.htmlView.destroy();
+    this.cssInputWrapper.destroy();
+    this.helpButton.destroy();
+
+    this.taskHeader.textContent = "Hooray!\nYou saved everyone!!\nAnd now you're CSS pro!\nThanks for playing!";
+    this.taskHeader.addClass(PlaygroundClasses.WinHeading);
   }
 
   private updateFurniture(): void {

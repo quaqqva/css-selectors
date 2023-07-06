@@ -66,6 +66,7 @@ export default class AppView {
   }
 
   public signalWin(): void {
-    throw Error('Not implemented');
+    this.main.signalWin();
+    this.sideMenu?.showWinText();
   }
 }

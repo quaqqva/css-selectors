@@ -106,7 +106,6 @@ export default class BaseComponent<T extends HTMLElement> {
     );
     setTimeout(() => {
       this.element.style.animation = '';
-      this.element.style.animationIterationCount = '';
       this.element.style.transformOrigin = '';
     }, duration);
   }

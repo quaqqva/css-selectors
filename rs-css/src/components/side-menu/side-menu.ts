@@ -126,6 +126,12 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     });
   }
 
+  public showWinText(): void {
+    this.contentLabel.textContent = 'You win!';
+    this.contentWrapper.textContent = 'Congratulations!! Thanks for finding my super big hamster...';
+    this.currentLevel = -1;
+  }
+
   private static createCloseButton(): BaseComponent<HTMLButtonElement> {
     const closeButton = new BaseComponent<HTMLButtonElement>({ ...SideMenu.CLOSE_BUTTON_PARAMS });
     const crossIcon = new BaseComponent<HTMLElement>({

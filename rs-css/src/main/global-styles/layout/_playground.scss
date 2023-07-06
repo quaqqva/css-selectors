@@ -20,6 +20,8 @@ $bg-full-height: 1080;
   text-align: center;
   position: relative;
   top:7%;
+  max-width: 80%;
+  margin: 0 auto;
 
   user-select: none;
   
@@ -42,6 +44,12 @@ $bg-full-height: 1080;
   &:hover {
     text-shadow: 6px 6px rgba(0, 0, 0, 0.25);
   }
+}
+
+.playground__task_win {
+  top: 20%;
+  border: 8px solid $additional-color-yellow;
+  background: url("../../assets/img/win-bg.gif");
 }
 
 .playground__help {

@@ -29,7 +29,8 @@ export default class App {
         failCallback: () => {
           this.view.signalWrongInput(this.controller.getUserInput(data));
         },
-        winCallback: () => {
+        winCallback: async () => {
+          await this.view.signalLevelWin(this.controller.currentSolution);
           this.view.signalWin();
         },
       });
