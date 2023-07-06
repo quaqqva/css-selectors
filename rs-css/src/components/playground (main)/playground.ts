@@ -119,7 +119,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
     furnitureDataPairs.set(this.floor, level.floorPets);
 
     this.updateFurniture(furnitureDataPairs);
-    this.showPets(furnitureDataPairs);
+    this.showPets(furnitureDataPairs, level.solution);
   }
 
   private updateFurniture(data: Map<Furniture, PetElement[]>): void {
@@ -134,9 +134,11 @@ export default class Playground extends BaseComponent<HTMLElement> {
     });
   }
 
-  private showPets(data: Map<Furniture, PetElement[]>): void {
+  private showPets(data: Map<Furniture, PetElement[]>, targetSelector: string): void {
+    const bodyEnviroment = new BaseComponent<HTMLElement>({ tag: Tags.Body });
     data.forEach((_, furniture) => {
       furniture.showPets(Playground.SHOW_ANIMATION_PARAMS);
+      furniture.highlightTargets(targetSelector, bodyEnviroment);
     });
   }
 }

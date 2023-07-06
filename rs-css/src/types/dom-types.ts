@@ -3,6 +3,7 @@ export enum Tags {
   Span = 'span',
   Div = 'div',
   Paragraph = 'p',
+  Body = 'body',
   Header = 'header',
   Main = 'main',
   Footer = 'footer',

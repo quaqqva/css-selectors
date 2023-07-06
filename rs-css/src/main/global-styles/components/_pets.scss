@@ -38,6 +38,10 @@
     left: -5% !important;
     bottom: 85% !important;
     @include pet-stand($other-transforms: rotate(40deg), $animation-name: pet-stand-on-parrot);
+
+    &.target {
+      @include target-pet-stand($other-transforms: rotate(40deg), $animation-name: pet-target-stand-on-parrot);
+    }
   }
 }
 
@@ -93,5 +97,5 @@
 }
 
 .target {
-  
+  @include target-pet-stand();
 }

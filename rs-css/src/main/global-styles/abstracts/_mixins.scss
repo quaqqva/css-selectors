@@ -120,3 +120,21 @@
   }
 }
 
+@mixin target-pet-stand($other-transforms: skew(0), $animation-name: target-pet-stand) {
+  transform-origin: bottom;
+  animation: $animation-name 1s ease-in-out infinite !important;
+
+  @keyframes #{$animation-name} {
+    0% {
+      transform: scaleY(1) $other-transforms;
+    }
+    50% {
+      transform: scaleY(0.9) $other-transforms;
+      @include image-border($border-width: 4px, $border-color: $additional-color-yellow);
+    }
+    100% {
+      transform: scaleY(1) $other-transforms;
+    }
+  }
+}
+

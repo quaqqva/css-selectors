@@ -3,9 +3,11 @@ import { AnimationParams, Tags } from '../../types/dom-types';
 import BaseComponent from '../base-component';
 import Pet from '../pet/pet';
 import HighlightableComponent from '../highlight/highlightable';
+import FakeComponent from '../pet/fake-component';
 
 enum FurnitureClasses {
   Markup = 'markup',
+  Target = 'target',
 }
 
 export default class Furniture extends BaseComponent<HTMLDivElement> {
@@ -34,6 +36,25 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
 
   public showPets(animation: AnimationParams): void {
     this.pets.forEach((pet) => pet.showAnimation(animation));
+  }
+
+  public highlightTargets(targetSelector: string, bodyEnviroment: BaseComponent<HTMLElement>): void {
+    const fakeComponent = new FakeComponent({ tag: this.name });
+    bodyEnviroment.append(fakeComponent);
+
+    const petComponents = this.pets.map((pet) => pet.fakeComponent);
+
+    const fakePets = petComponents.map((component) => component[0]);
+    const componentsMap: Map<FakeComponent, Pet> = new Map(petComponents.map((component) => [...component[1]]).flat());
+
+    fakeComponent.append(...fakePets);
+
+    const searchCallback = (fakePet: FakeComponent) => {
+      const pet = componentsMap.get(fakePet);
+      if (fakePet.checkSelectorMatch(targetSelector) && pet) pet.addClass(FurnitureClasses.Target);
+      fakePet.forEachChild((child) => searchCallback(child));
+    };
+    fakePets.forEach((fakePet) => searchCallback(fakePet));
   }
 
   public override append(...elements: Pet[]): void {

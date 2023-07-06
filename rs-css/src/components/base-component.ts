@@ -70,6 +70,10 @@ export default class BaseComponent<T extends HTMLElement> {
     classNames.forEach((className) => this.element.classList.remove(className));
   }
 
+  public checkSelectorMatch(selector: string): boolean {
+    return this.element.matches(selector);
+  }
+
   public setAttribute(attributeName: string, attributeValue: string): void {
     this.element.setAttribute(attributeName, attributeValue);
   }
