@@ -1,5 +1,5 @@
 import { ElementParameters } from '../types/default';
-import { Tags, Events, InsertPositions } from '../types/dom-types';
+import { Tags, Events, InsertPositions, AnimationParams } from '../types/dom-types';
 
 export default class BaseComponent<T extends HTMLElement> {
   protected element: T;
@@ -96,5 +96,16 @@ export default class BaseComponent<T extends HTMLElement> {
 
   public destroy(): void {
     this.element.remove();
+  }
+
+  public showAnimation({ name, duration, timingFunction = 'ease-in-out' }: AnimationParams): void {
+    this.element.setAttribute(
+      'style',
+      `animation: ${name} ${duration}ms ${timingFunction} !important; transform-origin: center`
+    );
+    setTimeout(() => {
+      this.element.style.animation = '';
+      this.element.style.transformOrigin = '';
+    }, duration);
   }
 }

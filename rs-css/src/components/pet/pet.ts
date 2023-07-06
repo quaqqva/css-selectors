@@ -1,7 +1,7 @@
 import BaseComponent from '../base-component';
 import { ElementParameters } from '../../types/default';
 import { PetElement } from '../../app/model/level-data';
-import { Tags, AnimationParams } from '../../types/dom-types';
+import { Tags } from '../../types/dom-types';
 import FakeComponent from './fake-component';
 
 export default class Pet extends BaseComponent<HTMLDivElement> {
@@ -57,14 +57,5 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
 
     resultComponent.addText(`${indents}</${this.fakeMarkupParams.tag}>\n`);
     return resultComponent;
-  }
-
-  public showAnimation({ name, duration, timingFunction = 'ease-in-out' }: AnimationParams): void {
-    this.element.style.transformOrigin = 'center';
-    this.element.style.animation = `${name} ${duration}ms ${timingFunction}`;
-    setTimeout(() => {
-      this.element.style.animation = '';
-      this.element.style.transformOrigin = '';
-    }, duration);
   }
 }

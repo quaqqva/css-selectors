@@ -21,11 +21,7 @@ type SelectorEnviroment = {
   body: BaseComponent<HTMLElement>;
 };
 
-interface Animatable {
-  showAnimation: (params: AnimationParams) => void;
-}
-
-export default class Furniture extends BaseComponent<HTMLDivElement> implements Animatable {
+export default class Furniture extends BaseComponent<HTMLDivElement> {
   private pets: Pet[];
 
   private name: string;
@@ -53,9 +49,8 @@ export default class Furniture extends BaseComponent<HTMLDivElement> implements 
     if (!selectorEnviroment) this.pets.forEach((pet) => pet.showAnimation(animation));
     else {
       const { selector, body } = selectorEnviroment;
-      this.searchForSelector(this.recreateEnviroment(body), selector, (element: unknown) => {
-        const animatable = element as Animatable;
-        animatable.showAnimation(animation);
+      this.searchForSelector(this.recreateEnviroment(body), selector, (element) => {
+        element.showAnimation(animation);
       });
     }
   }
@@ -64,13 +59,6 @@ export default class Furniture extends BaseComponent<HTMLDivElement> implements 
     this.searchForSelector(this.recreateEnviroment(body), selector, (element) => {
       element.addClass(FurnitureClasses.Target);
     });
-  }
-
-  public showAnimation({ name, duration, timingFunction = 'ease-in-out' }: AnimationParams): void {
-    this.element.style.animation = `${name} ${duration}ms ${timingFunction}`;
-    setTimeout(() => {
-      this.element.style.animation = '';
-    }, duration);
   }
 
   private recreateEnviroment(bodyEnviroment: BaseComponent<HTMLElement>): DOMEnviroment {
