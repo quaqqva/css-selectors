@@ -49,6 +49,10 @@ export default class AppView {
     this.sideMenu.show();
   }
 
+  public async signalLevelWin(selector: string) {
+    await this.main.signalLevelWin(selector);
+  }
+
   public signalWrongInput(): void {
     throw Error('Not implemented');
   }

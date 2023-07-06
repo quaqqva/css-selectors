@@ -60,9 +60,11 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
   }
 
   public showAnimation({ name, duration, timingFunction = 'ease-in-out' }: AnimationParams): void {
+    this.element.style.transformOrigin = 'center';
     this.element.style.animation = `${name} ${duration}ms ${timingFunction}`;
     setTimeout(() => {
       this.element.style.animation = '';
+      this.element.style.transformOrigin = '';
     }, duration);
   }
 }

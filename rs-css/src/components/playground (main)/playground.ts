@@ -7,7 +7,7 @@ import DragNDropComponent from '../draggables/drag-n-drop-component';
 import Furniture from '../furniture/furniture';
 import Pet from '../pet/pet';
 import { AppEvents } from '../../types/app-events';
-import './appear-animation.scss';
+import './animations.scss';
 import HTMLView from '../draggables/html-view/html-view';
 
 enum PlaygroundClasses {
@@ -62,6 +62,11 @@ export default class Playground extends BaseComponent<HTMLElement> {
     duration: 100,
   };
 
+  private static WIN_ANIMATION_PARAMS = {
+    name: 'pet-win',
+    duration: 500,
+  };
+
   private taskHeader: BaseComponent<HTMLHeadingElement>;
 
   private helpButton: BaseComponent<HTMLButtonElement>;
@@ -76,8 +81,12 @@ export default class Playground extends BaseComponent<HTMLElement> {
 
   private htmlView: HTMLView;
 
+  private furniturePetPairs: Map<Furniture, PetElement[] | undefined>;
+
   public constructor({ parent, emitter }: { parent: BaseComponent<HTMLElement>; emitter: EventEmitter }) {
     super({ ...Playground.ELEMENT_PARAMS, parent });
+    this.furniturePetPairs = new Map();
+
     this.taskHeader = new BaseComponent<HTMLHeadingElement>({ ...Playground.HEADING_PARAMS, parent: this });
 
     this.helpButton = new BaseComponent<HTMLButtonElement>({ ...Playground.HELP_BUTTON_PARAMS, parent: this });
@@ -113,18 +122,24 @@ export default class Playground extends BaseComponent<HTMLElement> {
   public changeLevel(level: LevelData): void {
     this.taskHeader.textContent = level.task;
 
-    const furnitureDataPairs = new Map();
-    furnitureDataPairs.set(this.couch, level.couchPets);
-    furnitureDataPairs.set(this.table, level.tablePets);
-    furnitureDataPairs.set(this.floor, level.floorPets);
-
-    this.updateFurniture(furnitureDataPairs);
-    this.showPets(furnitureDataPairs, level.solution);
+    this.furniturePetPairs.set(this.couch, level.couchPets);
+    this.furniturePetPairs.set(this.table, level.tablePets);
+    this.furniturePetPairs.set(this.floor, level.floorPets);
+    this.updateFurniture();
+    this.showPets(level.solution);
   }
 
-  private updateFurniture(data: Map<Furniture, PetElement[]>): void {
+  public async signalLevelWin(selector: string): Promise<void> {
+    const bodyEnviroment = new BaseComponent<HTMLElement>({ tag: Tags.Body });
+    this.furniturePetPairs.forEach((_, furniture) => {
+      furniture.animatePets(Playground.WIN_ANIMATION_PARAMS, { selector, body: bodyEnviroment });
+    });
+    await new Promise((resolve) => setTimeout(resolve, Playground.WIN_ANIMATION_PARAMS.duration));
+  }
+
+  private updateFurniture(): void {
     this.htmlView.clear();
-    data.forEach((pets, furniture) => {
+    this.furniturePetPairs.forEach((pets, furniture) => {
       furniture.clear();
       if (pets) {
         this.append(furniture);
@@ -134,11 +149,11 @@ export default class Playground extends BaseComponent<HTMLElement> {
     });
   }
 
-  private showPets(data: Map<Furniture, PetElement[]>, targetSelector: string): void {
+  private showPets(targetSelector: string): void {
     const bodyEnviroment = new BaseComponent<HTMLElement>({ tag: Tags.Body });
-    data.forEach((_, furniture) => {
-      furniture.showPets(Playground.SHOW_ANIMATION_PARAMS);
-      furniture.highlightTargets(targetSelector, bodyEnviroment);
+    this.furniturePetPairs.forEach((_, furniture) => {
+      furniture.animatePets(Playground.SHOW_ANIMATION_PARAMS);
+      furniture.highlightTargets({ selector: targetSelector, body: bodyEnviroment });
     });
   }
 }

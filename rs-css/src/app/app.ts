@@ -21,7 +21,8 @@ export default class App {
     this.eventEmitter.subscribe(this.view.SELECTOR_INPUT_EVENT, (data) => {
       this.controller.checkInput({
         viewData: data,
-        sucessCallback: () => {
+        sucessCallback: async () => {
+          await this.view.signalLevelWin(this.controller.currentSolution);
           this.eventEmitter.emit(AppEvents.LevelCompleted, [this.controller.currentLevel, this.controller.helped]);
           this.controller.loadNextLevel((level) => this.view.drawLevel(level));
         },

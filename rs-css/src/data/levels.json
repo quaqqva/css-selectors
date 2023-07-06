@@ -270,6 +270,7 @@
     "name": "Universal selector",
     "task": "Select every pet\nin the room!",
     "description": "Universal selector ```*``` can help you select **every** element on the page.\n**Hint**: you can combine it with descendant operator to select all descendants. Use your already gained knowledge!",
+    "solution": "couch *, table *, floor *",
     "couchPets": [
       {
         "tag": "cat"
