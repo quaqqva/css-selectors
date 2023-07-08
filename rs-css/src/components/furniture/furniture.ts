@@ -61,6 +61,11 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
     });
   }
 
+  public override clear(): void {
+    super.clear();
+    this.pets = [];
+  }
+
   private recreateEnviroment(bodyEnviroment: BaseComponent<HTMLElement>): DOMEnviroment {
     const fakeComponent = new FakeComponent({ tag: this.name });
     bodyEnviroment.append(fakeComponent);
@@ -96,10 +101,5 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
   public override append(...elements: Pet[]): void {
     super.append(...elements);
     this.pets.push(...elements);
-  }
-
-  public override clear(): void {
-    super.clear();
-    this.pets = [];
   }
 }

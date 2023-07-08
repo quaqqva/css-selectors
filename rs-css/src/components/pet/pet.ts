@@ -9,18 +9,6 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
 
   public children: Pet[];
 
-  private static createMarkup(data: PetElement): Partial<ElementParameters> {
-    const classes = structuredClone(data.classes) || [];
-    classes.push(data.tag);
-    if (data.attributes && data.attributes['id']) classes.push(data.attributes['id']);
-    const markup: Partial<ElementParameters> = {
-      tag: Tags.Div,
-      classes,
-      attributes: data.attributes,
-    };
-    return markup;
-  }
-
   public constructor(fakeMarkup: PetElement, markup?: Partial<ElementParameters>) {
     super(markup || Pet.createMarkup(fakeMarkup));
     this.fakeMarkupParams = fakeMarkup;
@@ -57,5 +45,17 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
 
     resultComponent.addText(`${indents}</${this.fakeMarkupParams.tag}>\n`);
     return resultComponent;
+  }
+
+  private static createMarkup(data: PetElement): Partial<ElementParameters> {
+    const classes = structuredClone(data.classes) || [];
+    classes.push(data.tag);
+    if (data.attributes && data.attributes['id']) classes.push(data.attributes['id']);
+    const markup: Partial<ElementParameters> = {
+      tag: Tags.Div,
+      classes,
+      attributes: data.attributes,
+    };
+    return markup;
   }
 }

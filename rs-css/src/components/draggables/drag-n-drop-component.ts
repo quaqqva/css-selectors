@@ -65,6 +65,14 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
     });
   }
 
+  public override append(...elements: (HTMLElement | BaseComponent<HTMLElement>)[]): void {
+    this.contentWrapper.append(...elements);
+  }
+
+  public override clear() {
+    this.contentWrapper.clear();
+  }
+
   private addDragHandler(): void {
     this.element.ondragstart = () => false;
     this.addEventListener(Events.MouseDown, (event) => {
@@ -120,13 +128,5 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
       minimizeButton.addClass(FontAwesome.WindowMinimize);
     };
     minimizeButton.addEventListener(Events.Click, minimizeHandler);
-  }
-
-  public override append(...elements: (HTMLElement | BaseComponent<HTMLElement>)[]): void {
-    this.contentWrapper.append(...elements);
-  }
-
-  public override clear() {
-    this.contentWrapper.clear();
   }
 }

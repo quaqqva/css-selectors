@@ -29,15 +29,6 @@ export default class AppController {
     this.helpUsed = false;
   }
 
-  private loadUserData(): UserData {
-    const data: string | null = localStorage.getItem(AppController.STORAGE_KEY);
-    if (!data) {
-      this.clearUserData();
-      return this.userData;
-    }
-    return JSON.parse(data);
-  }
-
   public saveUserData(): void {
     localStorage.setItem(AppController.STORAGE_KEY, JSON.stringify(this.userData));
   }
@@ -123,5 +114,14 @@ export default class AppController {
   public getUserInput(viewData: unknown) {
     const selector = (viewData as [markup: string, selector: string])[1];
     return selector;
+  }
+
+  private loadUserData(): UserData {
+    const data: string | null = localStorage.getItem(AppController.STORAGE_KEY);
+    if (!data) {
+      this.clearUserData();
+      return this.userData;
+    }
+    return JSON.parse(data);
   }
 }

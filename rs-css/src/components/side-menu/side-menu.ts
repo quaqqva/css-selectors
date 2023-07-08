@@ -140,6 +140,28 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     }
   }
 
+  public loadLevel(level: NumeratedLevel): void {
+    if (this.currentLevel !== SideMenu.WIN_INFO_INDEX)
+      this.levelList[this.currentLevel].removeClass(MenuClasses.CurrentLevelButton);
+    this.currentLevel = level.index;
+    this.levelList[this.currentLevel].addClass(MenuClasses.CurrentLevelButton);
+
+    this.contentLabel.textContent = this.getLabelTemplate();
+    if (this.description) this.description.destroy();
+    this.description = BaseComponent.FromHTML<HTMLParagraphElement>(
+      `<p class="${MenuClasses.Description}">${level.description}</p>`
+    );
+    if (this.isDescription) this.contentWrapper.append(this.description);
+  }
+
+  public hide(): void {
+    this.removeClass(MenuClasses.ShowMenu);
+  }
+
+  public show(): void {
+    this.addClass(MenuClasses.ShowMenu);
+  }
+
   private static createCloseButton(): BaseComponent<HTMLButtonElement> {
     const closeButton = new BaseComponent<HTMLButtonElement>({ ...SideMenu.CLOSE_BUTTON_PARAMS });
     const crossIcon = new BaseComponent<HTMLElement>({
@@ -200,27 +222,5 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
       this.contentLabel.removeClass(MenuClasses.HideElement);
       this.contentWrapper.removeClass(MenuClasses.HideElement);
     }, SideMenu.SWITCH_TRANSITION);
-  }
-
-  public loadLevel(level: NumeratedLevel): void {
-    if (this.currentLevel !== SideMenu.WIN_INFO_INDEX)
-      this.levelList[this.currentLevel].removeClass(MenuClasses.CurrentLevelButton);
-    this.currentLevel = level.index;
-    this.levelList[this.currentLevel].addClass(MenuClasses.CurrentLevelButton);
-
-    this.contentLabel.textContent = this.getLabelTemplate();
-    if (this.description) this.description.destroy();
-    this.description = BaseComponent.FromHTML<HTMLParagraphElement>(
-      `<p class="${MenuClasses.Description}">${level.description}</p>`
-    );
-    if (this.isDescription) this.contentWrapper.append(this.description);
-  }
-
-  public hide(): void {
-    this.removeClass(MenuClasses.ShowMenu);
-  }
-
-  public show(): void {
-    this.addClass(MenuClasses.ShowMenu);
   }
 }
