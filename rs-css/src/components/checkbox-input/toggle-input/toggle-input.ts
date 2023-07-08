@@ -1,7 +1,7 @@
-import { DefaultCallback } from '../../types/default';
-import { Events, Tags } from '../../types/dom-types';
-import BaseComponent from '../base-component';
-import CheckboxComponent from '../checkbox-input/checkbox-input';
+import { DefaultCallback } from '../../../types/default';
+import { Events, Tags } from '../../../types/dom-types';
+import BaseComponent from '../../base-component';
+import CheckboxComponent from '../checkbox-input';
 import './toggle-input-styles.scss';
 
 enum ToggleInputClasses {

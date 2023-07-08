@@ -4,7 +4,7 @@ import { Tags, Events } from '../../types/dom-types';
 import { FontAwesome } from '../../types/font-awesome';
 import './menu-styles.scss';
 import { CompletionState, NumeratedLevel } from '../../app/model/level-data';
-import ToggleInput from '../toggle-input/toggle-input';
+import ToggleInput from '../checkbox-input/toggle-input/toggle-input';
 import { AppEvents } from '../../types/app-events';
 
 enum MenuClasses {
