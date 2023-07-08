@@ -37,7 +37,7 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
   }
 
   public getMarkup(indentLevel: number): BaseComponent<HTMLSpanElement> {
-    const [component] = this.fakeComponent;
+    const component = new BaseComponent(this.fakeMarkupParams);
     const componentHTML = component.HTML.replace(/<\/.+>/, '');
 
     let indents = '';
