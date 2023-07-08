@@ -36,7 +36,7 @@ export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
     classes: [DragNDropClasses.MinimizeButton, FontAwesome.Regular, FontAwesome.WindowMinimize],
   };
 
-  private static MIN_BOTTOM_HEIGHT = 75;
+  private static MIN_BOTTOM_HEIGHT = 60;
 
   private shiftX: number;
 
