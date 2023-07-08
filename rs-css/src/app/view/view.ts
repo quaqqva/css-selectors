@@ -40,6 +40,7 @@ export default class AppView {
   public drawLevel(level: NumeratedLevel): void {
     this.main.changeLevel(level);
     if (this.sideMenu) this.sideMenu.loadLevel(level);
+    if (level.tablePets) this.sideMenu?.hide();
   }
 
   public loadSideMenu(completedLevels: CompletionState[], names: string[]) {
