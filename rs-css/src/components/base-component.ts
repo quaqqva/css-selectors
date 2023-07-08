@@ -102,7 +102,7 @@ export default class BaseComponent<T extends HTMLElement> {
   public showAnimation({ name, duration, timingFunction = 'ease-in-out', repeatCount = 1 }: AnimationParams): void {
     this.element.setAttribute(
       'style',
-      `${this.element.style.cssText} animation-name: ${name} !important; animation-duration: ${duration}ms !important; animation-timing-function: ${timingFunction} !important; animation-iteration-count: ${repeatCount} !important;  transform-origin: center;`
+      `${this.element.style.cssText} animation: ${name} ${duration}ms ${timingFunction} ${repeatCount} !important;  transform-origin: center;`
     );
     setTimeout(() => {
       this.element.style.animation = '';
