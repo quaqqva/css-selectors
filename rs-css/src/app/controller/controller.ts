@@ -69,8 +69,12 @@ export default class AppController {
   }
 
   public get currentSolution(): string {
-    this.helpUsed = true;
     return this.levels[this.currentLevelIndex].solution;
+  }
+
+  public get help(): string {
+    this.helpUsed = true;
+    return this.currentSolution;
   }
 
   public get helped(): boolean {

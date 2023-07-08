@@ -122,7 +122,10 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
     this.emitter.subscribe(AppEvents.ResetProgress, () => {
       this.completedLevels = new Array(this.completedLevels.length).fill(false);
-      this.levelList.forEach((button) => button.removeClass(MenuClasses.CompletedLevelButton));
+      this.levelList.forEach((button) => {
+        button.removeClass(MenuClasses.CompletedLevelButton);
+        button.removeClass(MenuClasses.CompletedWithHelpLevelButton);
+      });
     });
   }
 

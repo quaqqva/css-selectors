@@ -30,6 +30,7 @@ export default class App {
           this.view.signalWrongInput(this.controller.getUserInput(data));
         },
         winCallback: async () => {
+          this.eventEmitter.emit(AppEvents.LevelCompleted, [this.controller.currentLevel, this.controller.helped]);
           await this.view.signalLevelWin(this.controller.currentSolution);
           this.view.signalWin();
         },
@@ -46,7 +47,7 @@ export default class App {
     });
 
     this.eventEmitter.subscribe(AppEvents.GetSelector, () => {
-      this.eventEmitter.emit(AppEvents.PostSelector, this.controller.currentSolution);
+      this.eventEmitter.emit(AppEvents.PostSelector, this.controller.help);
     });
 
     this.view.loadSideMenu(this.controller.completedLevels, this.controller.names);
