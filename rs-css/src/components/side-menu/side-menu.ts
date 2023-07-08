@@ -54,6 +54,8 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private static SWITCH_TRANSITION = 300;
 
+  private static WIN_INFO_INDEX = -1;
+
   public static LEVEL_CHOSEN = 'choose-level';
 
   private emitter: EventEmitter;
@@ -130,9 +132,14 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
   }
 
   public showWinText(): void {
-    this.contentLabel.textContent = 'You win!';
-    this.contentWrapper.textContent = 'Congratulations!! Thanks for finding my super big hamster...';
-    this.currentLevel = -1;
+    this.levelList[this.currentLevel].removeClass(MenuClasses.CurrentLevelButton);
+    this.currentLevel = SideMenu.WIN_INFO_INDEX;
+    if (!this.isDescription) {
+      this.switchButton.toggle();
+      this.switchContent();
+    } else {
+      this.switchContent(true);
+    }
   }
 
   private static createCloseButton(): BaseComponent<HTMLButtonElement> {
@@ -175,17 +182,22 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     });
   }
 
-  private switchContent(): void {
-    this.isDescription = !this.isDescription;
+  private switchContent(toDescription?: boolean): void {
+    this.isDescription = toDescription || !this.isDescription;
 
     this.contentLabel.addClass(MenuClasses.HideElement);
     this.contentWrapper.addClass(MenuClasses.HideElement);
 
     setTimeout(() => {
-      this.contentLabel.textContent = this.getLabelTemplate();
-      this.contentWrapper.clear();
-      if (this.isDescription && this.description) this.contentWrapper.append(this.description);
-      else this.contentWrapper.append(...this.levelList, this.resetProgressButton);
+      if (this.currentLevel !== SideMenu.WIN_INFO_INDEX || !this.isDescription) {
+        this.contentLabel.textContent = this.getLabelTemplate();
+        this.contentWrapper.clear();
+        if (this.isDescription && this.description) this.contentWrapper.append(this.description);
+        else this.contentWrapper.append(...this.levelList, this.resetProgressButton);
+      } else {
+        this.contentLabel.textContent = 'You win!';
+        this.contentWrapper.textContent = 'Congratulations!! Thanks for finding my super big hamster...';
+      }
 
       this.contentLabel.removeClass(MenuClasses.HideElement);
       this.contentWrapper.removeClass(MenuClasses.HideElement);
@@ -193,7 +205,8 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
   }
 
   public loadLevel(level: NumeratedLevel): void {
-    this.levelList[this.currentLevel].removeClass(MenuClasses.CurrentLevelButton);
+    if (this.currentLevel !== SideMenu.WIN_INFO_INDEX)
+      this.levelList[this.currentLevel].removeClass(MenuClasses.CurrentLevelButton);
     this.currentLevel = level.index;
     this.levelList[this.currentLevel].addClass(MenuClasses.CurrentLevelButton);
 

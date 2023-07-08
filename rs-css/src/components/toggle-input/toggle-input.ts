@@ -1,6 +1,7 @@
 import { DefaultCallback } from '../../types/default';
 import { Events, Tags } from '../../types/dom-types';
 import BaseComponent from '../base-component';
+import CheckboxComponent from '../checkbox-input/checkbox-input';
 import './toggle-input-styles.scss';
 
 enum ToggleInputClasses {
@@ -15,14 +16,6 @@ export default class ToggleInput extends BaseComponent<HTMLDivElement> {
     classes: [ToggleInputClasses.ToggleInput],
   };
 
-  private static CHECKBOX_PARAMS = {
-    tag: Tags.Input,
-    classes: [ToggleInputClasses.Checkbox],
-    attributes: {
-      type: 'checkbox',
-    },
-  };
-
   private static SWITCH_BUTTON_PARAMS = {
     tag: Tags.Div,
     classes: [ToggleInputClasses.SwitchButton],
@@ -33,7 +26,7 @@ export default class ToggleInput extends BaseComponent<HTMLDivElement> {
     classes: [ToggleInputClasses.Label],
   };
 
-  private checkbox: BaseComponent<HTMLInputElement>;
+  private checkbox: CheckboxComponent;
 
   private label: BaseComponent<HTMLLabelElement>;
 
@@ -41,7 +34,9 @@ export default class ToggleInput extends BaseComponent<HTMLDivElement> {
 
   public constructor({ description, parent }: { description: string; parent?: BaseComponent<HTMLElement> }) {
     super({ ...ToggleInput.ELEMENT_PARAMS, parent });
-    this.checkbox = new BaseComponent<HTMLInputElement>({ ...ToggleInput.CHECKBOX_PARAMS, parent: this });
+    this.checkbox = new CheckboxComponent(this);
+    this.checkbox.addClass(ToggleInputClasses.Checkbox);
+
     this.button = new BaseComponent<HTMLDivElement>({
       ...ToggleInput.SWITCH_BUTTON_PARAMS,
       parent: this,
@@ -55,5 +50,9 @@ export default class ToggleInput extends BaseComponent<HTMLDivElement> {
 
   public addInputListener(handler: DefaultCallback): void {
     this.checkbox.addEventListener(Events.Input, handler);
+  }
+
+  public toggle(): void {
+    this.checkbox.toggle();
   }
 }
