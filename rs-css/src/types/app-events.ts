@@ -3,4 +3,6 @@ export enum AppEvents {
   ResetProgress = 'reset-progress',
   GetSelector = 'help-get-selector',
   PostSelector = 'help-post-selector',
+  SelectorInput = 'selector-input',
+  LevelChoose = 'level-chosen',
 }

@@ -18,7 +18,7 @@ export default class App {
   }
 
   public start(): void {
-    this.eventEmitter.subscribe(this.view.SELECTOR_INPUT_EVENT, (data) => {
+    this.eventEmitter.subscribe(AppEvents.SelectorInput, (data) => {
       this.controller.checkInput({
         viewData: data,
         sucessCallback: async () => {
@@ -37,7 +37,7 @@ export default class App {
       });
     });
 
-    this.eventEmitter.subscribe(this.view.LEVEL_CHOOSE_EVENT, (index) =>
+    this.eventEmitter.subscribe(AppEvents.LevelChoose, (index) =>
       this.controller.loadLevel(index as number, (level) => this.view.drawLevel(level))
     );
 

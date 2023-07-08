@@ -56,8 +56,6 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private static WIN_INFO_INDEX = -1;
 
-  public static LEVEL_CHOSEN = 'choose-level';
-
   private emitter: EventEmitter;
 
   private isDescription: boolean;
@@ -176,7 +174,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
       else if (levelCompleted === CompletionState.CompletedWithHelp)
         button.addClass(MenuClasses.CompletedWithHelpLevelButton);
       button.addEventListener(Events.Click, () => {
-        this.emitter.emit(SideMenu.LEVEL_CHOSEN, index);
+        this.emitter.emit(AppEvents.LevelChoose, index);
       });
       return button;
     });

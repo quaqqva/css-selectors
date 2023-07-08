@@ -1,3 +1,4 @@
+import { AppEvents } from '../../../types/app-events';
 import { DefaultCallback } from '../../../types/default';
 import { Events, Tags } from '../../../types/dom-types';
 import EventEmitter from '../../../utils/event-emitter';
@@ -51,7 +52,7 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
     this.textView = new HighlightableComponent({ ...CSSInput.TEXT_VIEW_PARAMS, parent: this });
 
     const enterHandler: DefaultCallback = () => {
-      emitter.emit(CSSInput.INPUT_EVENT, this.input.text);
+      emitter.emit(AppEvents.SelectorInput, this.input.text);
     };
 
     this.input.addEnterListener(enterHandler);

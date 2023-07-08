@@ -22,8 +22,6 @@ enum PlaygroundClasses {
 }
 
 export default class Playground extends BaseComponent<HTMLElement> {
-  public static INPUT_EVENT = 'selector-entered';
-
   private static ELEMENT_PARAMS = {
     tag: Tags.Main,
     classes: [PlaygroundClasses.Playground],
@@ -106,10 +104,6 @@ export default class Playground extends BaseComponent<HTMLElement> {
     this.cssInput = new CSSInput({ parent: this.cssInputWrapper, emitter });
 
     this.htmlView = new HTMLView(this);
-
-    emitter.subscribe(CSSInput.INPUT_EVENT, (selector) => {
-      emitter.emit(Playground.INPUT_EVENT, [this.htmlView.textContent, selector]);
-    });
 
     emitter.subscribe(AppEvents.LevelCompleted, () => {
       this.cssInput.clearInput();

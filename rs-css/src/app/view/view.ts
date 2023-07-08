@@ -37,14 +37,6 @@ export default class AppView {
     this.body.append(footer);
   }
 
-  public get SELECTOR_INPUT_EVENT() {
-    return Playground.INPUT_EVENT;
-  }
-
-  public get LEVEL_CHOOSE_EVENT() {
-    return SideMenu.LEVEL_CHOSEN;
-  }
-
   public drawLevel(level: NumeratedLevel): void {
     this.main.changeLevel(level);
     if (this.sideMenu) this.sideMenu.loadLevel(level);
