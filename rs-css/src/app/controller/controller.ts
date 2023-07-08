@@ -117,7 +117,7 @@ export default class AppController {
   }
 
   public getUserInput(viewData: unknown) {
-    const [_, selector] = viewData as [markup: string, selector: string];
+    const selector = (viewData as [markup: string, selector: string])[1];
     return selector;
   }
 }
