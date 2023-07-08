@@ -25,6 +25,8 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
     },
   };
 
+  private static INPUT_LETTER_DELAY = 40;
+
   private static BUTTON_PARAMS = {
     tag: Tags.Button,
     classes: [CSSInputClasses.EnterButton],
@@ -35,8 +37,6 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
     tag: Tags.Code,
     classes: [CSSInputClasses.TextView],
   };
-
-  public static INPUT_EVENT = 'selector-input';
 
   private input: TextInput;
 
@@ -75,7 +75,7 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
       const char = text[i];
       this.input.text += char;
       this.textView.textContent = text.substring(0, i + 1);
-      await delay(40);
+      await delay(CSSInput.INPUT_LETTER_DELAY);
     }
   }
 

@@ -1,11 +1,11 @@
-import { Tags } from '../../types/dom-types';
+import { InputTypes, Tags } from '../../types/dom-types';
 import BaseComponent from '../base-component';
 
 export default class CheckboxComponent extends BaseComponent<HTMLInputElement> {
   private static ELEMENT_PARAMS = {
     tag: Tags.Input,
     attributes: {
-      type: 'checkbox',
+      type: InputTypes.Checkbox,
     },
   };
 

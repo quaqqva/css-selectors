@@ -1,12 +1,13 @@
 import { DefaultCallback, ElementParameters } from '../../types/default';
-import { Events, Tags } from '../../types/dom-types';
+import { Events, InputTypes, Tags } from '../../types/dom-types';
 import BaseComponent from '../base-component';
+import { Keys } from '../../types/keys';
 
 export default class TextInput extends BaseComponent<HTMLInputElement> {
   private static DEFAULT_PARAMS = {
     tag: Tags.Input,
     attributes: {
-      type: 'text',
+      type: InputTypes.Text,
     },
   };
 
@@ -25,7 +26,7 @@ export default class TextInput extends BaseComponent<HTMLInputElement> {
   public addEnterListener(handler: DefaultCallback): void {
     this.addEventListener(Events.KeyDown, (event) => {
       const keyEvent = event as KeyboardEvent;
-      if (keyEvent.key === 'Enter') handler();
+      if (keyEvent.key === Keys.Enter) handler();
     });
   }
 

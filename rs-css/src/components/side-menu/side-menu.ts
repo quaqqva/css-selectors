@@ -56,6 +56,16 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private static WIN_INFO_INDEX = -1;
 
+  private static SWITCH_BUTTON_LABEL = 'switch-content';
+
+  private static WIN_HEADER = 'You win!';
+
+  private static WIN_CONTENT = 'Congratulations!! Thanks for finding my super big hamster...';
+
+  private static MARK_COMPLETED = '✅';
+
+  private static MARK_WITH_HELP = '☑️';
+
   private emitter: EventEmitter;
 
   private isDescription: boolean;
@@ -90,7 +100,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     this.isDescription = true;
     this.currentLevel = 0;
 
-    this.switchButton = new ToggleInput({ description: 'Switch content', parent: this });
+    this.switchButton = new ToggleInput({ description: SideMenu.SWITCH_BUTTON_LABEL, parent: this });
     this.switchButton.addInputListener(() => {
       this.switchContent();
     });
@@ -177,9 +187,9 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     return this.isDescription
       ? `Level ${this.currentLevel + 1} of ${this.levelList.length} ${
           completionState === CompletionState.Completed
-            ? '✅'
+            ? SideMenu.MARK_COMPLETED
             : completionState === CompletionState.CompletedWithHelp
-            ? '☑️'
+            ? SideMenu.MARK_WITH_HELP
             : ''
         }`
       : 'Levels';
@@ -215,8 +225,8 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
         if (this.isDescription && this.description) this.contentWrapper.append(this.description);
         else this.contentWrapper.append(...this.levelList, this.resetProgressButton);
       } else {
-        this.contentLabel.textContent = 'You win!';
-        this.contentWrapper.textContent = 'Congratulations!! Thanks for finding my super big hamster...';
+        this.contentLabel.textContent = SideMenu.WIN_HEADER;
+        this.contentWrapper.textContent = SideMenu.WIN_CONTENT;
       }
 
       this.contentLabel.removeClass(MenuClasses.HideElement);

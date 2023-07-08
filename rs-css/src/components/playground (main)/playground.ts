@@ -66,6 +66,10 @@ export default class Playground extends BaseComponent<HTMLElement> {
     duration: 500,
   };
 
+  private static CSS_INPUT_PANEL_TITLE = 'styles.css';
+
+  private static WIN_HEADER_TEXT = "Hooray!\nYou saved everyone!!\nAnd now you're CSS pro!\nThanks for playing!";
+
   private taskHeader: BaseComponent<HTMLHeadingElement>;
 
   private helpButton: BaseComponent<HTMLButtonElement>;
@@ -99,7 +103,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
     this.couch = new Furniture(Playground.COUCH_PARAMS);
     this.floor = new Furniture(Playground.FLOOR_PARAMS);
 
-    this.cssInputWrapper = new DragNDropComponent({ parent: this, panelTitle: 'styles.css' });
+    this.cssInputWrapper = new DragNDropComponent({ parent: this, panelTitle: Playground.CSS_INPUT_PANEL_TITLE });
     this.cssInputWrapper.addClass(PlaygroundClasses.CSSDraggable);
     this.cssInput = new CSSInput({ parent: this.cssInputWrapper, emitter });
 
@@ -151,7 +155,7 @@ export default class Playground extends BaseComponent<HTMLElement> {
     this.cssInputWrapper.destroy();
     this.helpButton.destroy();
 
-    this.taskHeader.textContent = "Hooray!\nYou saved everyone!!\nAnd now you're CSS pro!\nThanks for playing!";
+    this.taskHeader.textContent = Playground.WIN_HEADER_TEXT;
     this.taskHeader.addClass(PlaygroundClasses.WinHeading);
   }
 

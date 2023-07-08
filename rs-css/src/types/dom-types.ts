@@ -39,3 +39,8 @@ export type AnimationParams = {
   timingFunction?: string;
   repeatCount?: number;
 };
+
+export enum InputTypes {
+  Text = 'text',
+  Checkbox = 'checkbox',
+}
