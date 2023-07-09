@@ -56,6 +56,7 @@ $bg-full-height: 1080;
   position: absolute;
   left: 5%;
   bottom: 90px;
+  z-index: $help-button-layer;
 
   width: 20vw;
   height: 40px;
