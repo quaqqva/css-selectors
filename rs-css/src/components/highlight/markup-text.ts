@@ -21,13 +21,17 @@ export default class MarkupText extends BaseComponent<HTMLDivElement> {
   };
 
   private static OFFSET = 75;
+
   public constructor(textContent: string, parentPosition: Position, parent: BaseComponent<HTMLElement>) {
     super({ ...MarkupText.ELEMENT_PARAMS, parent });
     this.text = new HighlightableComponent<HTMLSpanElement>({ ...MarkupText.TEXT_PARAMS, parent: this, textContent });
 
     const headerHeight = 75;
     this.element.style.top = `${Math.max(parentPosition.y - MarkupText.OFFSET, headerHeight)}px`;
-    this.element.style.left = `${Math.min(parentPosition.x - MarkupText.OFFSET, document.body.offsetWidth - 400)}px`;
+    this.element.style.left = `${Math.min(
+      parentPosition.x - MarkupText.OFFSET,
+      document.body.offsetWidth - this.element.offsetWidth - MarkupText.OFFSET / 2
+    )}px`;
   }
 
   public show(): void {

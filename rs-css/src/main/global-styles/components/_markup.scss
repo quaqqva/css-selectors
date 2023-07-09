@@ -23,6 +23,10 @@
   color: $additional-color-light;
   font-size: 1.5em;
 
+  @media (max-width: $tablet-width) {
+    font-size: 1.25em;
+  }
+
   background-color: $accent-color-2;
   border: 4px solid $additional-color-light;
 
