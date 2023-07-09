@@ -4,6 +4,7 @@
   border: none;
   box-sizing: border-box;
   z-index: $default-layer;
+  --other-transform: skew(0);
 }
 
 body {

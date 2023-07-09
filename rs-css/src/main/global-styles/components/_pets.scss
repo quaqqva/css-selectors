@@ -37,6 +37,7 @@
   & > * {
     left: -5% !important;
     bottom: 85% !important;
+    --other-transform: rotate(40deg);
     @include pet-stand($other-transforms: rotate(40deg), $animation-name: pet-stand-on-parrot);
 
     &.target {
