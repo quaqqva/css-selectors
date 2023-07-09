@@ -1,4 +1,3 @@
-import { AppEvents } from '../../../types/app-events';
 import { DefaultCallback } from '../../../types/default';
 import { Events, Tags } from '../../../types/dom-types';
 import EventEmitter from '../../../utils/event-emitter';

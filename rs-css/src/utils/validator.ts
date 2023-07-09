@@ -5,15 +5,17 @@ type InputParams = {
 };
 
 export default function validateSelector({ markup, selector, solution }: InputParams): boolean {
-  if (!selector) return false;
   if (selector === solution) return true;
   const template = document.createElement('template');
   template.insertAdjacentHTML('afterbegin', markup);
 
-  const userSelect = template.querySelectorAll(selector);
-  const solutionSelect = template.querySelectorAll(solution);
-
-  return compareLists(userSelect, solutionSelect);
+  try {
+    const userSelect = template.querySelectorAll(selector);
+    const solutionSelect = template.querySelectorAll(solution);
+    return compareLists(userSelect, solutionSelect);
+  } catch {
+    return false;
+  }
 }
 
 function compareLists(list1: NodeListOf<Element>, list2: NodeListOf<Element>): boolean {

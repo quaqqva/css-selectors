@@ -20,12 +20,7 @@ export default class BaseComponent<T extends HTMLElement> {
   }
 
   public constructor({ tag = Tags.Div, textContent, classes, attributes, parent }: Partial<ElementParameters>) {
-    const candidate = document.createElement(tag);
-    try {
-      this.element = candidate as T;
-    } catch (e: unknown) {
-      throw Error('Error: wrong tag value passed');
-    }
+    this.element = document.createElement(tag) as T;
 
     if (textContent) this.element.innerText = textContent;
 
@@ -75,8 +70,11 @@ export default class BaseComponent<T extends HTMLElement> {
   }
 
   public checkSelectorMatch(selector: string): boolean {
-    if (!selector) return false;
-    return this.element.matches(selector);
+    try {
+      return this.element.matches(selector);
+    } catch {
+      return false;
+    }
   }
 
   public setAttribute(attributeName: string, attributeValue: string): void {
