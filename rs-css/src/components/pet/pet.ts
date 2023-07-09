@@ -77,7 +77,7 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
   }
 
   private static createMarkup(data: PetElement): Partial<ElementParameters> {
-    const classes = structuredClone(data.classes) || [];
+    const classes = JSON.parse(JSON.stringify(data.classes || []));
     classes.push(data.tag);
     const markup: Partial<ElementParameters> = {
       tag: Tags.Div,

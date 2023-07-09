@@ -118,7 +118,7 @@ export default class AppController {
 
   private loadUserData(): UserData {
     const data: string | null = localStorage.getItem(AppController.STORAGE_KEY);
-    if (!data) {
+    if (!data || JSON.parse(data).completedLevels.length !== this.levels.length) {
       this.clearUserData();
       return this.userData;
     }

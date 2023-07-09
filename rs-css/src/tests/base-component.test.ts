@@ -3,7 +3,7 @@ import { Tags } from '../types/dom-types';
 
 describe('base DOM component', () => {
   it('creates new dom element and adds it to the specified parent into the DOM', () => {
-    const component = new BaseComponent<HTMLElement>({
+    new BaseComponent<HTMLElement>({
       tag: Tags.Span,
       classes: ['test-span'],
       parent: document.body,
@@ -11,7 +11,7 @@ describe('base DOM component', () => {
         attr: 'value',
       },
     });
-    expect(document.querySelector('span.test-span[attr="value"]')).toBeDefined();
+    expect(document.querySelector('span.test-span[attr="value"]')).toBeTruthy();
   });
   it('can add DOM elements to itself', () => {
     const component = new BaseComponent<HTMLDivElement>({ parent: document.body });
@@ -21,7 +21,7 @@ describe('base DOM component', () => {
         classes: ['test-p'],
       })
     );
-    expect(document.querySelector('div .test-p')).toBeDefined();
+    expect(document.querySelector('div .test-p')).toBeTruthy();
   });
   describe('can check if it matches selector', () => {
     describe('when element matches given selector', () => {

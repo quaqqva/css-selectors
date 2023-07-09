@@ -82,14 +82,14 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
     if (!selectorEnviroment) this.pets.forEach((pet) => pet.showAnimation(animation));
     else {
       const { selector, body } = selectorEnviroment;
-      this.searchForSelector(this.recreateEnviroment(body), selector, (element) => {
+      this.searchForSelector(this.recreateEnvironment(body), selector, (element) => {
         element.showAnimation(animation);
       });
     }
   }
 
   public highlightTargets({ selector, body }: SelectorEnviroment): void {
-    this.searchForSelector(this.recreateEnviroment(body), selector, (element) => {
+    this.searchForSelector(this.recreateEnvironment(body), selector, (element) => {
       element.addClass(FurnitureClasses.Target);
     });
   }
@@ -99,7 +99,7 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
     this.pets = [];
   }
 
-  private recreateEnviroment(bodyEnviroment: BaseComponent<HTMLElement>): DOMEnviroment {
+  private recreateEnvironment(bodyEnviroment: BaseComponent<HTMLElement>): DOMEnviroment {
     const fakeComponent = new FakeComponent({ tag: this.name });
     bodyEnviroment.append(fakeComponent);
 
