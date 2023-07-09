@@ -125,6 +125,8 @@ export default class Playground extends BaseComponent<HTMLElement> {
   }
 
   public changeLevel(level: LevelData): void {
+    this.clear();
+    this.append(this.taskHeader);
     this.append(this.cssInputWrapper);
     this.append(this.htmlView);
     this.append(this.helpButton);
@@ -170,8 +172,8 @@ export default class Playground extends BaseComponent<HTMLElement> {
       if (pets) {
         this.append(furniture);
         furniture.append(...pets.map((pet) => new Pet(pet)));
-        this.htmlView.append(furniture.getMarkup());
-      } else furniture.destroy();
+        this.htmlView.append(furniture.getMarkup(this));
+      }
     });
   }
 

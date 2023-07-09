@@ -5,6 +5,7 @@ import Pet from '../pet/pet';
 import HighlightableComponent from '../highlight/highlightable';
 import FakeComponent from '../pet/fake-component';
 import { MarkupClasses } from '../../types/markup-classes';
+import MarkupText from '../highlight/markup-text';
 
 enum FurnitureClasses {
   Markup = 'markup',
@@ -27,6 +28,8 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
 
   private name: string;
 
+  private markupText: MarkupText | null;
+
   private static MARKUP_PARAMS = {
     tag: Tags.Code,
     classes: [FurnitureClasses.Markup],
@@ -36,9 +39,10 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
     super(params);
     this.name = params.name;
     this.pets = [];
+    this.markupText = null;
   }
 
-  public getMarkup(): HighlightableComponent<HTMLElement> {
+  public getMarkup(appearingTextPlaceholder: BaseComponent<HTMLElement>): HighlightableComponent<HTMLElement> {
     const markupComponent = new HighlightableComponent<HTMLElement>(Furniture.MARKUP_PARAMS);
 
     const spanElement = new HighlightableComponent<HTMLSpanElement>({
@@ -46,19 +50,24 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
       classes: [MarkupClasses.Element],
     });
     spanElement.addText(`<${this.name}>\n`);
-    spanElement.append(...this.pets.map((pet) => pet.getMarkup(1)));
+    spanElement.append(...this.pets.map((pet) => pet.getMarkup(1, appearingTextPlaceholder)));
     spanElement.addText(`</${this.name}>`);
 
     markupComponent.append(spanElement);
 
+    const { x, y } = this.element.getBoundingClientRect();
+    this.markupText = new MarkupText(`<${this.name}></${this.name}>`, { x, y }, appearingTextPlaceholder);
+
     const highlightHandler = () => {
       spanElement.addClass(MarkupClasses.SpanHighlighted);
       this.addClass(MarkupClasses.PlaygroundElementHighlighted);
+      this.markupText?.show();
     };
 
     const removeHighlightHandler = () => {
       spanElement.removeClass(MarkupClasses.SpanHighlighted);
       this.removeClass(MarkupClasses.PlaygroundElementHighlighted);
+      this.markupText?.hide();
     };
 
     spanElement.addEventListener(Events.MouseOver, highlightHandler);
