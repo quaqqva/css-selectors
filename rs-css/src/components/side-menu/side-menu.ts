@@ -56,7 +56,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
 
   private static WIN_INFO_INDEX = -1;
 
-  private static SWITCH_BUTTON_LABEL = 'switch-content';
+  private static SWITCH_BUTTON_LABEL = 'Switch content';
 
   private static WIN_HEADER = 'You win!';
 
