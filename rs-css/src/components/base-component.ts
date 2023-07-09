@@ -51,6 +51,10 @@ export default class BaseComponent<T extends HTMLElement> {
     this.element.innerText = value;
   }
 
+  public insertBeforeNode(node: Node) {
+    node.parentNode?.insertBefore(this.element, node);
+  }
+
   public append(...elements: (HTMLElement | BaseComponent<HTMLElement>)[]): void {
     elements.forEach((element) => {
       if (element instanceof BaseComponent) this.element.append(element.element);

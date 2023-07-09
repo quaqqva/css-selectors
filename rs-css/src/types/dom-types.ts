@@ -24,6 +24,8 @@ export enum Events {
   MouseUp = 'mouseup',
   MouseMove = 'mousemove',
   KeyDown = 'keydown',
+  MouseOver = 'mouseover',
+  MouseOut = 'mouseout',
 }
 
 export enum InsertPositions {
@@ -43,4 +45,10 @@ export type AnimationParams = {
 export enum InputTypes {
   Text = 'text',
   Checkbox = 'checkbox',
+}
+
+export enum NodeTypes {
+  ElementNode = 1,
+  AttributeNode,
+  TextNode,
 }

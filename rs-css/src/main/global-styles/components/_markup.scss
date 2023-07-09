@@ -1,0 +1,11 @@
+.markup__element {
+  cursor: default;
+}
+
+.markup__element > .tag-content *{
+  transition: color $hover-transition ease-in-out;
+}
+
+.markup__element_highlighted > .tag-content *{
+  color: $additional-color-light;
+}

@@ -99,6 +99,7 @@
     bottom: 90%;
   }
 
+  transition: filter $hover-transition ease-in-out;
   @include image-border(0.5px, $additional-color-light);
   @include pet-stand();
 }

@@ -99,3 +99,7 @@
 .target {
   @include target-pet-stand();
 }
+
+.highlighted, .pug.highlighted, .pug#laying.highlighted, .corgy.highlighted, .guinea-pig.small.highlighted {
+  @include image-border($border-width: 4px, $border-color: $additional-color-light);
+}

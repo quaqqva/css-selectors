@@ -14,6 +14,8 @@ enum CSSInputClasses {
 }
 
 export default class CSSInput extends BaseComponent<HTMLDivElement> {
+  public static INPUT_EVENT = 'css-input';
+
   private static ELEMENT_PARAMS = {
     classes: [CSSInputClasses.Wrapper],
   };
@@ -52,7 +54,7 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
     this.textView = new HighlightableComponent({ ...CSSInput.TEXT_VIEW_PARAMS, parent: this });
 
     const enterHandler: DefaultCallback = () => {
-      emitter.emit(AppEvents.SelectorInput, this.input.text);
+      emitter.emit(CSSInput.INPUT_EVENT, this.input.text);
     };
 
     this.input.addEnterListener(enterHandler);

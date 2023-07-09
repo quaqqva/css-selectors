@@ -88,11 +88,14 @@ $bg-full-height: 1080;
 
 .playground__couch, .playground__floor, .playground__table {
   position: absolute;
-}
+  transition: filter $hover-transition ease-in-out;
 
-.playground__couch, .playground__floor, .playground__table {
   display: flex;
   justify-content: space-around;
+
+  &.highlighted {
+    filter: drop-shadow(0 0 10px $additional-color-light) !important;
+  }
 }
 
 .playground__couch {

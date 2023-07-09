@@ -1,9 +1,10 @@
 import { ElementParameters } from '../../types/default';
-import { AnimationParams, Tags } from '../../types/dom-types';
+import { AnimationParams, Events, Tags } from '../../types/dom-types';
 import BaseComponent from '../base-component';
 import Pet from '../pet/pet';
 import HighlightableComponent from '../highlight/highlightable';
 import FakeComponent from '../pet/fake-component';
+import { MarkupClasses } from '../../types/markup-classes';
 
 enum FurnitureClasses {
   Markup = 'markup',
@@ -39,9 +40,32 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
 
   public getMarkup(): HighlightableComponent<HTMLElement> {
     const markupComponent = new HighlightableComponent<HTMLElement>(Furniture.MARKUP_PARAMS);
-    markupComponent.addText(`<${this.name}>\n`);
-    markupComponent.append(...this.pets.map((pet) => pet.getMarkup(1)));
-    markupComponent.addText(`</${this.name}>`);
+
+    const spanElement = new HighlightableComponent<HTMLSpanElement>({
+      tag: Tags.Span,
+      classes: [MarkupClasses.Element],
+    });
+    spanElement.addText(`<${this.name}>\n`);
+    spanElement.append(...this.pets.map((pet) => pet.getMarkup(1)));
+    spanElement.addText(`</${this.name}>`);
+
+    markupComponent.append(spanElement);
+
+    const highlightHandler = () => {
+      spanElement.addClass(MarkupClasses.SpanHighlighted);
+      this.addClass(MarkupClasses.PlaygroundElementHighlighted);
+    };
+
+    const removeHighlightHandler = () => {
+      spanElement.removeClass(MarkupClasses.SpanHighlighted);
+      this.removeClass(MarkupClasses.PlaygroundElementHighlighted);
+    };
+
+    spanElement.addEventListener(Events.MouseOver, highlightHandler);
+    this.addEventListener(Events.MouseOver, highlightHandler);
+
+    spanElement.addEventListener(Events.MouseOut, removeHighlightHandler);
+    this.addEventListener(Events.MouseOut, removeHighlightHandler);
     return markupComponent;
   }
 

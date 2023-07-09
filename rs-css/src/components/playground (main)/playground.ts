@@ -113,6 +113,10 @@ export default class Playground extends BaseComponent<HTMLElement> {
       this.cssInput.clearInput();
     });
 
+    emitter.subscribe(CSSInput.INPUT_EVENT, (selector) => {
+      emitter.emit(AppEvents.SelectorInput, [this.htmlView.textContent, selector]);
+    });
+
     emitter.subscribe(AppEvents.PostSelector, async (selector) => {
       this.helpButton.setAttribute('disabled', 'true');
       await this.cssInput.inputText(selector as string);

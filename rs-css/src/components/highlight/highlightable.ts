@@ -2,6 +2,7 @@ import { ElementParameters } from '../../types/default';
 import BaseComponent from '../base-component';
 import wrapInSpan from '../../utils/wrap-in-span';
 import './highlight-theme.scss';
+import { NodeTypes } from '../../types/dom-types';
 
 type Replacer = (match: string) => string;
 
@@ -13,6 +14,7 @@ enum HighlightClasses {
   BracketSpan = 'css-bracket-highlight',
   ClassSpan = 'css-class-highlight',
   PseudoSpan = 'css-pseudo-highlight',
+  TagContent = 'tag-content',
 }
 
 export default class HighlightableComponent<T extends HTMLElement> extends BaseComponent<T> {
@@ -38,11 +40,11 @@ export default class HighlightableComponent<T extends HTMLElement> extends BaseC
 
   private highlight(): void {
     const content = this.element.innerText;
-    this.element.innerHTML = content.includes('<') ? this.highlightHTML() : this.highlightCSS();
+    if (content.includes('<')) this.highlightHTML();
+    else this.element.innerHTML = this.highlightCSS();
   }
 
-  private highlightHTML(): string {
-    const content = this.element.innerText;
+  private highlightHTML(): void {
     const tagReplacer: Replacer = (tag) => {
       const components = tag.split(' ');
       let tagName = components[0];
@@ -69,7 +71,19 @@ export default class HighlightableComponent<T extends HTMLElement> extends BaseC
       )}`;
     };
 
-    return content.replace(/<[^<]+>/g, tagReplacer).replace(/(\w|-)+="(\w|-)+"/g, attributeValueReplacer);
+    this.element.childNodes.forEach((node) => {
+      if (node.nodeType === NodeTypes.TextNode) {
+        const content = node.textContent;
+        if (content) {
+          let newHTML = content.replace(/<[^<]+>/g, tagReplacer).replace(/(\w|-)+="(\w|-)+"/g, attributeValueReplacer);
+          newHTML = `<span>${newHTML}</span>`;
+          const newComponent = BaseComponent.FromHTML(newHTML);
+          newComponent.addClass(HighlightClasses.TagContent);
+          newComponent.insertBeforeNode(node);
+          node.remove();
+        }
+      }
+    });
   }
 
   private highlightCSS(): string {
