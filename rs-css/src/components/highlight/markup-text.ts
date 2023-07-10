@@ -28,9 +28,12 @@ export default class MarkupText extends BaseComponent<HTMLDivElement> {
 
     const headerHeight = 75;
     this.element.style.top = `${Math.max(parentPosition.y - MarkupText.OFFSET, headerHeight)}px`;
-    this.element.style.left = `${Math.min(
-      parentPosition.x - MarkupText.OFFSET,
-      document.body.offsetWidth - this.element.offsetWidth - MarkupText.OFFSET / 2
+    this.element.style.left = `${Math.max(
+      0,
+      Math.min(
+        parentPosition.x - MarkupText.OFFSET,
+        document.body.offsetWidth - this.element.offsetWidth - MarkupText.OFFSET / 2
+      )
     )}px`;
   }
 
