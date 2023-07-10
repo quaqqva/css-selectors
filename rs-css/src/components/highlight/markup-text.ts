@@ -16,7 +16,7 @@ export default class MarkupText extends BaseComponent<HTMLDivElement> {
   };
 
   private static TEXT_PARAMS = {
-    tag: Tags.Span,
+    tag: Tags.Code,
     classes: [MarkupClasses.Element],
   };
 
