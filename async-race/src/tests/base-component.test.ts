@@ -1,10 +1,10 @@
-import BaseComponent from '../components/base-component';
+import DOMComponent from '../components/base-component';
 import { Tags } from '../types/dom-types';
 
 describe('base DOM component', () => {
   it('creates new dom element and adds it to the specified parent into the DOM', () => {
     // eslint-disable-next-line no-new
-    new BaseComponent<HTMLElement>({
+    new DOMComponent<HTMLElement>({
       tag: Tags.Span,
       classes: ['test-span'],
       parent: document.body,
@@ -15,9 +15,9 @@ describe('base DOM component', () => {
     expect(document.querySelector('span.test-span[attr="value"]')).toBeTruthy();
   });
   it('can add DOM elements to itself', () => {
-    const component = new BaseComponent<HTMLDivElement>({ parent: document.body });
+    const component = new DOMComponent<HTMLDivElement>({ parent: document.body });
     component.append(
-      new BaseComponent({
+      new DOMComponent({
         tag: Tags.Paragraph,
         classes: ['test-p'],
       })
@@ -27,7 +27,7 @@ describe('base DOM component', () => {
   describe('can check if it matches selector', () => {
     describe('when element matches given selector', () => {
       it('returns true', () => {
-        const component = new BaseComponent<HTMLSpanElement>({
+        const component = new DOMComponent<HTMLSpanElement>({
           tag: Tags.Span,
           classes: ['super-span', 'span-span'],
           attributes: {
@@ -40,21 +40,21 @@ describe('base DOM component', () => {
     });
   });
   it('can add and remove class to / from the element', () => {
-    const component = new BaseComponent<HTMLElement>({});
+    const component = new DOMComponent<HTMLElement>({});
     component.addClass('class');
     expect(component.checkSelectorMatch('.class')).toBe(true);
     component.removeClass('class');
     expect(component.checkSelectorMatch('.class')).toBe(false);
   });
   it('can and and remove attributes to / from the element', () => {
-    const component = new BaseComponent<HTMLElement>({});
+    const component = new DOMComponent<HTMLElement>({});
     component.setAttribute('width', '400');
     expect(component.checkSelectorMatch('[width="400"]')).toBe(true);
     component.removeAttribute('width');
     expect(component.checkSelectorMatch('[width="400"]')).toBe(false);
   });
   it('returns correct HTML', () => {
-    const component = new BaseComponent<HTMLButtonElement>({
+    const component = new DOMComponent<HTMLButtonElement>({
       tag: Tags.Button,
       classes: ['super-button'],
       attributes: {
