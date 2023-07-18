@@ -10,7 +10,7 @@ const devtool = isDevMode ? 'source-map' : undefined;
 
 module.exports = {
   entry: ['@babel/polyfill', './src/main/index.ts'],
-  resolve: {  
+  resolve: {
     extensions: ['.ts', '.js'],
   },
   mode: buildMode,
@@ -60,10 +60,7 @@ module.exports = {
       {
         test: /\.(?:js|mjs|cjs|tsx?)$/,
         exclude: /node_modules/,
-        use: [
-          'babel-loader',
-          'ts-loader',
-        ],
+        use: ['babel-loader', 'ts-loader'],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,

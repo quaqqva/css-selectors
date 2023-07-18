@@ -5,22 +5,22 @@ export type ElementParameters = {
   textContent: string;
   classes: string[];
   attributes: { [attribute: string]: string };
-  parent: Node | BaseComponent<HTMLElement>;
+  parent: Node | DOMComponent<HTMLElement>;
 };
-export default class BaseComponent<T extends HTMLElement> {
+export default class DOMComponent<T extends HTMLElement> {
   protected element: T;
 
-  public static FromHTML<T extends HTMLElement>(html: string): BaseComponent<T> {
+  public static FromHTML<T extends HTMLElement>(html: string): DOMComponent<T> {
     const template = document.createElement(Tags.Template);
     template.insertAdjacentHTML(InsertPositions.Prepend, html);
     const element = template.firstChild as T;
-    const component = new BaseComponent<T>({ tag: element.tagName });
+    const component = new DOMComponent<T>({ tag: element.tagName });
     component.element = element;
     return component;
   }
 
-  public static FromElement<T extends HTMLElement>(element: T): BaseComponent<T> {
-    const component = new BaseComponent<T>({});
+  public static FromElement<T extends HTMLElement>(element: T): DOMComponent<T> {
+    const component = new DOMComponent<T>({});
     component.element = element;
     return component;
   }
@@ -39,7 +39,7 @@ export default class BaseComponent<T extends HTMLElement> {
     }
 
     if (parent instanceof Node) parent.appendChild(this.element);
-    if (parent instanceof BaseComponent) parent.append(this.element);
+    if (parent instanceof DOMComponent) parent.append(this.element);
   }
 
   public get HTML(): string {
@@ -58,9 +58,9 @@ export default class BaseComponent<T extends HTMLElement> {
     node.parentNode?.insertBefore(this.element, node);
   }
 
-  public append(...elements: (HTMLElement | BaseComponent<HTMLElement>)[]): void {
+  public append(...elements: (HTMLElement | DOMComponent<HTMLElement>)[]): void {
     elements.forEach((element) => {
-      if (element instanceof BaseComponent) this.element.append(element.element);
+      if (element instanceof DOMComponent) this.element.append(element.element);
       else this.element.append(element);
     });
   }

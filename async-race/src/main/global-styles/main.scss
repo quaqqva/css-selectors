@@ -1,11 +1,11 @@
-@import "abstracts/colors";
-@import "abstracts/variables";
-@import "abstracts/mixins";
+@import 'abstracts/colors';
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
 
-@import "base/reset";
+@import 'base/reset';
 
-@import "layout/header";
-@import "layout/main";
-@import "layout/footer";
+@import 'layout/header';
+@import 'layout/main';
+@import 'layout/footer';
 
-@import "vendors/normalize.css";
+@import 'vendors/normalize.css';
