@@ -1,3 +1,5 @@
-export enum AppEvents {
-    SwitchView = 'switch-view'
+enum AppEvents {
+  SwitchView = 'switch-view',
 }
+
+export default AppEvents;

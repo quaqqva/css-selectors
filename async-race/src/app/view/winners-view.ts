@@ -1,5 +1,3 @@
-import View from "./view";
+import View from './view';
 
-export default class WinnersView extends View {
-    
-}
+export default class WinnersView extends View {}

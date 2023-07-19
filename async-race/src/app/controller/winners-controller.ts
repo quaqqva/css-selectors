@@ -1,5 +1,3 @@
-import Controller from "./controller";
+import Controller from './controller';
 
-export default class WinnersController extends Controller {
-    
-}
+export default class WinnersController extends Controller {}
