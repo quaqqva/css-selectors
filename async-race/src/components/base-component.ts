@@ -1,16 +1,16 @@
 import { Tags, Events, InsertPositions, AnimationParams } from '../types/dom-types';
 
-export type ElementParameters = {
+export type ElementParameters = Partial<{
   tag: string;
   textContent: string;
   classes: string[];
   attributes: { [attribute: string]: string };
   parent: Node | DOMComponent<HTMLElement>;
-};
+}>;
 export default class DOMComponent<T extends HTMLElement> {
   protected element: T;
 
-  public static FromHTML<T extends HTMLElement>(html: string): DOMComponent<T> {
+  public static fromHTML<T extends HTMLElement>(html: string): DOMComponent<T> {
     const template = document.createElement(Tags.Template);
     template.insertAdjacentHTML(InsertPositions.Prepend, html);
     const element = template.firstChild as T;
@@ -19,13 +19,13 @@ export default class DOMComponent<T extends HTMLElement> {
     return component;
   }
 
-  public static FromElement<T extends HTMLElement>(element: T): DOMComponent<T> {
+  public static fromElement<T extends HTMLElement>(element: T): DOMComponent<T> {
     const component = new DOMComponent<T>({});
     component.element = element;
     return component;
   }
 
-  public constructor({ tag = Tags.Div, textContent, classes, attributes, parent }: Partial<ElementParameters>) {
+  public constructor({ tag = Tags.Div, textContent, classes, attributes, parent }: ElementParameters) {
     this.element = document.createElement(tag) as T;
 
     if (textContent) this.element.innerText = textContent;

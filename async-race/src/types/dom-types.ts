@@ -7,6 +7,7 @@ export enum Tags {
   Header = 'header',
   Main = 'main',
   Footer = 'footer',
+  Section = 'section',
   Input = 'input',
   Icon = 'i',
   Template = 'template',

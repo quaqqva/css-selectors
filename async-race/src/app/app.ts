@@ -1,15 +1,13 @@
 import Controller from './controller/controller';
 import GarageController from './controller/garage-controller';
 import WinnersController from './controller/winners-controller';
-
-import View from './view/view';
-import GarageView from './view/garage-view';
-import WinnersView from './view/winners-view';
 import EventEmitter from '../utils/event-emitter';
-import { AppEvents } from './app-events';
+import AppEvents from './app-events';
+import AppView from './view/app-view';
+import AppViews from './view/app-views';
 
 export default class App {
-  view: View;
+  view: AppView;
 
   controller: Controller;
 
@@ -17,7 +15,7 @@ export default class App {
 
   public constructor() {
     this.emitter = new EventEmitter();
-    this.view = new GarageView();
+    this.view = new AppView({ emitter: this.emitter, startView: AppViews.GarageView });
     this.controller = new GarageController();
   }
 
@@ -28,8 +26,8 @@ export default class App {
   }
 
   private switchView(): void {
-    const isGarage: boolean = this.view instanceof GarageView;
-    this.view = isGarage ? new WinnersView() : new GarageView();
+    const isGarage = this.controller instanceof GarageController;
+    this.view.switchTo(isGarage ? AppViews.WinnersView : AppViews.GarageView);
     this.controller = isGarage ? new WinnersController() : new GarageController();
   }
 }
