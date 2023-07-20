@@ -8,6 +8,7 @@ import Header from './header/header';
 import GarageView from './sections/garage-view';
 import SectionView from './sections/section-view';
 import WinnersView from './sections/winners-view';
+import './styles/main.scss';
 
 enum ViewSections {
   SectionSlider = 'section-slider',
@@ -64,7 +65,7 @@ export default class AppView {
   private initializeBody(): DOMComponent<HTMLElement> {
     const body = DOMComponent.fromElement(document.body);
 
-    const header = new Header();
+    const header = new Header({ emitter: this.emitter });
     body.append(header);
 
     const main = new DOMComponent({

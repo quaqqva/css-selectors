@@ -1,0 +1,21 @@
+.footer {
+  width: 100%;
+  height: $footer-height;
+
+  font-size: 1.25rem;
+  color: $color-dark-xs;
+}
+
+.footer__made-for {
+  width: 260px;
+  height: 50%;
+}
+
+.footer__course-link {
+  height: 100%;
+  svg {
+    height: 100%;
+    aspect-ratio: 81 / 38;
+    transform: translateY(-10%);
+  }
+}

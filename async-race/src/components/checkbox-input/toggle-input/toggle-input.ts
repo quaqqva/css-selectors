@@ -53,7 +53,7 @@ export default class ToggleInput extends DOMComponent<HTMLDivElement> {
       ...ToggleInput.SWITCH_BUTTON_PARAMS,
       parent: this,
     });
-    this.button.addEventListener(Events.Click, () => {
+    this.addEventListener(Events.Click, () => {
       this.toggle();
     });
 
