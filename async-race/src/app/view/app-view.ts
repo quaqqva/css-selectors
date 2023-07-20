@@ -1,4 +1,5 @@
 import DOMComponent from '../../components/base-component';
+import Slider from '../../components/slider/slider';
 import { Tags } from '../../types/dom-types';
 import EventEmitter from '../../utils/event-emitter';
 import AppViews from './app-views';
@@ -9,6 +10,7 @@ import SectionView from './sections/section-view';
 import WinnersView from './sections/winners-view';
 
 enum ViewSections {
+  SectionSlider = 'section-slider',
   GarageSection = 'garage',
   WinnersSection = 'winners',
 }
@@ -16,7 +18,7 @@ enum ViewSections {
 export default class AppView {
   private emitter: EventEmitter;
 
-  private mainElement: DOMComponent<HTMLElement>;
+  private slider: Slider;
 
   private sections: Map<AppViews, SectionView>;
 
@@ -25,7 +27,8 @@ export default class AppView {
   public constructor({ emitter, startView }: { emitter: EventEmitter; startView: AppViews }) {
     this.emitter = emitter;
 
-    this.mainElement = this.initializeBody();
+    this.slider = new Slider(this.initializeBody());
+    this.slider.addClass(ViewSections.SectionSlider);
 
     this.sections = new Map<AppViews, SectionView>();
     this.switchTo(startView);
@@ -38,7 +41,7 @@ export default class AppView {
     if (!sectionView) {
       const viewContainer = new DOMComponent<HTMLElement>({
         tag: Tags.Section,
-        parent: this.mainElement,
+        parent: this.slider,
       });
       switch (this.currentSection) {
         case AppViews.GarageView:
@@ -54,6 +57,8 @@ export default class AppView {
       }
       this.sections.set(this.currentSection, sectionView);
     }
+
+    this.slider.slideTo(sectionView.section);
   }
 
   private initializeBody(): DOMComponent<HTMLElement> {

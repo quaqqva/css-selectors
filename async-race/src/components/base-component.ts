@@ -39,7 +39,7 @@ export default class DOMComponent<T extends HTMLElement> {
     }
 
     if (parent instanceof Node) parent.appendChild(this.element);
-    if (parent instanceof DOMComponent) parent.append(this.element);
+    if (parent instanceof DOMComponent) parent.append(this);
   }
 
   public get HTML(): string {
