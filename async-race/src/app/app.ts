@@ -1,33 +1,40 @@
 import Controller from './controller/controller';
-import GarageController from './controller/garage-controller';
-import WinnersController from './controller/winners-controller';
 import EventEmitter from '../utils/event-emitter';
 import AppEvents from './app-events';
 import AppView from './view/app-view';
 import AppViews from './view/app-views';
 
-export default class App {
+export type AppConfig = {
+  title: string;
+  connection: {
+    url: string;
+  };
+};
+export class App {
+  currentView: AppViews;
+
   view: AppView;
 
   controller: Controller;
 
   emitter: EventEmitter;
 
-  public constructor() {
+  public constructor(config: AppConfig) {
     this.emitter = new EventEmitter();
-    this.view = new AppView({ emitter: this.emitter, startView: AppViews.GarageView });
-    this.controller = new GarageController();
+    this.currentView = AppViews.GarageView;
+    this.view = new AppView({ appTitle: config.title, emitter: this.emitter });
+    this.controller = new Controller(config.connection.url);
   }
 
   public start(): void {
+    this.view.switchTo(this.currentView);
     this.emitter.subscribe(AppEvents.SwitchView, () => {
       this.switchView();
     });
   }
 
   private switchView(): void {
-    const isGarage = this.controller instanceof GarageController;
-    this.view.switchTo(isGarage ? AppViews.WinnersView : AppViews.GarageView);
-    this.controller = isGarage ? new WinnersController() : new GarageController();
+    this.currentView = this.currentView === AppViews.GarageView ? AppViews.WinnersView : AppViews.GarageView;
+    this.view.switchTo(this.currentView);
   }
 }

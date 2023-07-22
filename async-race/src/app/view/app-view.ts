@@ -25,14 +25,15 @@ export default class AppView {
 
   private currentSection: AppViews | undefined;
 
-  public constructor({ emitter, startView }: { emitter: EventEmitter; startView: AppViews }) {
+  public constructor({ appTitle, emitter }: { appTitle: string; emitter: EventEmitter }) {
+    document.title = appTitle;
+
     this.emitter = emitter;
 
     this.slider = new Slider(this.initializeBody());
     this.slider.addClass(ViewSections.SectionSlider);
 
     this.sections = new Map<AppViews, SectionView>();
-    this.switchTo(startView);
   }
 
   public switchTo(viewType: AppViews): void {
