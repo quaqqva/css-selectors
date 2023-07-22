@@ -47,7 +47,6 @@
   }
 
   .toggle-input__button {
-    z-index: $toggle-input-button-layer;
     &::before {
       box-sizing: border-box;
       background-color: $color-light-xl;
@@ -56,6 +55,10 @@
       border-left: none;
       border-right: $border-width dashed $color-dark-xl;
     }
+  }
+
+  .toggle-input__checkbox {
+    z-index: $toggle-input-checkbox-layer;
   }
 
   .toggle-input__checkbox:checked {
