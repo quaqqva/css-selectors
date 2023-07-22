@@ -1,0 +1,54 @@
+.garage__menu {
+  width: 45%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.garage-menu__add,
+.garage-menu__generate {
+  @include button($bg-color: $color-dark-xl, $border-color: $color-light-xl, $edge-color: $color-light-m);
+}
+
+.garage-menu__race {
+  @include button($bg-color: $color-light-l, $border-color: $color-bg, $edge-color: $color-dark-xl);
+  border: none;
+  border-top: 2px dashed $color-bg;
+  box-shadow: none;
+
+  position: relative;
+
+  &::after {
+    width: 100%;
+    height: 50%;
+
+    content: '';
+    background-color: $color-light-l;
+
+    $border-width: 4px;
+    border-radius: inherit;
+    border-bottom: $border-width dashed $color-bg;
+    transition: border-width ease-in-out $active-transition;
+
+    position: absolute;
+    left: 0;
+    bottom: (-$border-width);
+
+    z-index: -1;
+  }
+
+  &:active {
+    box-shadow: none;
+    &::after {
+      border-bottom-width: 2px;
+    }
+  }
+}
+
+.garage-menu__reset {
+  @include button(
+    $bg-color: $color-light-s,
+    $border-color: $color-light-xl,
+    $edge-color: $color-light-m,
+    $horizontal-padding: 20px
+  );
+}
