@@ -30,7 +30,7 @@ export default class AppView {
 
     this.emitter = emitter;
 
-    this.slider = new Slider(this.initializeBody());
+    this.slider = new Slider({ parent: this.initializeBody() });
     this.slider.addClass(ViewSections.SectionSlider);
 
     this.sections = new Map<AppViews, SectionView>();

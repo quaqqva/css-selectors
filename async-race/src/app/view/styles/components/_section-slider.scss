@@ -1,0 +1,9 @@
+.section-slider {
+  width: calc($views-count * 100%);
+  min-height: $main-height;
+
+  & > * {
+    width: calc(100% / $views-count);
+    height: $main-height;
+  }
+}

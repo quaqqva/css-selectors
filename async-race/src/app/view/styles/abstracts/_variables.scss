@@ -3,8 +3,11 @@ $default-layer: 0;
 $toggle-input-labels-layer: 1;
 $toggle-input-checkbox-layer: 2;
 
+$views-count: 2;
+
 $header-height: 75px;
 $footer-height: 60px;
+$main-height: calc(100vh - $header-height - $footer-height);
 
 $hover-transition: 500ms;
 $active-transition: 300ms;

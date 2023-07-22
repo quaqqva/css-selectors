@@ -1,0 +1,20 @@
+$slide-time: 300ms;
+
+.slider-wrapper {
+  width: 100%;
+  overflow-x: clip;
+}
+
+.slider {
+  display: flex;
+  transition: transform ease-in-out $slide-time;
+
+  & > * {
+    opacity: 1;
+    transition: opacity ease-in-out calc($slide-time / 2);
+  }
+}
+
+.slider__element_hidden {
+  opacity: 0;
+}
