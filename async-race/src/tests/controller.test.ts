@@ -108,6 +108,7 @@ describe('controller', () => {
     });
     it('can create entities', async () => {
       const newCar = {
+        id: 20,
         wins: 10,
         time: 500,
       };

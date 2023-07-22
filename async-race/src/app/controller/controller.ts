@@ -2,7 +2,7 @@ import { RequestMethod, ResponseStatus } from '../../types/request-types';
 import buildURL from '../../utils/build-url';
 import { Car, CarViewData } from '../model/car';
 import { DriveData, EngineStatus } from '../model/drive';
-import { Winner, WinnerViewData } from '../model/winner';
+import { Winner } from '../model/winner';
 
 export default class Controller {
   private static ENDPOINTS = {
@@ -18,7 +18,7 @@ export default class Controller {
   }
 
   public async createCar(carData: CarViewData): Promise<Car> {
-    const car = await this.createEntity<Car>(Controller.ENDPOINTS.garage, carData);
+    const car = await this.createEntity<CarViewData, Car>(Controller.ENDPOINTS.garage, carData);
     return car;
   }
 
@@ -88,8 +88,8 @@ export default class Controller {
     return response.status === ResponseStatus.OK;
   }
 
-  public async createWinner(winnerData: WinnerViewData): Promise<Winner> {
-    const winner = await this.createEntity<Winner>(Controller.ENDPOINTS.winners, winnerData);
+  public async createWinner(winnerData: Winner): Promise<Winner> {
+    const winner = await this.createEntity<Winner, Winner>(Controller.ENDPOINTS.winners, winnerData);
     return winner;
   }
 
@@ -142,7 +142,7 @@ export default class Controller {
     this.deleteEntity(Controller.ENDPOINTS.winners, winnerId);
   }
 
-  private async createEntity<T>(endpoint: string, viewData: Omit<T, 'id'>): Promise<T> {
+  private async createEntity<T, V>(endpoint: string, viewData: T): Promise<V> {
     const url = buildURL([this.baseUrl, endpoint]);
     const response = await fetch(url, {
       headers: {
@@ -151,7 +151,7 @@ export default class Controller {
       method: RequestMethod.POST,
       body: JSON.stringify(viewData),
     });
-    const entity = (await response.json()) as T;
+    const entity = (await response.json()) as V;
     return entity;
   }
 
