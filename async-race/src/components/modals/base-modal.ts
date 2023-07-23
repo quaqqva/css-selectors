@@ -61,12 +61,10 @@ export default class Modal extends DOMComponent<HTMLDivElement> {
   public hide(): void {
     this.addClass(ModalClasses.ModalElementHidden);
     this.background.addClass(ModalClasses.ModalBackgroundHidden);
-    const hideHandler = () => {
+    setTimeout(() => {
       this.destroy();
       this.background.destroy();
       this.parent.removeCSSProperty('overflow');
-      this.removeEventListener(Events.TransitionEnd, hideHandler);
-    };
-    this.addEventListener(Events.TransitionEnd, hideHandler);
+    }, this.showTime);
   }
 }
