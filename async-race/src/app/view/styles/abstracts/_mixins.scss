@@ -1,5 +1,6 @@
 @mixin button($bg-color, $border-color, $edge-color, $border-radius: 15px, $horizontal-padding: 6px) {
   cursor: pointer;
+  height: 40px;
 
   padding: 4px $horizontal-padding 2px;
 
