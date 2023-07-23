@@ -16,6 +16,7 @@ export enum Tags {
   Heading3 = 'h3',
   Label = 'label',
   Code = 'code',
+  Form = 'form',
 }
 
 export enum Events {
@@ -27,6 +28,7 @@ export enum Events {
   KeyDown = 'keydown',
   MouseOver = 'mouseover',
   MouseOut = 'mouseout',
+  Submit = 'submit',
 }
 
 export enum InsertPositions {
@@ -46,6 +48,8 @@ export type AnimationParams = {
 export enum InputTypes {
   Text = 'text',
   Checkbox = 'checkbox',
+  Submit = 'submit',
+  Color = 'color',
 }
 
 export enum NodeTypes {

@@ -1,0 +1,63 @@
+.submit-car-modal {
+  $width: min(500px, 90vw);
+  $height: 260px;
+
+  left: calc(50% - $width / 2);
+
+  width: $width;
+  height: $height;
+  background-color: $color-light-m;
+
+  border: $color-dark-l dashed 4px;
+  border-radius: 75px;
+
+  .submit-modal__title {
+    margin: 20px auto 0;
+    text-align: center;
+
+    font-style: bold;
+    font-size: 1.15em;
+    -webkit-text-stroke: 1px $color-light-xl;
+  }
+
+  .submit-modal__form {
+    height: 70%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .submit-modal__label {
+    width: 90%;
+
+    display: flex;
+    gap: 1em;
+  }
+
+  .submit-modal__input {
+    max-width: 50%;
+    background-color: $color-light-l;
+
+    &[type = "text"] {
+      border: none;
+    }
+
+    &[type = "color"] {
+      position: relative;
+      left: 0.3em;
+
+      min-width: 80px;
+
+      border: 2px solid $color-dark-xl;
+    }
+  }
+
+  .submit-modal__submit {
+    @include button($bg-color: $color-dark-l, $border-color: $color-dark-s, $edge-color: $color-dark-m, $border-radius: 20px);
+    color: $color-light-xl;
+    min-width: 180px;
+    height: 40px;
+  }
+}
