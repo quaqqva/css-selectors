@@ -1,0 +1,87 @@
+.submit-car-modal {
+  @include modal($bg-color: $color-light-m, $border-color: $color-dark-l, $height: 260px);
+
+  .submit-modal__title {
+    @include modal-title($color: color-dark-xl, $stroke-color: $color-light-xl);
+  }
+
+  .submit-modal__form {
+    height: 70%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .submit-modal__label {
+    width: 90%;
+
+    display: flex;
+    gap: 1em;
+  }
+
+  .submit-modal__input {
+    max-width: 50%;
+    background-color: $color-light-l;
+
+    &[type='text'] {
+      border: none;
+    }
+
+    &[type='color'] {
+      position: relative;
+      left: 0.3em;
+
+      min-width: 80px;
+
+      border: 2px solid $color-dark-xl;
+    }
+  }
+
+  .submit-modal__submit {
+    @include button(
+      $bg-color: $color-dark-l,
+      $border-color: $color-dark-s,
+      $edge-color: $color-dark-m,
+      $border-radius: 20px
+    );
+    color: $color-light-xl;
+    min-width: 180px;
+    height: 40px;
+  }
+}
+
+.confirm-modal {
+  @include modal($bg-color: $color-dark-l, $border-color: $color-light-xl, $height: 200px);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 30px 0;
+
+  column-gap: 30px;
+
+  &__text {
+    @include modal-title($color: $color-light-xl, $stroke-color: none);
+    grid-column: span 2;
+  }
+
+  button {
+    text-transform: capitalize;
+    width: 120px;
+    height: 40px;
+
+    align-self: flex-end;
+  }
+
+  .confirm-modal__yes {
+    @include button($bg-color: $color-dark-xl, $border-color: $color-light-l, $edge-color: $color-light-m);
+    justify-self: flex-end;
+  }
+
+  .confirm-modal__no {
+    @include button($bg-color: $color-light-s, $border-color: $color-light-xl, $edge-color: $color-light-l);
+    justify-self: flex-start;
+  }
+}

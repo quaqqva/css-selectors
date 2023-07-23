@@ -20,3 +20,26 @@
     box-shadow: 0 2px $edge-color;
   }
 }
+
+@mixin modal($bg-color, $border-color, $height) {
+  $width: min(500px, 90vw);
+
+  left: calc(50% - $width / 2);
+
+  width: $width;
+  height: $height;
+  background-color: $bg-color;
+
+  border: $border-color dashed 4px;
+  border-radius: 75px;
+}
+
+@mixin modal-title($color, $stroke-color) {
+  margin: 20px auto 0;
+
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.15em;
+  color: $color;
+  -webkit-text-stroke: 1px $stroke-color;
+}
