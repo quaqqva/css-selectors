@@ -1,7 +1,17 @@
 .garage__menu {
-  width: 45%;
+  width: max(45%, 500px);
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 1310px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 550px) {
+    width: 280px;
+    font-size: 0.9rem;
+    gap: 10px;
+  }
 }
 
 .garage-menu__add,
