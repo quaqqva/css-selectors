@@ -1,11 +1,12 @@
-import DOMComponent, { ElementParameters } from '../../../components/base-component';
-import Menu from '../../../components/menu/menu';
-import FormModal from '../../../components/modals/form-modal';
-import { InputTypes } from '../../../types/dom-types';
-import EventEmitter from '../../../utils/event-emitter';
-import AppEvents from '../../app-events';
-import { CarViewData } from '../../model/car';
-import SectionView from './section-view';
+import DOMComponent, { ElementParameters } from '../../../../components/base-component';
+import Menu from '../../../../components/menu/menu';
+import FormModal from '../../../../components/modals/form-modal';
+import { InputTypes } from '../../../../types/dom-types';
+import EventEmitter from '../../../../utils/event-emitter';
+import AppEvents from '../../../app-events';
+import { Car, CarViewData } from '../../../model/car';
+import SectionView from '../section-view';
+import Track from './car-track';
 
 enum GarageClasses {
   GarageMenu = 'garage__menu',
@@ -13,6 +14,7 @@ enum GarageClasses {
   MenuGenerateButton = 'garage-menu__generate',
   MenuRaceButton = 'garage-menu__race',
   MenuResetButton = 'garage-menu__reset',
+  TracksWrapper = 'garage__tracks',
   SubmitCarModal = 'submit-car-modal',
 }
 export default class GarageView extends SectionView {
@@ -23,6 +25,12 @@ export default class GarageView extends SectionView {
   private static RANDOM_CARS_COUNT = 100;
 
   private static MENU_BUTTONS: string[] = ['Add new', `Generate ${GarageView.RANDOM_CARS_COUNT}`, 'Race', 'Reset'];
+
+  private static TRACKS_WRAPPER_PARAMS: ElementParameters = {
+    classes: [GarageClasses.TracksWrapper],
+  };
+
+  private static CARS_PER_PAGE = 7;
 
   private static SUBMIT_CAR_MODAL_PARAMS = {
     classes: [GarageClasses.SubmitCarModal],
@@ -36,10 +44,24 @@ export default class GarageView extends SectionView {
 
   private menu: DOMComponent<HTMLDivElement>;
 
+  private tracksWrapper: DOMComponent<HTMLDivElement>;
+
   public constructor(emitter: EventEmitter, container: DOMComponent<HTMLElement>) {
     super(emitter, container);
 
     this.menu = this.createMenu();
+    this.tracksWrapper = new DOMComponent<HTMLDivElement>({
+      ...GarageView.TRACKS_WRAPPER_PARAMS,
+      parent: this.container,
+    });
+  }
+
+  public get carsPerPage(): number {
+    return GarageView.CARS_PER_PAGE;
+  }
+
+  public drawCars(cars: Car[]): void {
+    this.tracksWrapper.append(...cars.map((car) => new Track(car)));
   }
 
   private createMenu(): Menu {

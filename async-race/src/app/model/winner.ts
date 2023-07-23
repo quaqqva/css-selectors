@@ -4,4 +4,13 @@ export type Winner = {
   time: number;
 };
 
-export type WinnerViewData = Omit<Winner, 'id'>;
+export enum WinnersSortCriteria {
+  Id = 'id',
+  Wins = 'wins',
+  Time = 'time',
+}
+
+export enum WinnersSortOrder {
+  Ascending = 'ASC',
+  Descending = 'DESC',
+}

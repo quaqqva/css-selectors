@@ -3,6 +3,7 @@ import EventEmitter from '../utils/event-emitter';
 import AppEvents from './app-events';
 import AppView from './view/app-view';
 import AppViews from './view/app-views';
+import { CarFullData } from './model/car-full';
 
 export type AppConfig = {
   title: string;
@@ -26,8 +27,10 @@ export class App {
     this.controller = new Controller(config.connection.url);
   }
 
-  public start(): void {
+  public async start(): Promise<void> {
     this.view.switchTo(this.currentView);
+    const carsData = await this.controller.getCars({ pageNum: 1, carsPerPage: this.view.carsPerPage });
+    this.view.drawCars(carsData as CarFullData[]);
     this.emitter.subscribe(AppEvents.SwitchView, () => {
       this.switchView();
     });

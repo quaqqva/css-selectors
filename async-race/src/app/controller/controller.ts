@@ -1,8 +1,9 @@
 import { RequestMethod, ResponseStatus } from '../../types/request-types';
 import buildURL from '../../utils/build-url';
 import { Car, CarViewData } from '../model/car';
+import { CarFullData } from '../model/car-full';
 import { DriveData, EngineStatus } from '../model/drive';
-import { Winner } from '../model/winner';
+import { Winner, WinnersSortCriteria, WinnersSortOrder } from '../model/winner';
 
 export default class Controller {
   private static ENDPOINTS = {
@@ -44,8 +45,9 @@ export default class Controller {
     return count;
   }
 
-  public updateCar(carData: Car): void {
-    this.updateEntity(Controller.ENDPOINTS.garage, carData);
+  public async updateCar(carData: Car): Promise<Car> {
+    const car = await this.updateEntity(Controller.ENDPOINTS.garage, carData);
+    return car;
   }
 
   public deleteCar(carId: number): void {
@@ -101,14 +103,14 @@ export default class Controller {
   public async getWinners({
     pageNum,
     winnersPerPage,
-    sortBy = 'wins',
-    sortOrder = 'ASC',
+    sortBy = WinnersSortCriteria.Wins,
+    sortOrder = WinnersSortOrder.Ascending,
   }: {
     pageNum?: number;
     winnersPerPage?: number;
-    sortBy?: 'id' | 'wins' | 'time';
-    sortOrder?: 'ASC' | 'DESC';
-  }): Promise<Winner[]> {
+    sortBy?: WinnersSortCriteria;
+    sortOrder?: WinnersSortOrder;
+  }): Promise<CarFullData[]> {
     type WinnersQueryParams = {
       _page?: string;
       _limit?: string;
@@ -126,7 +128,11 @@ export default class Controller {
       queryParams._limit = winnersPerPage.toString();
     }
     const winners = (await this.getEntities(Controller.ENDPOINTS.winners, queryParams)) as Winner[];
-    return winners;
+    const carsPromise = winners.map(async (winner) => {
+      const carInfo = await this.getCar(winner.id);
+      return { ...carInfo, ...winner };
+    });
+    return Promise.all(carsPromise);
   }
 
   public async getWinnersCount(): Promise<number> {
@@ -134,8 +140,18 @@ export default class Controller {
     return count;
   }
 
-  public updateWinner(winnerData: Winner) {
-    this.updateEntity<Winner>(Controller.ENDPOINTS.winners, winnerData);
+  public async updateWinner(winnerData: Omit<Winner, 'wins'>): Promise<Winner> {
+    const winner = await this.getWinner(winnerData.id);
+    winner.time = Math.min(winner.time, winnerData.time);
+    winner.wins += 1;
+
+    try {
+      const result = await this.updateEntity<Winner>(Controller.ENDPOINTS.winners, winner);
+      return result;
+    } catch {
+      const result = await this.createWinner(winner);
+      return result;
+    }
   }
 
   public deleteWinner(winnerId: number) {
@@ -178,7 +194,7 @@ export default class Controller {
     return entities;
   }
 
-  private async updateEntity<T extends { id: number }>(endpoint: string, data: T): Promise<void> {
+  private async updateEntity<T extends { id: number }>(endpoint: string, data: T): Promise<T> {
     const url = buildURL([this.baseUrl, endpoint, data.id.toString()]);
     const response = await fetch(url, {
       headers: {
@@ -188,6 +204,7 @@ export default class Controller {
       body: JSON.stringify(data),
     });
     if (response.status === ResponseStatus.NotFound) throw Error('Entity not found');
+    return (await response.json()) as T;
   }
 
   private async deleteEntity(endpoint: string, id: number): Promise<void> {

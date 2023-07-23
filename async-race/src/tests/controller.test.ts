@@ -6,6 +6,7 @@
 import fetch from 'node-fetch';
 import Controller from '../app/controller/controller';
 import { EngineStatus } from '../app/model/drive';
+import { Winner } from '../app/model/winner';
 
 describe('controller', () => {
   const url = 'http://127.0.0.1:3000';
@@ -107,23 +108,32 @@ describe('controller', () => {
       });
     });
     it('can create entities', async () => {
-      const newCar = {
-        id: 20,
+      type CarMockData = {
+        id?: number;
+        name: string;
+        color: string;
+        wins: number;
+        time: number;
+      };
+      const carData: CarMockData = {
+        name: 'Gaz-21',
+        color: '#ffffff',
         wins: 10,
         time: 500,
       };
-      const winners = await controller.getWinners({});
-      controller.createWinner(newCar);
+      carData.id = (await controller.createCar(carData)).id;
+
+      const oldCount = await controller.getWinnersCount();
+      controller.createWinner(carData as Winner);
       const newCount = await controller.getWinnersCount();
-      expect(newCount).toBe(winners.length + 1);
+      expect(newCount).toBe(oldCount + 1);
     });
 
     it('can update entities', async () => {
       const car = (await controller.getWinners({}))[0];
-      car.wins = 99;
-      controller.updateWinner(car);
-      const updatedCar = await controller.getWinner(car.id);
-      expect(car).toEqual(updatedCar);
+      const updatedCar = await controller.updateWinner(car);
+      const carWinnerData = { id: car.id, wins: car.wins + 1, time: car.time };
+      expect(carWinnerData).toEqual(updatedCar);
     });
 
     it('can delete entities', async () => {

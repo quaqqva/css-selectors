@@ -2,10 +2,11 @@ import DOMComponent from '../../components/base-component';
 import Slider from '../../components/slider/slider';
 import { Tags } from '../../types/dom-types';
 import EventEmitter from '../../utils/event-emitter';
+import { CarFullData } from '../model/car-full';
 import AppViews from './app-views';
 import footer from './footer/footer';
 import Header from './header/header';
-import GarageView from './sections/garage-view';
+import GarageView from './sections/garage/garage-view';
 import SectionView from './sections/section-view';
 import WinnersView from './sections/winners-view';
 import './styles/main.scss';
@@ -23,7 +24,7 @@ export default class AppView {
 
   private sections: Map<AppViews, SectionView>;
 
-  private currentSection: AppViews | undefined;
+  private currentSection: AppViews;
 
   public constructor({ appTitle, emitter }: { appTitle: string; emitter: EventEmitter }) {
     document.title = appTitle;
@@ -33,7 +34,13 @@ export default class AppView {
     this.slider = new Slider({ parent: this.initializeBody() });
     this.slider.addClass(ViewSections.SectionSlider);
 
+    this.currentSection = AppViews.GarageView;
     this.sections = new Map<AppViews, SectionView>();
+  }
+
+  public get carsPerPage(): number {
+    const currentSection = this.sections.get(this.currentSection);
+    return currentSection ? currentSection.carsPerPage : -1;
   }
 
   public switchTo(viewType: AppViews): void {
@@ -61,6 +68,10 @@ export default class AppView {
     }
 
     this.slider.slideTo(sectionView.section);
+  }
+
+  public drawCars(cars: CarFullData[]): void {
+    this.sections.get(this.currentSection)?.drawCars(cars);
   }
 
   private initializeBody(): DOMComponent<HTMLElement> {
