@@ -85,3 +85,32 @@
     justify-self: flex-start;
   }
 }
+
+.info-modal {
+  @include modal($bg-color: $color-light-m, $border-color: $color-dark-l, $height: 200px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 15px;
+
+  &__info {
+    @include modal-title($color: $color-dark-xl, $stroke-color: $color-light-xl);
+    width: 90%;
+  }
+
+  &__ok {
+    @include button(
+      $bg-color: $color-dark-l,
+      $border-color: $color-dark-s,
+      $edge-color: $color-dark-m,
+      $border-radius: 20px
+    );
+
+    color: $color-light-xl;
+    text-transform: uppercase;
+    width: 120px;
+    height: 40px;
+  }
+}
