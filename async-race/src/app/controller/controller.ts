@@ -1,5 +1,7 @@
 import { RequestMethod, ResponseStatus } from '../../types/request-types';
 import buildURL from '../../utils/build-url';
+import generateCarName from '../../utils/car-name-generator/car-name-generator';
+import generateColor from '../../utils/color-generator';
 import { Car, CarViewData } from '../model/car';
 import { CarFullData } from '../model/car-full';
 import { DriveData, EngineStatus } from '../model/drive';
@@ -21,6 +23,17 @@ export default class Controller {
   public async createCar(carData: CarViewData): Promise<Car> {
     const car = await this.createEntity<CarViewData, Car>(Controller.ENDPOINTS.garage, carData);
     return car;
+  }
+
+  public async createRandomCars(count: number): Promise<void> {
+    const carsPromise = new Array<Car | null>(count).fill(null).map(async () => {
+      const car = await this.createCar({
+        name: generateCarName(),
+        color: generateColor(),
+      });
+      return car;
+    });
+    await Promise.all(carsPromise);
   }
 
   public async getCar(carId: number): Promise<Car> {

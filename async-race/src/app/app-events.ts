@@ -8,6 +8,7 @@ enum AppEvents {
   CarDeleted = 'car-deleted',
   CarsPageLoad = 'cars-page-load',
   GenerateCars = 'generate-cars',
+  CarsGenerated = 'cars-generated',
 }
 
 export default AppEvents;

@@ -27,8 +27,7 @@ export class App {
 
   public async start(): Promise<void> {
     this.view.switchTo(AppViews.GarageView);
-    const carsData = await this.controller.getCars({ pageNum: 1, carsPerPage: this.view.carsPerPage });
-    this.view.drawCars(carsData as CarFullData[]);
+    this.loadPage(1);
 
     this.emitter.subscribe(AppEvents.SwitchView, () => {
       this.switchView();
@@ -50,10 +49,20 @@ export class App {
     });
 
     this.emitter.subscribe(AppEvents.CarsPageLoad, async (pageNumber) => {
-      const pageNum = pageNumber as number;
-      const carsPage = await this.controller.getCars({ pageNum, carsPerPage: this.view.carsPerPage });
-      this.view.drawCars(carsPage as CarFullData[]);
+      this.loadPage(pageNumber as number);
     });
+
+    this.emitter.subscribe(AppEvents.GenerateCars, async (carsCount) => {
+      await this.controller.createRandomCars(carsCount as number);
+      this.emitter.emit(AppEvents.CarsGenerated, null);
+    });
+  }
+
+  private async loadPage(pageNumber: number): Promise<void> {
+    if (this.view.currentSection === AppViews.GarageView) {
+      const carsPage = await this.controller.getCars({ pageNum: pageNumber, carsPerPage: this.view.carsPerPage });
+      this.view.drawCars(carsPage as CarFullData[]);
+    }
   }
 
   private switchView(): void {

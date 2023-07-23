@@ -55,7 +55,15 @@ export default class GarageView extends SectionView {
       this.updateCar(data as Car);
     });
 
-    this.emitter.subscribe(AppEvents.CarDeleted, () => {
+    this.emitter.subscribe(AppEvents.CarDeleted, (id) => {
+      if (getMapKeys(this.tracks).length === this.carsPerPage) this.requestPage();
+      else {
+        this.tracks.get(id as number)?.destroy();
+        this.tracks.delete(id as number);
+      }
+    });
+
+    this.emitter.subscribe(AppEvents.CarsGenerated, () => {
       this.requestPage();
     });
   }
