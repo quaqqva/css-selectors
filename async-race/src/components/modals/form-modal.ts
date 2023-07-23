@@ -52,6 +52,7 @@ export default class FormModal extends Modal {
     elementParams,
     inputNames,
     inputTypes,
+    inputValues,
     onSubmit,
     windowTitle,
     showTime,
@@ -59,6 +60,7 @@ export default class FormModal extends Modal {
     elementParams: ElementParameters;
     inputNames: string[];
     inputTypes: InputTypes[];
+    inputValues?: string[];
     onSubmit: (formData: string[]) => void;
     windowTitle?: string;
     showTime?: number;
@@ -82,7 +84,7 @@ export default class FormModal extends Modal {
     );
     if (windowTitle)
       this.append(new DOMComponent<HTMLHeadingElement>({ ...FormModal.TITLE_PARAMS, textContent: windowTitle }));
-    const form = this.createForm();
+    const form = this.createForm(inputValues);
     form.addEventListener(Events.Submit, (event: Event) => {
       event.preventDefault();
       this.hide();
@@ -91,7 +93,7 @@ export default class FormModal extends Modal {
     });
   }
 
-  private createForm(): DOMComponent<HTMLFormElement> {
+  private createForm(inputValues?: string[]): DOMComponent<HTMLFormElement> {
     const form = new DOMComponent<HTMLFormElement>({
       ...FormModal.FORM_PARAMS,
       parent: this,
@@ -100,7 +102,10 @@ export default class FormModal extends Modal {
     this.labels.forEach((label, index) => {
       const input = this.inputs[index];
       input.required = true;
-      if (input.getAttribute('type') === InputTypes.Color) input.value = FormModal.DEFAULT_INPUT_COLOR;
+
+      if (inputValues) input.value = inputValues[index];
+      else if (input.getAttribute('type') === InputTypes.Color) input.value = FormModal.DEFAULT_INPUT_COLOR;
+
       label.append(input);
       form.append(label);
     });

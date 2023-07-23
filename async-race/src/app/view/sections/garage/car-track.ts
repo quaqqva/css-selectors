@@ -5,6 +5,10 @@ import SVGComponent from '../../../../components/svg-component';
 import { Tags } from '../../../../types/dom-types';
 import Menu from '../../../../components/menu/menu';
 import FontAwesome from '../../../../types/font-awesome';
+import EventEmitter from '../../../../utils/event-emitter';
+import SubmitCarModal from './submit-car-modal';
+import ConfirmModal from '../../../../components/modals/confirm-modal';
+import AppEvents from '../../../app-events';
 
 enum TrackElements {
   Track = 'track',
@@ -37,6 +41,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     classes: [FontAwesome.Solid, FontAwesome.Times],
   };
 
+  private emitter: EventEmitter;
+
   private carSVG: SVGComponent;
 
   private flagSVG: SVGComponent;
@@ -45,8 +51,9 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
   private car: Car;
 
-  public constructor(car: Car) {
+  public constructor(emitter: EventEmitter, car: Car) {
     super(Track.TRACK_PARAMS);
+    this.emitter = emitter;
 
     this.carSVG = new SVGComponent({ pathToSprite: trackSprite, id: 'car', parent: this });
     this.carSVG.addClass(TrackElements.CarSVG);
@@ -60,6 +67,12 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     this.car = car;
 
     this.createMenu();
+  }
+
+  public updateCar(car: Car): void {
+    this.car = car;
+    this.carSVG.setColor(car.color);
+    this.carTitle.textContent = car.name;
   }
 
   public startEngine(): void {}
@@ -76,14 +89,28 @@ export default class Track extends DOMComponent<HTMLDivElement> {
         TrackElements.StartButton,
         TrackElements.BreakButton,
       ],
-      clickHandlers: [() => this.updateCar(), () => this.deleteCar(), () => this.startEngine(), () => this.resetCar()],
+      clickHandlers: [() => this.changeCar(), () => this.deleteCar(), () => this.startEngine(), () => this.resetCar()],
     });
 
     const deleteButtonIndex = 1;
     menu.getButton(deleteButtonIndex).append(new DOMComponent<HTMLElement>(Track.DELETE_ICON_PARAMS));
   }
 
-  private updateCar(): void {}
+  private changeCar(): void {
+    const modal = new SubmitCarModal(this.emitter, this.car);
+    modal.show();
+  }
 
-  private deleteCar(): void {}
+  private deleteCar(): void {
+    const deleteText = `Are you sure you want to delete ${this.car.name}?`;
+    const confirmModal = new ConfirmModal({
+      params: {},
+      info: deleteText,
+      yesCallback: () => {
+        this.emitter.emit(AppEvents.CarDelete, this.car.id);
+      },
+      noCallback: () => {},
+    });
+    confirmModal.show();
+  }
 }

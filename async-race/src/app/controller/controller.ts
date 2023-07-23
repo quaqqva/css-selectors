@@ -50,8 +50,8 @@ export default class Controller {
     return car;
   }
 
-  public deleteCar(carId: number): void {
-    this.deleteEntity(Controller.ENDPOINTS.garage, carId);
+  public async deleteCar(carId: number): Promise<void> {
+    await this.deleteEntity(Controller.ENDPOINTS.garage, carId);
   }
 
   public async toggleEngine({
@@ -154,8 +154,8 @@ export default class Controller {
     }
   }
 
-  public deleteWinner(winnerId: number) {
-    this.deleteEntity(Controller.ENDPOINTS.winners, winnerId);
+  public async deleteWinner(winnerId: number): Promise<void> {
+    await this.deleteEntity(Controller.ENDPOINTS.winners, winnerId);
   }
 
   private async createEntity<T, V>(endpoint: string, viewData: T): Promise<V> {

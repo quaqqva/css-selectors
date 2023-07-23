@@ -1,12 +1,12 @@
 import DOMComponent, { ElementParameters } from '../../../../components/base-component';
 import Menu from '../../../../components/menu/menu';
-import FormModal from '../../../../components/modals/form-modal';
-import { InputTypes } from '../../../../types/dom-types';
 import EventEmitter from '../../../../utils/event-emitter';
+import getMapKeys from '../../../../utils/get-map-keys';
 import AppEvents from '../../../app-events';
-import { Car, CarViewData } from '../../../model/car';
+import { Car } from '../../../model/car';
 import SectionView from '../section-view';
 import Track from './car-track';
+import SubmitCarModal from './submit-car-modal';
 
 enum GarageClasses {
   GarageMenu = 'garage__menu',
@@ -15,7 +15,6 @@ enum GarageClasses {
   MenuRaceButton = 'garage-menu__race',
   MenuResetButton = 'garage-menu__reset',
   TracksWrapper = 'garage__tracks',
-  SubmitCarModal = 'submit-car-modal',
 }
 export default class GarageView extends SectionView {
   private static MENU_PARAMS: ElementParameters = {
@@ -32,19 +31,11 @@ export default class GarageView extends SectionView {
 
   private static CARS_PER_PAGE = 7;
 
-  private static SUBMIT_CAR_MODAL_PARAMS = {
-    classes: [GarageClasses.SubmitCarModal],
-  };
-
-  private static SUBMIT_MODAL_TITLE = 'Enter car info';
-
-  private static SUBMIT_CAR_INPUTS: string[] = ['Name', 'Color'];
-
-  private static SUBMT_CAR_INPUTS_TYPES: InputTypes[] = [InputTypes.Text, InputTypes.Color];
-
   private menu: DOMComponent<HTMLDivElement>;
 
   private tracksWrapper: DOMComponent<HTMLDivElement>;
+
+  private tracks: Map<number, Track>;
 
   public constructor(emitter: EventEmitter, container: DOMComponent<HTMLElement>) {
     super(emitter, container);
@@ -54,6 +45,19 @@ export default class GarageView extends SectionView {
       ...GarageView.TRACKS_WRAPPER_PARAMS,
       parent: this.container,
     });
+    this.tracks = new Map();
+
+    this.emitter.subscribe(AppEvents.CarCreated, (data) => {
+      this.createCar(data as Car);
+    });
+
+    this.emitter.subscribe(AppEvents.CarUpdated, (data) => {
+      this.updateCar(data as Car);
+    });
+
+    this.emitter.subscribe(AppEvents.CarDeleted, () => {
+      this.requestPage();
+    });
   }
 
   public get carsPerPage(): number {
@@ -61,7 +65,13 @@ export default class GarageView extends SectionView {
   }
 
   public drawCars(cars: Car[]): void {
-    this.tracksWrapper.append(...cars.map((car) => new Track(car)));
+    this.tracks.clear();
+    this.tracksWrapper.clear();
+    cars.forEach((car) => {
+      const track = new Track(this.emitter, car);
+      this.tracks.set(car.id, track);
+      this.tracksWrapper.append(track);
+    });
   }
 
   private createMenu(): Menu {
@@ -72,19 +82,7 @@ export default class GarageView extends SectionView {
 
     const clickHandlers = [
       () => {
-        const inputModal = new FormModal({
-          elementParams: GarageView.SUBMIT_CAR_MODAL_PARAMS,
-          inputNames: GarageView.SUBMIT_CAR_INPUTS,
-          inputTypes: GarageView.SUBMT_CAR_INPUTS_TYPES,
-          onSubmit: (formData) => {
-            const carViewData: CarViewData = {
-              name: formData[0],
-              color: formData[1],
-            };
-            this.emitter.emit(AppEvents.CarSubmit, carViewData);
-          },
-          windowTitle: GarageView.SUBMIT_MODAL_TITLE,
-        });
+        const inputModal = new SubmitCarModal(this.emitter);
         inputModal.show();
       },
       () => {
@@ -110,6 +108,24 @@ export default class GarageView extends SectionView {
       clickHandlers,
     });
     return menu;
+  }
+
+  private createCar(car: Car): void {
+    const ids = getMapKeys(this.tracks);
+    if (ids.length < this.carsPerPage) {
+      const newTrack = new Track(this.emitter, car);
+      this.tracksWrapper.append(newTrack);
+      this.tracks.set(car.id, newTrack);
+    }
+  }
+
+  private updateCar(car: Car): void {
+    const carTrack = this.tracks.get(car.id);
+    if (carTrack) carTrack.updateCar(car);
+  }
+
+  private requestPage(): void {
+    this.emitter.emit(AppEvents.CarsPageLoad, this.currentPage);
   }
 
   private launchRace(): void {}

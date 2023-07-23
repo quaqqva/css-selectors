@@ -24,7 +24,7 @@ export default class AppView {
 
   private sections: Map<AppViews, SectionView>;
 
-  private currentSection: AppViews;
+  public currentSection: AppViews;
 
   public constructor({ appTitle, emitter }: { appTitle: string; emitter: EventEmitter }) {
     document.title = appTitle;
