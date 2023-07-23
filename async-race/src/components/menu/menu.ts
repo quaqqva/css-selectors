@@ -30,9 +30,13 @@ export default class Menu extends DOMComponent<HTMLDivElement> {
     this.clickHandlers = clickHandlers;
 
     this.addEventListener(Events.Click, (event) => {
-      const clicked = event.target;
-      if (clicked instanceof HTMLButtonElement) {
-        const index = Array.prototype.indexOf.call(clicked.parentElement?.children, clicked);
+      const clicked = event.target as Node;
+      const isButton = clicked instanceof HTMLButtonElement;
+      if (isButton || clicked.parentNode instanceof HTMLButtonElement) {
+        const parent = isButton ? clicked.parentNode : clicked.parentNode?.parentNode;
+        const button = isButton ? clicked : clicked.parentNode;
+
+        const index = Array.prototype.indexOf.call(parent?.children, button);
         this.clickHandlers[index]();
       }
     });
