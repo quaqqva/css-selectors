@@ -29,6 +29,7 @@ export enum Events {
   MouseOver = 'mouseover',
   MouseOut = 'mouseout',
   Submit = 'submit',
+  TransitionEnd = 'transitionend',
 }
 
 export enum InsertPositions {
