@@ -98,24 +98,16 @@ export default class GarageView extends SectionView {
       },
     ];
 
-    const menu = new Menu({ params, buttonTexts: GarageView.MENU_BUTTONS, clickHandlers });
-    menu.forEachButton((button, index) => {
-      switch (index) {
-        case 0:
-          button.addClass(GarageClasses.MenuAddButton);
-          break;
-        case 1:
-          button.addClass(GarageClasses.MenuGenerateButton);
-          break;
-        case 2:
-          button.addClass(GarageClasses.MenuRaceButton);
-          break;
-        case 3:
-          button.addClass(GarageClasses.MenuResetButton);
-          break;
-        default:
-          break;
-      }
+    const menu = new Menu({
+      params,
+      buttonTexts: GarageView.MENU_BUTTONS,
+      buttonClasses: [
+        GarageClasses.MenuAddButton,
+        GarageClasses.MenuGenerateButton,
+        GarageClasses.MenuRaceButton,
+        GarageClasses.MenuResetButton,
+      ],
+      clickHandlers,
     });
     return menu;
   }

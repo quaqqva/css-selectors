@@ -4,6 +4,6 @@
 
   & > * {
     width: calc(100% / $views-count);
-    height: $main-height;
+    min-height: $main-height;
   }
 }

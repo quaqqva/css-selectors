@@ -10,17 +10,20 @@ export default class Menu extends DOMComponent<HTMLDivElement> {
     params,
     buttonTexts,
     clickHandlers,
+    buttonClasses,
   }: {
     params: ElementParameters;
     buttonTexts: string[];
     clickHandlers: (() => void)[];
+    buttonClasses?: string[];
   }) {
     super(params);
     this.buttons = buttonTexts.map(
-      (buttonText) =>
+      (buttonText, index) =>
         new DOMComponent<HTMLButtonElement>({
           tag: Tags.Button,
           textContent: buttonText,
+          classes: buttonClasses ? [buttonClasses[index]] : undefined,
           parent: this,
         })
     );
@@ -45,9 +48,7 @@ export default class Menu extends DOMComponent<HTMLDivElement> {
     this.clickHandlers.push(callback);
   }
 
-  public forEachButton(callback: (button: DOMComponent<HTMLButtonElement>, index: number) => void): void {
-    this.buttons.forEach((button, index) => {
-      callback(button, index);
-    });
+  public getButton(index: number): DOMComponent<HTMLButtonElement> {
+    return this.buttons[index];
   }
 }

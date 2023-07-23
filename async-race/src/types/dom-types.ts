@@ -17,6 +17,8 @@ export enum Tags {
   Label = 'label',
   Code = 'code',
   Form = 'form',
+  SVG = 'svg',
+  SVGUse = 'use',
 }
 
 export enum Events {
@@ -58,3 +60,5 @@ export enum NodeTypes {
   AttributeNode,
   TextNode,
 }
+
+export type HTMLSVGElement = HTMLElement & SVGElement;

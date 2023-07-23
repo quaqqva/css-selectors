@@ -1,0 +1,132 @@
+$menu-left-indent: 6em;
+$menu-left-indent-mobile: 4em;
+$car-width: 150px;
+$car-mobile-width: 100px;
+
+.track {
+  width: 100%;
+  height: 140px;
+
+  border-bottom: 4px solid $color-light-xl;
+
+  position: relative;
+}
+
+.track__title {
+  font-size: 1.25rem;
+  color: $color-light-xl;
+}
+
+.track__car,
+.track__flag {
+  position: absolute;
+}
+
+.track__car {
+  width: $car-width;
+  transform: scale(-1, 1) translateY(32.5%);
+  left: 100px;
+  bottom: -5px;
+
+  @media (max-width: 600px) {
+    width: $car-mobile-width;
+    left: 20px;
+    transform: scale(-1, 1) translateY(37.5%);
+  }
+}
+
+.track__flag {
+  width: 80px;
+  aspect-ratio: 1/1;
+
+  right: calc($car-width + 20px);
+  bottom: -5px;
+
+  @media (max-width: 600px) {
+    width: 60px;
+    right: calc($car-mobile-width + 10px);
+  }
+
+  fill: $color-light-xl;
+}
+
+.track__menu {
+  display: inline-flex;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: $menu-left-indent;
+
+  @media (max-width: $mobile-width) {
+    left: $menu-left-indent-mobile;
+  }
+
+  gap: 1rem;
+
+  button {
+    text-transform: capitalize;
+  }
+}
+
+.track__update-car {
+  @include button(
+    $bg-color: $color-light-s,
+    $border-color: $color-light-xl,
+    $edge-color: $color-light-l,
+    $border-radius: 20px,
+    $edge-height: 3px
+  );
+  height: 30px;
+  font-size: 1rem;
+}
+
+.track__delete-car {
+  @include button(
+    $bg-color: $color-dark-l,
+    $border-color: $color-dark-s,
+    $edge-color: $color-dark-m,
+    $border-radius: 20px,
+    $edge-height: 3px
+  );
+  height: 30px;
+  width: 35px;
+
+  font-size: 1.25rem;
+  color: $color-light-s;
+}
+
+.track__start-engine,
+.track__reset-car {
+  position: absolute;
+  top: 50px;
+  width: 36px;
+}
+
+.track__start-engine {
+  left: (-$menu-left-indent);
+  @media (max-width: $mobile-width) {
+    left: (-$menu-left-indent-mobile);
+  }
+
+  @include button(
+    $bg-color: $color-light-s,
+    $border-color: $color-dark-xs,
+    $edge-color: $color-dark-s,
+    $edge-height: 4px
+  );
+}
+
+.track__reset-car {
+  left: calc(52px - $menu-left-indent);
+  @media (max-width: $mobile-width) {
+    left: calc(52px - $menu-left-indent-mobile);
+  }
+  @include button(
+    $bg-color: $color-dark-l,
+    $border-color: $color-dark-s,
+    $edge-color: $color-dark-m,
+    $edge-height: 4px
+  );
+  color: $color-light-xl;
+}

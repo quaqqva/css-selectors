@@ -78,7 +78,7 @@ export default class DOMComponent<T extends HTMLElement> {
     node.parentNode?.insertBefore(this.element, node);
   }
 
-  public append(...elements: (HTMLElement | DOMComponent<HTMLElement>)[]): void {
+  public append(...elements: (Element | DOMComponent<HTMLElement>)[]): void {
     elements.forEach((element) => {
       if (element instanceof DOMComponent) this.element.append(element.element);
       else this.element.append(element);

@@ -62,3 +62,10 @@
     $horizontal-padding: 20px
   );
 }
+
+.garage__tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 50px auto;
+}
