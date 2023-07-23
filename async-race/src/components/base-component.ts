@@ -5,7 +5,7 @@ export type ElementParameters = Partial<{
   textContent: string;
   classes: string[];
   attributes: { [attribute: string]: string };
-  parent: Node | DOMComponent<HTMLElement>;
+  parent: DOMComponent<HTMLElement>;
 }>;
 export default class DOMComponent<T extends HTMLElement> {
   protected element: T;
@@ -52,6 +52,26 @@ export default class DOMComponent<T extends HTMLElement> {
 
   public set textContent(value: string) {
     this.element.innerText = value;
+  }
+
+  public get width(): number {
+    return this.element.offsetWidth;
+  }
+
+  public get height(): number {
+    return this.element.offsetHeight;
+  }
+
+  public get scrolledY(): number {
+    return this.element.scrollTop;
+  }
+
+  public get scrolledX(): number {
+    return this.element.scrollLeft;
+  }
+
+  public get isBody(): boolean {
+    return this.element === document.body;
   }
 
   public insertBeforeNode(node: Node) {
@@ -118,5 +138,17 @@ export default class DOMComponent<T extends HTMLElement> {
       this.element.style.animation = '';
       this.element.style.transformOrigin = '';
     }, duration);
+  }
+
+  public setCSSProperty(name: string, value: string): void {
+    this.element.style.setProperty(name, value);
+  }
+
+  public getCSSProperty(name: string): string {
+    return this.element.style.getPropertyValue(name);
+  }
+
+  public removeCSSProperty(name: string): void {
+    this.element.style.removeProperty(name);
   }
 }

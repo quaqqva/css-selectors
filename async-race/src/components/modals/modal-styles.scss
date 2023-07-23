@@ -1,0 +1,27 @@
+.modal__background {
+  background-color: rgba(0, 0, 0, 0.5);
+
+  position: absolute;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  opacity: 1;
+  transition: opacity ease-in-out var(--modal-show-time);
+}
+
+.modal__background_hidden {
+  opacity: 0;
+}
+
+.modal {
+  position: absolute;
+
+  transform: translateY(10vh);
+  transition: transform ease-in-out var(--modal-show-time);
+}
+
+.modal_hidden {
+  transform: translateY(-100%); 
+}

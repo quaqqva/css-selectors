@@ -7,7 +7,7 @@ describe('base DOM component', () => {
     new DOMComponent<HTMLElement>({
       tag: Tags.Span,
       classes: ['test-span'],
-      parent: document.body,
+      parent: DOMComponent.fromElement(document.body),
       attributes: {
         attr: 'value',
       },
@@ -15,7 +15,7 @@ describe('base DOM component', () => {
     expect(document.querySelector('span.test-span[attr="value"]')).toBeTruthy();
   });
   it('can add DOM elements to itself', () => {
-    const component = new DOMComponent<HTMLDivElement>({ parent: document.body });
+    const component = new DOMComponent<HTMLDivElement>({ parent: DOMComponent.fromElement(document.body) });
     component.append(
       new DOMComponent({
         tag: Tags.Paragraph,

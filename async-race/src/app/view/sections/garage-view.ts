@@ -1,5 +1,6 @@
 import DOMComponent, { ElementParameters } from '../../../components/base-component';
 import Menu from '../../../components/menu/menu';
+import Modal from '../../../components/modals/base-modal';
 import EventEmitter from '../../../utils/event-emitter';
 import AppEvents from '../../app-events';
 import SectionView from './section-view';
@@ -34,7 +35,10 @@ export default class GarageView extends SectionView {
 
     const buttonTexts = ['Add new', `Generate ${GarageView.RANDOM_CARS_COUNT}`, 'Race', 'Reset'];
     const clickHandlers = [
-      () => {}, // Adding new
+      () => {
+        const inputModal = new Modal({});
+        inputModal.show();
+      }, // Adding new
       () => {
         this.emitter.emit(AppEvents.GenerateCars, GarageView.RANDOM_CARS_COUNT);
       },
