@@ -108,7 +108,6 @@ export default class FormModal extends Modal {
       if (inputValues) input.value = inputValues[index];
       else if (input.getAttribute('type') === InputTypes.Color) {
         input.value = FormModal.DEFAULT_INPUT_COLOR;
-        console.log(colorsPaletteId);
         if (colorsPaletteId) input.setAttribute('list', colorsPaletteId);
       }
 

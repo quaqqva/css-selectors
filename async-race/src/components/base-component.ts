@@ -1,4 +1,4 @@
-import { Tags, Events, InsertPositions, AnimationParams, AnimationFillMode } from '../types/dom-types';
+import { Tags, Events, InsertPositions, AnimationParams, AnimationFillMode, TransformOrigin } from '../types/dom-types';
 
 export type ElementParameters = Partial<{
   tag: string;
@@ -140,12 +140,16 @@ export default class DOMComponent<T extends HTMLElement> {
     this.element.remove();
   }
 
-  public showAnimation({
-    name,
-    duration,
-    timingFunction = 'ease-in-out',
-    fillMode = AnimationFillMode.None,
-  }: AnimationParams): void {
+  public showAnimation(
+    { name, duration, timingFunction = 'ease-in-out', fillMode = AnimationFillMode.None }: AnimationParams,
+    transformOrigin?: TransformOrigin
+  ): void {
+    if (transformOrigin) {
+      this.element.style.transformOrigin = transformOrigin;
+      setTimeout(() => {
+        this.removeCSSProperty('transformOrigin');
+      }, duration);
+    }
     this.element.style.animation = `${name} ${duration}ms ${timingFunction} ${fillMode}`;
   }
 

@@ -2,7 +2,7 @@ import DOMComponent, { ElementParameters } from '../../../../components/base-com
 import { Car } from '../../../model/car';
 import trackSprite from '../../../../assets/img/track_sprite.svg';
 import SVGComponent from '../../../../components/svg-component';
-import { AnimationFillMode, Events, Tags } from '../../../../types/dom-types';
+import { AnimationFillMode, Events, Tags, TransformOrigin } from '../../../../types/dom-types';
 import Menu from '../../../../components/menu/menu';
 import FontAwesome from '../../../../types/font-awesome';
 import EventEmitter from '../../../../utils/event-emitter';
@@ -46,7 +46,11 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     classes: [FontAwesome.Solid, FontAwesome.Times],
   };
 
+  private static MAX_FAST_TIME = 3500;
+
   private static CAR_DRIVE_ANIMATION = 'car-drive';
+
+  private static CAR_DRIVE_FAST_ANIMATION = 'car-drive-fast';
 
   private static CAR_STOP_ANIMATION = 'car-stop';
 
@@ -109,11 +113,18 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
     const startTime = Date.now();
 
-    this.carSVG.showAnimation({
-      name: Track.CAR_DRIVE_ANIMATION,
-      duration: travelTime,
-      fillMode: AnimationFillMode.Forwards,
-    });
+    const isFast = travelTime <= Track.MAX_FAST_TIME;
+    const animationName = isFast ? Track.CAR_DRIVE_FAST_ANIMATION : Track.CAR_DRIVE_ANIMATION;
+    const transformOrigin = isFast ? TransformOrigin.BottomLeft : TransformOrigin.Center;
+
+    this.carSVG.showAnimation(
+      {
+        name: animationName,
+        duration: travelTime,
+        fillMode: AnimationFillMode.Forwards,
+      },
+      transformOrigin
+    );
     this.emitter.emit(AppEvents.RequestCarDrive, this.car.id);
 
     const finishHandler = () => {

@@ -57,6 +57,12 @@ export enum AnimationFillMode {
   Both = 'both',
 }
 
+export enum TransformOrigin {
+  Center = 'center',
+  BottomLeft = 'bottom left',
+  BottomRight = 'bottom right',
+}
+
 export enum InputTypes {
   Text = 'text',
   Checkbox = 'checkbox',

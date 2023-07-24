@@ -18,6 +18,7 @@ $menu-left-indent-mobile: 4em;
   border-bottom: 4px solid $color-light-xl;
 
   position: relative;
+  overflow: hidden;
 }
 
 .track__title {
@@ -58,7 +59,36 @@ $menu-left-indent-mobile: 4em;
   0% {
     left: var(--car-start);
   }
+  90% {
+    transform: var(--transforms);
+  }
+  95% {
+    transform: var(--transforms) rotate(2deg);
+  }
   100% {
+    transform: var(--transforms);
+    left: calc(100% - var(--car-width) - 10px);
+  }
+}
+
+@keyframes car-drive-fast {
+  0% {
+    left: var(--car-start);
+  }
+  20% {
+    transform: var(--transforms) rotate(-20deg);
+  }
+  30% {
+    transform: var(--transforms);
+  }
+  90% {
+    transform: var(--transforms);
+  }
+  95% {
+    transform: var(--transforms) rotate(1deg);
+  }
+  100% {
+    transform: var(--transforms);
     left: calc(100% - var(--car-width) - 10px);
   }
 }
