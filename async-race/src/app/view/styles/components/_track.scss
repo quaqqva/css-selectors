@@ -15,6 +15,9 @@ $car-mobile-width: 100px;
 .track__title {
   font-size: 1.25rem;
   color: $color-light-xl;
+  
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .track__car,
