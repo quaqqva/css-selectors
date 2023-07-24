@@ -1,12 +1,10 @@
-import { Tags } from '../types/dom-types';
+import { HTMLSVGElement, Tags } from '../types/dom-types';
 import DOMComponent from './base-component';
 
-export default class SVGComponent {
+export default class SVGComponent extends DOMComponent<HTMLSVGElement> {
   private static ELEMENT_NAMESPACE = 'http://www.w3.org/2000/svg';
 
   private static ATTRIBUTE_NAMESPACE = 'http://www.w3.org/1999/xlink';
-
-  private element: Element;
 
   private useElement: Element;
 
@@ -19,18 +17,15 @@ export default class SVGComponent {
     id: string;
     parent: DOMComponent<HTMLElement>;
   }) {
-    this.element = document.createElementNS(SVGComponent.ELEMENT_NAMESPACE, Tags.SVG);
+    super({});
+    this.element = <HTMLSVGElement>document.createElementNS(SVGComponent.ELEMENT_NAMESPACE, Tags.SVG);
     this.useElement = document.createElementNS(SVGComponent.ELEMENT_NAMESPACE, Tags.SVGUse);
     this.useElement.setAttributeNS(SVGComponent.ATTRIBUTE_NAMESPACE, 'xlink:href', `${pathToSprite}#${id}`);
     this.element.append(this.useElement);
-    parent.append(this.element);
-  }
-
-  public addClass(className: string): void {
-    this.element.classList.add(className);
+    parent.append(this);
   }
 
   public setColor(color: string): void {
-    (this.element as HTMLElement).style.setProperty('fill', color);
+    this.element.style.fill = color;
   }
 }

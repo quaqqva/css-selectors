@@ -22,4 +22,10 @@ export default class EventEmitter {
     const handlerIndex = handlers.indexOf(handler);
     if (handlerIndex >= 0) handlers.splice(handlerIndex, 1);
   }
+
+  public addHandlers(handlers: { [event: string]: (data: unknown) => void }) {
+    Object.entries(handlers).forEach((entry) => {
+      this.subscribe(entry[0], entry[1]);
+    });
+  }
 }

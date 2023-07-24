@@ -9,6 +9,11 @@ enum AppEvents {
   CarsPageLoad = 'cars-page-load',
   GenerateCars = 'generate-cars',
   CarsGenerated = 'cars-generated',
+  CarToggleEngine = 'car-toggle-engine',
+  CarEngineToggled = 'car-engine-toggled',
+  RequestCarDrive = 'request-car-drive',
+  ResponseCarDrive = 'response-car-drive',
+  CarFinished = 'car-finished',
 }
 
 export default AppEvents;

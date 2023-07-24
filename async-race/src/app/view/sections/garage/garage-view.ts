@@ -1,9 +1,11 @@
 import DOMComponent, { ElementParameters } from '../../../../components/base-component';
 import Menu from '../../../../components/menu/menu';
+import InfoModal from '../../../../components/modals/info-modal';
 import EventEmitter from '../../../../utils/event-emitter';
 import getMapKeys from '../../../../utils/get-map-keys';
 import AppEvents from '../../../app-events';
 import { Car } from '../../../model/car';
+import { DriveData, EngineStatus } from '../../../model/drive';
 import SectionView from '../section-view';
 import Track from './car-track';
 import SubmitCarModal from './submit-car-modal';
@@ -46,26 +48,7 @@ export default class GarageView extends SectionView {
       parent: this.container,
     });
     this.tracks = new Map();
-
-    this.emitter.subscribe(AppEvents.CarCreated, (data) => {
-      this.createCar(data as Car);
-    });
-
-    this.emitter.subscribe(AppEvents.CarUpdated, (data) => {
-      this.updateCar(data as Car);
-    });
-
-    this.emitter.subscribe(AppEvents.CarDeleted, (id) => {
-      if (getMapKeys(this.tracks).length === this.carsPerPage) this.requestPage();
-      else {
-        this.tracks.get(id as number)?.destroy();
-        this.tracks.delete(id as number);
-      }
-    });
-
-    this.emitter.subscribe(AppEvents.CarsGenerated, () => {
-      this.requestPage();
-    });
+    this.addEventHandlers();
   }
 
   public get carsPerPage(): number {
@@ -80,6 +63,45 @@ export default class GarageView extends SectionView {
       this.tracks.set(car.id, track);
       this.tracksWrapper.append(track);
     });
+  }
+
+  private addEventHandlers(): void {
+    const handler = {
+      [AppEvents.CarCreated]: (data: unknown) => {
+        this.createCar(data as Car);
+      },
+      [AppEvents.CarUpdated]: (data: unknown) => {
+        this.updateCar(data as Car);
+      },
+      [AppEvents.CarDeleted]: (id: unknown) => {
+        if (getMapKeys(this.tracks).length === this.carsPerPage) this.requestPage();
+        else {
+          this.tracks.get(id as number)?.destroy();
+          this.tracks.delete(id as number);
+        }
+      },
+      [AppEvents.CarsGenerated]: () => {
+        this.requestPage();
+      },
+      [AppEvents.CarEngineToggled]: (data: unknown) => {
+        const { id, engineStatus, driveData } = data as {
+          id: number;
+          engineStatus: EngineStatus;
+          driveData: DriveData;
+        };
+        const track = this.tracks.get(id);
+        if (engineStatus === EngineStatus.Started) track?.launchCar(driveData);
+        else track?.resetCar();
+      },
+      [AppEvents.ResponseCarDrive]: (data: unknown) => {
+        const { id, isDriving } = data as {
+          id: number;
+          isDriving: boolean;
+        };
+        if (!isDriving) this.tracks.get(id)?.stopCar();
+      },
+    };
+    this.emitter.addHandlers(handler);
   }
 
   private createMenu(): Menu {
@@ -136,7 +158,26 @@ export default class GarageView extends SectionView {
     this.emitter.emit(AppEvents.CarsPageLoad, this.currentPage);
   }
 
-  private launchRace(): void {}
+  private launchRace(): void {
+    this.tracks.forEach((track) => {
+      track.startEngine();
+    });
 
-  private resetRace(): void {}
+    const firstFinishHandler = (carData: unknown) => {
+      const { car, time } = carData as { car: Car; time: number };
+      const infoModal = new InfoModal({
+        params: {},
+        info: `${car.name} finished first in ${time}s!`,
+      });
+      infoModal.show();
+      this.emitter.unsubscribe(AppEvents.CarFinished, firstFinishHandler);
+    };
+    this.emitter.subscribe(AppEvents.CarFinished, firstFinishHandler);
+  }
+
+  private resetRace(): void {
+    this.tracks.forEach((track) => {
+      track.stopEngine();
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { Tags, Events, InsertPositions, AnimationParams } from '../types/dom-types';
+import { Tags, Events, InsertPositions, AnimationParams, AnimationFillMode } from '../types/dom-types';
 
 export type ElementParameters = Partial<{
   tag: string;
@@ -140,15 +140,13 @@ export default class DOMComponent<T extends HTMLElement> {
     this.element.remove();
   }
 
-  public showAnimation({ name, duration, timingFunction = 'ease-in-out', repeatCount = 1 }: AnimationParams): void {
-    this.element.setAttribute(
-      'style',
-      `${this.element.style.cssText} animation: ${name} ${duration}ms ${timingFunction} ${repeatCount} !important;  transform-origin: center;`
-    );
-    setTimeout(() => {
-      this.element.style.animation = '';
-      this.element.style.transformOrigin = '';
-    }, duration);
+  public showAnimation({
+    name,
+    duration,
+    timingFunction = 'ease-in-out',
+    fillMode = AnimationFillMode.None,
+  }: AnimationParams): void {
+    this.element.style.animation = `${name} ${duration}ms ${timingFunction} ${fillMode}`;
   }
 
   public setCSSProperty(name: string, value: string): void {
@@ -156,7 +154,8 @@ export default class DOMComponent<T extends HTMLElement> {
   }
 
   public getCSSProperty(name: string): string {
-    return this.element.style.getPropertyValue(name);
+    const computedStyles = this.element.computedStyleMap();
+    return computedStyles.get(name)?.toString() || 'undefined';
   }
 
   public removeCSSProperty(name: string): void {

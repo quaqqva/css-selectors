@@ -5,6 +5,7 @@ import AppView from './view/app-view';
 import AppViews from './view/app-views';
 import { CarFullData } from './model/car-full';
 import { Car, CarViewData } from './model/car';
+import { EngineStatus } from './model/drive';
 
 export type AppConfig = {
   title: string;
@@ -28,34 +29,47 @@ export class App {
   public async start(): Promise<void> {
     this.view.switchTo(AppViews.GarageView);
     this.loadPage(1);
+    this.addEventHandlers();
+  }
 
-    this.emitter.subscribe(AppEvents.SwitchView, () => {
-      this.switchView();
-    });
-
-    this.emitter.subscribe(AppEvents.CarCreate, async (carViewData) => {
-      const car = await this.controller.createCar(carViewData as CarViewData);
-      this.emitter.emit(AppEvents.CarCreated, car);
-    });
-
-    this.emitter.subscribe(AppEvents.CarUpdate, async (carData) => {
-      const updatedCar = await this.controller.updateCar(carData as Car);
-      this.emitter.emit(AppEvents.CarUpdated, updatedCar);
-    });
-
-    this.emitter.subscribe(AppEvents.CarDelete, async (carId) => {
-      await this.controller.deleteCar(carId as number);
-      this.emitter.emit(AppEvents.CarDeleted, carId);
-    });
-
-    this.emitter.subscribe(AppEvents.CarsPageLoad, async (pageNumber) => {
-      this.loadPage(pageNumber as number);
-    });
-
-    this.emitter.subscribe(AppEvents.GenerateCars, async (carsCount) => {
-      await this.controller.createRandomCars(carsCount as number);
-      this.emitter.emit(AppEvents.CarsGenerated, null);
-    });
+  private addEventHandlers(): void {
+    const handlers = {
+      [AppEvents.SwitchView]: () => {
+        this.switchView();
+      },
+      [AppEvents.CarCreate]: async (carViewData: unknown) => {
+        const car = await this.controller.createCar(carViewData as CarViewData);
+        this.emitter.emit(AppEvents.CarCreated, car);
+      },
+      [AppEvents.CarUpdate]: async (carData: unknown) => {
+        const updatedCar = await this.controller.updateCar(carData as Car);
+        this.emitter.emit(AppEvents.CarUpdated, updatedCar);
+      },
+      [AppEvents.CarDelete]: async (carId: unknown) => {
+        await this.controller.deleteCar(carId as number);
+        this.emitter.emit(AppEvents.CarDeleted, carId);
+      },
+      [AppEvents.CarsPageLoad]: async (pageNumber: unknown) => {
+        this.loadPage(pageNumber as number);
+      },
+      [AppEvents.GenerateCars]: async (carsCount: unknown) => {
+        await this.controller.createRandomCars(carsCount as number);
+        this.emitter.emit(AppEvents.CarsGenerated, null);
+      },
+      [AppEvents.CarToggleEngine]: async (requestData: unknown) => {
+        const { id, engineStatus } = requestData as {
+          id: number;
+          engineStatus: EngineStatus.Started | EngineStatus.Stopped;
+        };
+        const driveData = await this.controller.toggleEngine({ carId: id, engineStatus });
+        this.emitter.emit(AppEvents.CarEngineToggled, { id, engineStatus, driveData });
+      },
+      [AppEvents.RequestCarDrive]: async (id: unknown) => {
+        const isDriving = await this.controller.switchToDrive(id as number);
+        this.emitter.emit(AppEvents.ResponseCarDrive, { id, isDriving });
+      },
+    };
+    this.emitter.addHandlers(handlers);
   }
 
   private async loadPage(pageNumber: number): Promise<void> {

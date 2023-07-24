@@ -14,5 +14,7 @@ export default class WinnersView extends SectionView {
     return WinnersView.CARS_PER_PAGE;
   }
 
-  public drawCars(cars: CarFullData[]): void {}
+  public drawCars(cars: CarFullData[]): void {
+    cars.push();
+  }
 }

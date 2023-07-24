@@ -32,6 +32,7 @@ export enum Events {
   MouseOut = 'mouseout',
   Submit = 'submit',
   TransitionEnd = 'transitionend',
+  AnimationEnd = 'animationend',
 }
 
 export enum InsertPositions {
@@ -46,7 +47,15 @@ export type AnimationParams = {
   duration: number;
   timingFunction?: string;
   repeatCount?: number;
+  fillMode?: AnimationFillMode;
 };
+
+export enum AnimationFillMode {
+  None = 'none',
+  Forwards = 'forwards',
+  Backwards = 'backwards',
+  Both = 'both',
+}
 
 export enum InputTypes {
   Text = 'text',

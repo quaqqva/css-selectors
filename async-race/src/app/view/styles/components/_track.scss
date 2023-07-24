@@ -15,7 +15,7 @@ $car-mobile-width: 100px;
 .track__title {
   font-size: 1.25rem;
   color: $color-light-xl;
-  
+
   display: inline-block;
   vertical-align: middle;
 }
@@ -27,14 +27,39 @@ $car-mobile-width: 100px;
 
 .track__car {
   width: $car-width;
-  transform: translateY(35%);
+  --transforms: translateY(35%);
+  transform: var(--transforms);
   left: 100px;
   bottom: 0;
 
   @media (max-width: 600px) {
+    --transforms: translateY(40%);
     width: $car-mobile-width;
     left: 20px;
-    transform: translateY(40%);
+  }
+}
+
+@keyframes car-drive {
+  0% {
+    left: 100px;
+  }
+  100% {
+    left: calc(100% - $car-width - 10px);
+  }
+}
+
+@keyframes car-stop {
+  $stop-length: 30px;
+  0% {
+    left: var(--car-stop-at);
+  }
+  75% {
+    transform: var(--transforms) rotate(2deg);
+    left: min(var(--car-stop-at) + $stop-length, 100% - $car-width - 10px);
+  }
+  100% {
+    transform: var(--transforms);
+    left: min(var(--car-stop-at) + $stop-length, 100% - $car-width - 10px);
   }
 }
 
