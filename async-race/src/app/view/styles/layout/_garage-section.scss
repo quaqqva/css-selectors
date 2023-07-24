@@ -37,8 +37,9 @@
     $border-width: 4px;
     border-radius: inherit;
     border-bottom: $border-width dashed $color-bg;
-    transition: border-width ease-in-out $active-transition, 
-                border-bottom-color ease-in-out $active-transition;
+    transition:
+      border-width ease-in-out $active-transition,
+      border-bottom-color ease-in-out $active-transition;
 
     position: absolute;
     left: 0;
