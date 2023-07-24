@@ -27,13 +27,18 @@ $car-mobile-width: 100px;
 
 .track__car {
   width: $car-width;
+
   --transforms: translateY(35%);
   transform: var(--transforms);
+
   left: 100px;
   bottom: 0;
 
+  transition: opacity ease-in-out $active-transition;
+
   @media (max-width: 600px) {
     --transforms: translateY(40%);
+  
     width: $car-mobile-width;
     left: 20px;
   }

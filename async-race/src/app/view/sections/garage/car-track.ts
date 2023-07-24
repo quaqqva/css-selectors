@@ -134,8 +134,15 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   }
 
   public resetCar(): void {
-    this.carSVG.setCSSProperty('animation', '');
-    this.carSVG.setCSSProperty(Track.CAR_STOP_COORDS, '');
+    this.carSVG.setCSSProperty('opacity', '0');
+
+    const opacityTransitionTime = 300;
+    setTimeout(() => {
+      this.carSVG.setCSSProperty('animation', '');
+      this.carSVG.setCSSProperty(Track.CAR_STOP_COORDS, '');
+      this.carSVG.setCSSProperty('opacity', '');
+    }, opacityTransitionTime);
+
     this.engineStatus = EngineStatus.Stopped;
   }
 
