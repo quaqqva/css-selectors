@@ -132,9 +132,9 @@ $car-mobile-width: 100px;
 }
 
 .track__start-engine {
-  left: (-$menu-left-indent);
+  left: calc(4px - $menu-left-indent);
   @media (max-width: $mobile-width) {
-    left: (-$menu-left-indent-mobile);
+    left: calc(4px - $menu-left-indent-mobile);
   }
 
   @include button(
@@ -143,12 +143,17 @@ $car-mobile-width: 100px;
     $edge-color: $color-dark-s,
     $edge-height: 4px
   );
+
+  &:disabled {
+    color: var(--car-color);
+    -webkit-text-stroke: 1px $color-dark-l;
+  }
 }
 
 .track__reset-car {
-  left: calc(52px - $menu-left-indent);
+  left: calc(56px - $menu-left-indent);
   @media (max-width: $mobile-width) {
-    left: calc(52px - $menu-left-indent-mobile);
+    left: calc(56px - $menu-left-indent-mobile);
   }
   @include button(
     $bg-color: $color-dark-l,

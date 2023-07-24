@@ -161,6 +161,7 @@ export default class GarageView extends SectionView {
   private launchRace(): void {
     this.tracks.forEach((track) => {
       track.startEngine();
+      track.disableMenuButton(Track.STOP_BUTTON_INDEX);
     });
 
     const firstFinishHandler = (carData: unknown) => {

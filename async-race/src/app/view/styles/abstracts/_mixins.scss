@@ -21,11 +21,18 @@
 
   transition:
     transform ease-in-out $active-transition,
-    box-shadow ease-in-out $active-transition;
+    box-shadow ease-in-out $active-transition,
+    color ease-in-out $active-transition;
 
   &:active {
     transform: translateY($edge-height - 2px);
     box-shadow: 0 2px $edge-color;
+  }
+
+  &:disabled {
+    cursor: default;
+    pointer-events: none;
+    color: darken($border-color, 20);
   }
 }
 

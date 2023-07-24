@@ -37,6 +37,10 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     classes: [TrackElements.CarMenu],
   };
 
+  public static START_BUTTON_INDEX = 2;
+
+  public static STOP_BUTTON_INDEX = 3;
+
   private static DELETE_ICON_PARAMS: ElementParameters = {
     tag: Tags.Icon,
     classes: [FontAwesome.Solid, FontAwesome.Times],
@@ -47,6 +51,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   private static CAR_STOP_ANIMATION = 'car-stop';
 
   private static CAR_STOP_COORDS = '--car-stop-at'; // for CSS
+
+  private static CAR_COLOR_VAR = '--car-color'; // for CSS
 
   private emitter: EventEmitter;
 
@@ -59,6 +65,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   private car: Car;
 
   private engineStatus: EngineStatus;
+
+  private menu: Menu;
 
   public constructor(emitter: EventEmitter, car: Car) {
     super(Track.TRACK_PARAMS);
@@ -76,16 +84,22 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     this.car = car;
     this.engineStatus = EngineStatus.Stopped;
 
-    this.createMenu();
+    this.menu = this.createMenu();
+    this.disableMenuButton(Track.STOP_BUTTON_INDEX);
   }
 
   public updateCar(car: Car): void {
     this.car = car;
     this.carSVG.setColor(car.color);
     this.carTitle.textContent = car.name;
+
+    this.menu.getButton(Track.START_BUTTON_INDEX).setCSSProperty(Track.CAR_COLOR_VAR, car.color);
   }
 
   public startEngine(): void {
+    this.disableMenuButton(Track.START_BUTTON_INDEX);
+    this.enableMenuButton(Track.STOP_BUTTON_INDEX);
+
     this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Started });
   }
 
@@ -113,6 +127,9 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   }
 
   public stopEngine(): void {
+    this.enableMenuButton(Track.START_BUTTON_INDEX);
+    this.disableMenuButton(Track.STOP_BUTTON_INDEX);
+
     this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Stopped });
   }
 
@@ -136,7 +153,17 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     });
   }
 
-  private createMenu(): void {
+  private enableMenuButton(index: number): void {
+    const button = this.menu.getButton(index);
+    button.removeAttribute('disabled');
+  }
+
+  public disableMenuButton(index: number): void {
+    const button = this.menu.getButton(index);
+    button.setAttribute('disabled', true.toString());
+  }
+
+  private createMenu(): Menu {
     const menu = new Menu({
       params: { ...Track.MENU_PARAMS, parent: this },
       buttonTexts: ['update', '', 'a', 'b'],
@@ -156,6 +183,10 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
     const deleteButtonIndex = 1;
     menu.getButton(deleteButtonIndex).append(new DOMComponent<HTMLElement>(Track.DELETE_ICON_PARAMS));
+
+    const startButtonIndex = 2;
+    menu.getButton(startButtonIndex).setCSSProperty(Track.CAR_COLOR_VAR, this.car.color);
+    return menu;
   }
 
   private changeCar(): void {
