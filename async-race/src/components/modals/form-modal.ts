@@ -55,6 +55,7 @@ export default class FormModal extends Modal {
     inputValues,
     onSubmit,
     windowTitle,
+    colorsPaletteId,
     showTime,
   }: {
     elementParams: ElementParameters;
@@ -63,6 +64,7 @@ export default class FormModal extends Modal {
     inputValues?: string[];
     onSubmit: (formData: string[]) => void;
     windowTitle?: string;
+    colorsPaletteId?: string;
     showTime?: number;
   }) {
     super(elementParams, showTime);
@@ -84,7 +86,7 @@ export default class FormModal extends Modal {
     );
     if (windowTitle)
       this.append(new DOMComponent<HTMLHeadingElement>({ ...FormModal.TITLE_PARAMS, textContent: windowTitle }));
-    const form = this.createForm(inputValues);
+    const form = this.createForm(inputValues, colorsPaletteId);
     form.addEventListener(Events.Submit, (event: Event) => {
       event.preventDefault();
       this.hide();
@@ -93,7 +95,7 @@ export default class FormModal extends Modal {
     });
   }
 
-  private createForm(inputValues?: string[]): DOMComponent<HTMLFormElement> {
+  private createForm(inputValues?: string[], colorsPaletteId?: string): DOMComponent<HTMLFormElement> {
     const form = new DOMComponent<HTMLFormElement>({
       ...FormModal.FORM_PARAMS,
       parent: this,
@@ -104,7 +106,11 @@ export default class FormModal extends Modal {
       input.required = true;
 
       if (inputValues) input.value = inputValues[index];
-      else if (input.getAttribute('type') === InputTypes.Color) input.value = FormModal.DEFAULT_INPUT_COLOR;
+      else if (input.getAttribute('type') === InputTypes.Color) {
+        input.value = FormModal.DEFAULT_INPUT_COLOR;
+        console.log(colorsPaletteId);
+        if (colorsPaletteId) input.setAttribute('list', colorsPaletteId);
+      }
 
       label.append(input);
       form.append(label);

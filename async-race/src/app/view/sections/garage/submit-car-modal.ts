@@ -17,6 +17,8 @@ export default class SubmitCarModal extends FormModal {
 
   private static INPUTS: string[] = ['Name', 'Color'];
 
+  private static PALETTE_ID = 'app-colors';
+
   private static INPUTS_TYPES: InputTypes[] = [InputTypes.Text, InputTypes.Color];
 
   public constructor(emitter: EventEmitter, carData?: Car) {
@@ -38,6 +40,7 @@ export default class SubmitCarModal extends FormModal {
       inputTypes: SubmitCarModal.INPUTS_TYPES,
       inputValues,
       windowTitle: SubmitCarModal.TITLE,
+      colorsPaletteId: SubmitCarModal.PALETTE_ID,
       onSubmit: submitHandler,
     });
   }

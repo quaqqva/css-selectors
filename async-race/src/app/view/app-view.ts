@@ -9,6 +9,7 @@ import Header from './header/header';
 import GarageView from './sections/garage/garage-view';
 import SectionView from './sections/section-view';
 import WinnersView from './sections/winners-view';
+import colorPalette from './color-palette.html';
 import './styles/main.scss';
 
 enum ViewSections {
@@ -36,6 +37,7 @@ export default class AppView {
 
     this.currentSection = AppViews.GarageView;
     this.sections = new Map<AppViews, SectionView>();
+    DOMComponent.fromElement(document.body).append(DOMComponent.fromHTML(colorPalette));
   }
 
   public get carsPerPage(): number {
