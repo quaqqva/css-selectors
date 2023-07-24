@@ -1,9 +1,9 @@
 .garage__menu {
-  width: max(45%, 500px);
+  width: clamp(500px, 45%, 750px);
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: 1310px) {
+  @media (max-width: 1350px) {
     font-size: 1.5rem;
   }
 
