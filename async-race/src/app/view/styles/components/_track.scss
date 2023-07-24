@@ -33,6 +33,7 @@ $car-mobile-width: 100px;
 
   left: 100px;
   bottom: 0;
+  z-index: $car-index;
 
   transition: opacity ease-in-out $active-transition;
 
