@@ -1,7 +1,15 @@
 $menu-left-indent: 6em;
 $menu-left-indent-mobile: 4em;
-$car-width: 150px;
-$car-mobile-width: 100px;
+
+:root {
+  --car-width: 150px;
+  --car-start: 100px;
+
+  @media (max-width: 600px) {
+    --car-width: 100px;
+    --car-start: 20px;
+  }
+}
 
 .track {
   width: 100%;
@@ -26,12 +34,12 @@ $car-mobile-width: 100px;
 }
 
 .track__car {
-  width: $car-width;
+  width: var(--car-width);
 
   --transforms: translateY(35%);
   transform: var(--transforms);
 
-  left: 100px;
+  left: var(--car-start);
   bottom: 0;
   z-index: $car-index;
 
@@ -39,18 +47,15 @@ $car-mobile-width: 100px;
 
   @media (max-width: 600px) {
     --transforms: translateY(40%);
-  
-    width: $car-mobile-width;
-    left: 20px;
   }
 }
 
 @keyframes car-drive {
   0% {
-    left: 100px;
+    left: var(--car-start);
   }
   100% {
-    left: calc(100% - $car-width - 10px);
+    left: calc(100% - var(--car-width) - 10px);
   }
 }
 
@@ -61,11 +66,11 @@ $car-mobile-width: 100px;
   }
   75% {
     transform: var(--transforms) rotate(2deg);
-    left: min(var(--car-stop-at) + $stop-length, 100% - $car-width - 10px);
+    left: min(var(--car-stop-at) + $stop-length, 100% - var(--car-width) - 10px);
   }
   100% {
     transform: var(--transforms);
-    left: min(var(--car-stop-at) + $stop-length, 100% - $car-width - 10px);
+    left: min(var(--car-stop-at) + $stop-length, 100% - var(--car-width) - 10px);
   }
 }
 
@@ -73,12 +78,12 @@ $car-mobile-width: 100px;
   width: 80px;
   aspect-ratio: 1/1;
 
-  right: calc($car-width + 20px);
+  right: calc(var(--car-width) + 20px);
   bottom: -5px;
 
   @media (max-width: 600px) {
     width: 60px;
-    right: calc($car-mobile-width + 10px);
+    right: calc(var(--car-width) + 10px);
   }
 
   fill: $color-light-xl;
