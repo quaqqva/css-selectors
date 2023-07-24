@@ -37,13 +37,22 @@
     $border-width: 4px;
     border-radius: inherit;
     border-bottom: $border-width dashed $color-bg;
-    transition: border-width ease-in-out $active-transition;
+    transition: border-width ease-in-out $active-transition, 
+                border-bottom-color ease-in-out $active-transition;
 
     position: absolute;
     left: 0;
     bottom: (-$border-width);
 
     z-index: -1;
+  }
+
+  &:disabled {
+    color: $color-light-s;
+    border-color: $color-light-s;
+    &::after {
+      border-bottom-color: $color-light-s;
+    }
   }
 
   &:active {
@@ -61,6 +70,14 @@
     $edge-color: $color-light-m,
     $horizontal-padding: 20px
   );
+
+  transition: ease-in-out $active-transition;
+
+  &:disabled {
+    color: $color-light-s;
+    background-color: $color-dark-m;
+    border-color: $color-light-l;
+  }
 }
 
 .garage__tracks {

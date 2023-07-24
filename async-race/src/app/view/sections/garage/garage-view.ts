@@ -1,6 +1,7 @@
 import DOMComponent, { ElementParameters } from '../../../../components/base-component';
 import Menu from '../../../../components/menu/menu';
 import InfoModal from '../../../../components/modals/info-modal';
+import { Events } from '../../../../types/dom-types';
 import EventEmitter from '../../../../utils/event-emitter';
 import getMapKeys from '../../../../utils/get-map-keys';
 import AppEvents from '../../../app-events';
@@ -27,13 +28,17 @@ export default class GarageView extends SectionView {
 
   private static MENU_BUTTONS: string[] = ['Add new', `Generate ${GarageView.RANDOM_CARS_COUNT}`, 'Race', 'Reset'];
 
+  private static RACE_BUTTON_INDEX = 2;
+
+  private static RESET_BUTTON_INDEX = 3;
+
   private static TRACKS_WRAPPER_PARAMS: ElementParameters = {
     classes: [GarageClasses.TracksWrapper],
   };
 
   private static CARS_PER_PAGE = 7;
 
-  private menu: DOMComponent<HTMLDivElement>;
+  private menu: Menu;
 
   private tracksWrapper: DOMComponent<HTMLDivElement>;
 
@@ -159,9 +164,12 @@ export default class GarageView extends SectionView {
   }
 
   private launchRace(): void {
+    this.menu.disableButton(GarageView.RACE_BUTTON_INDEX);
+    this.menu.disableButton(GarageView.RESET_BUTTON_INDEX);
+
     this.tracks.forEach((track) => {
       track.startEngine();
-      track.disableMenuButton(Track.STOP_BUTTON_INDEX);
+      track.disableStopButton();
     });
 
     const firstFinishHandler = (carData: unknown) => {
@@ -171,6 +179,16 @@ export default class GarageView extends SectionView {
         info: `${car.name} finished first in ${time}s!`,
       });
       infoModal.show();
+
+      this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
+
+      const resetButton = this.menu.getButton(GarageView.RESET_BUTTON_INDEX);
+      const enableRaceButtonHandler = () => {
+        this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
+        resetButton.removeEventListener(Events.Click, enableRaceButtonHandler);
+      };
+      resetButton.addEventListener(Events.Click, enableRaceButtonHandler);
+
       this.emitter.unsubscribe(AppEvents.CarFinished, firstFinishHandler);
     };
     this.emitter.subscribe(AppEvents.CarFinished, firstFinishHandler);

@@ -37,9 +37,9 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     classes: [TrackElements.CarMenu],
   };
 
-  public static START_BUTTON_INDEX = 2;
+  private static START_BUTTON_INDEX = 2;
 
-  public static STOP_BUTTON_INDEX = 3;
+  private static STOP_BUTTON_INDEX = 3;
 
   private static DELETE_ICON_PARAMS: ElementParameters = {
     tag: Tags.Icon,
@@ -85,7 +85,7 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     this.engineStatus = EngineStatus.Stopped;
 
     this.menu = this.createMenu();
-    this.disableMenuButton(Track.STOP_BUTTON_INDEX);
+    this.disableStopButton();
   }
 
   public updateCar(car: Car): void {
@@ -97,8 +97,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   }
 
   public startEngine(): void {
-    this.disableMenuButton(Track.START_BUTTON_INDEX);
-    this.enableMenuButton(Track.STOP_BUTTON_INDEX);
+    this.menu.disableButton(Track.START_BUTTON_INDEX);
+    this.menu.enableButton(Track.STOP_BUTTON_INDEX);
 
     this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Started });
   }
@@ -127,8 +127,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   }
 
   public stopEngine(): void {
-    this.enableMenuButton(Track.START_BUTTON_INDEX);
-    this.disableMenuButton(Track.STOP_BUTTON_INDEX);
+    this.menu.enableButton(Track.START_BUTTON_INDEX);
+    this.disableStopButton();
 
     this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Stopped });
   }
@@ -153,14 +153,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     });
   }
 
-  private enableMenuButton(index: number): void {
-    const button = this.menu.getButton(index);
-    button.removeAttribute('disabled');
-  }
-
-  public disableMenuButton(index: number): void {
-    const button = this.menu.getButton(index);
-    button.setAttribute('disabled', true.toString());
+  public disableStopButton(): void {
+    this.menu.disableButton(Track.STOP_BUTTON_INDEX);
   }
 
   private createMenu(): Menu {

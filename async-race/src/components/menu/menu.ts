@@ -55,4 +55,14 @@ export default class Menu extends DOMComponent<HTMLDivElement> {
   public getButton(index: number): DOMComponent<HTMLButtonElement> {
     return this.buttons[index];
   }
+
+  public enableButton(index: number): void {
+    const button = this.getButton(index);
+    button.removeAttribute('disabled');
+  }
+
+  public disableButton(index: number): void {
+    const button = this.getButton(index);
+    button.setAttribute('disabled', true.toString());
+  }
 }
