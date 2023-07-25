@@ -60,7 +60,7 @@ export default class GarageView extends SectionView {
     return GarageView.CARS_PER_PAGE;
   }
 
-  public drawCars(cars: Car[]): void {
+  protected drawCars(cars: Car[]): void {
     this.tracks.clear();
     this.tracksWrapper.clear();
     cars.forEach((car) => {
@@ -70,17 +70,30 @@ export default class GarageView extends SectionView {
     });
   }
 
+  protected alertNoData(): void {
+    this.tracksWrapper.destroy();
+    super.alertNoData();
+  }
+
+  protected removeNoDataMessage(): void {
+    super.removeNoDataMessage();
+    this.container.append(this.tracksWrapper);
+  }
+
   private addEventHandlers(): void {
     const handler = {
       [AppEvents.CarCreated]: (data: unknown) => {
+        this.removeNoDataMessage();
         this.createCar(data as Car);
       },
       [AppEvents.CarUpdated]: (data: unknown) => {
         this.updateCar(data as Car);
       },
       [AppEvents.CarDeleted]: (id: unknown) => {
-        if (getMapKeys(this.tracks).length === this.carsPerPage) this.requestPage();
+        const carsOnPage = getMapKeys(this.tracks).length;
+        if (carsOnPage === this.carsPerPage) this.requestPage();
         else {
+          if (carsOnPage === 1) this.alertNoData();
           this.tracks.get(id as number)?.destroy();
           this.tracks.delete(id as number);
         }

@@ -97,7 +97,6 @@ export class App {
         pageNum: pageNumber,
         winnersPerPage: this.view.carsPerPage,
       });
-      console.log(winnersPage);
       this.view.drawCars(winnersPage);
     }
   }

@@ -77,7 +77,7 @@ export default class AppView {
   }
 
   public drawCars(cars: CarFullData[]): void {
-    this.sections.get(this.currentSection)?.drawCars(cars);
+    this.sections.get(this.currentSection)?.drawData(cars);
   }
 
   private initializeBody(): DOMComponent<HTMLElement> {

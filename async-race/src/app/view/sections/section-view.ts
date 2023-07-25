@@ -1,13 +1,25 @@
-import DOMComponent from '../../../components/base-component';
+import DOMComponent, { ElementParameters } from '../../../components/base-component';
+import { Tags } from '../../../types/dom-types';
 import EventEmitter from '../../../utils/event-emitter';
 import { CarFullData } from '../../model/car-full';
 
+enum SectionElements {
+  NoDataMessage = 'section__no-data',
+}
 export default abstract class SectionView {
+  private static NO_DATA_PARAMS: ElementParameters = {
+    tag: Tags.Heading2,
+    classes: [SectionElements.NoDataMessage],
+    textContent: 'No data avaliable',
+  };
+
   protected emitter: EventEmitter;
 
   protected container: DOMComponent<HTMLElement>;
 
   protected page: number;
+
+  private noDataMessage: DOMComponent<HTMLHeadingElement>;
 
   public get section() {
     return this.container;
@@ -23,7 +35,26 @@ export default abstract class SectionView {
     this.emitter = emitter;
     this.container = container;
     this.page = 1;
+
+    this.noDataMessage = new DOMComponent<HTMLHeadingElement>(SectionView.NO_DATA_PARAMS);
   }
 
-  public abstract drawCars(cars: CarFullData[]): void;
+  public drawData(cars: CarFullData[]): void {
+    if (cars.length) {
+      this.removeNoDataMessage();
+      this.drawCars(cars);
+    } else {
+      this.alertNoData();
+    }
+  }
+
+  protected abstract drawCars(cars: CarFullData[]): void;
+
+  protected alertNoData(): void {
+    this.container.append(this.noDataMessage);
+  }
+
+  protected removeNoDataMessage(): void {
+    this.noDataMessage.destroy();
+  }
 }

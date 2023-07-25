@@ -12,14 +12,23 @@ export default class WinnersView extends SectionView {
   public constructor(emitter: EventEmitter, container: DOMComponent<HTMLElement>) {
     super(emitter, container);
     this.table = new WinnersTable(WinnersView.CARS_PER_PAGE);
-    this.container.append(this.table);
   }
 
   public get carsPerPage(): number {
     return WinnersView.CARS_PER_PAGE;
   }
 
-  public drawCars(cars: CarFullData[]): void {
+  protected drawCars(cars: CarFullData[]): void {
     this.table.addCars(cars, this.currentPage);
+  }
+
+  protected alertNoData(): void {
+    this.table.destroy();
+    super.alertNoData();
+  }
+
+  protected removeNoDataMessage(): void {
+    super.removeNoDataMessage();
+    this.container.append(this.table);
   }
 }
