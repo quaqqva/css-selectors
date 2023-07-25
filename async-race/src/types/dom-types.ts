@@ -19,6 +19,7 @@ export enum Tags {
   Form = 'form',
   SVG = 'svg',
   SVGUse = 'use',
+  Image = 'img',
 }
 
 export enum Events {
