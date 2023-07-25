@@ -1,9 +1,8 @@
 import DOMComponent, { ElementParameters } from '../../../../components/base-component';
 import Menu from '../../../../components/menu/menu';
 import InfoModal from '../../../../components/modals/info-modal';
-import { Events } from '../../../../types/dom-types';
 import EventEmitter from '../../../../utils/event-emitter';
-import getMapKeys from '../../../../utils/get-map-keys';
+import { getMapKeys, getMapValues } from '../../../../utils/get-map-entries';
 import AppEvents from '../../../app-events';
 import { Car } from '../../../model/car';
 import { DriveData, EngineStatus } from '../../../model/drive';
@@ -44,8 +43,12 @@ export default class GarageView extends SectionView {
 
   private tracks: Map<number, Track>;
 
+  private raceGoing: boolean;
+
   public constructor(emitter: EventEmitter, container: DOMComponent<HTMLElement>) {
     super(emitter, container);
+
+    this.raceGoing = false;
 
     this.menu = this.createMenu();
     this.tracksWrapper = new DOMComponent<HTMLDivElement>({
@@ -61,13 +64,18 @@ export default class GarageView extends SectionView {
   }
 
   protected drawCars(cars: Car[]): void {
-    this.tracks.clear();
     this.tracksWrapper.clear();
+    this.tracks.clear();
+
     cars.forEach((car) => {
       const track = new Track(this.emitter, car);
       this.tracks.set(car.id, track);
       this.tracksWrapper.append(track);
     });
+
+    if (this.raceGoing) this.resetRace();
+    this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
+    this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
   }
 
   protected alertNoData(): void {
@@ -101,6 +109,9 @@ export default class GarageView extends SectionView {
       [AppEvents.CarsGenerated]: () => {
         this.requestPage();
       },
+      [AppEvents.CarToggleEngine]: () => {
+        this.menu.disableButton(GarageView.RACE_BUTTON_INDEX);
+      },
       [AppEvents.CarEngineToggled]: (data: unknown) => {
         const { id, engineStatus, driveData } = data as {
           id: number;
@@ -108,8 +119,13 @@ export default class GarageView extends SectionView {
           driveData: DriveData;
         };
         const track = this.tracks.get(id);
-        if (engineStatus === EngineStatus.Started) track?.launchCar(driveData);
-        else track?.resetCar();
+        if (engineStatus === EngineStatus.Started) {
+          track?.launchCar(driveData);
+        } else {
+          track?.resetCar();
+          if (getMapValues(this.tracks).every((trackElement) => !trackElement.isDriving))
+            this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
+        }
       },
       [AppEvents.ResponseCarDrive]: (data: unknown) => {
         const { id, isDriving } = data as {
@@ -185,6 +201,8 @@ export default class GarageView extends SectionView {
       track.disableStopButton();
     });
 
+    this.raceGoing = true;
+
     const firstFinishHandler = (carData: unknown) => {
       const { car, time } = carData as { car: Car; time: number };
       const infoModal = new InfoModal({
@@ -195,20 +213,13 @@ export default class GarageView extends SectionView {
       infoModal.show();
 
       this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
-
-      const resetButton = this.menu.getButton(GarageView.RESET_BUTTON_INDEX);
-      const enableRaceButtonHandler = () => {
-        this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
-        resetButton.removeEventListener(Events.Click, enableRaceButtonHandler);
-      };
-      resetButton.addEventListener(Events.Click, enableRaceButtonHandler);
-
       this.emitter.unsubscribe(AppEvents.CarFinished, firstFinishHandler);
     };
     this.emitter.subscribe(AppEvents.CarFinished, firstFinishHandler);
   }
 
   private resetRace(): void {
+    this.raceGoing = false;
     this.tracks.forEach((track) => {
       track.stopEngine();
     });

@@ -100,7 +100,9 @@ export default class Controller {
     const response = await fetch(url, {
       method: RequestMethod.PATCH,
     });
-    return response.status === ResponseStatus.OK;
+    if (response.status === ResponseStatus.OK) return true;
+    if (response.status === ResponseStatus.InternalServerError) return false;
+    throw Error('Not valid drive request');
   }
 
   public async createWinner(winnerData: Winner): Promise<Winner> {

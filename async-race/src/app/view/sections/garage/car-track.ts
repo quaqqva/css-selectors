@@ -84,6 +84,10 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     this.disableStopButton();
   }
 
+  public get isDriving(): boolean {
+    return this.engineStatus === EngineStatus.Started;
+  }
+
   public updateCar(car: Car): void {
     this.car = car;
     this.carImage.setColor(car.color);
