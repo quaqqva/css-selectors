@@ -1,0 +1,49 @@
+.winners-table {
+  width: min(960px, 90%);
+  margin: 0 auto;
+  text-align: center;
+  border: 4px solid $color-dark-xs;
+
+  $row-height: 50px;
+  border-collapse: collapse;
+
+  @media (max-width: 650px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 420px) {
+    font-size: 0.55rem;
+  }
+
+  thead {
+    height: $row-height;
+    background-color: $color-light-xl;
+    text-transform: capitalize;
+  }
+
+  td {
+    border: 2px solid $color-dark-xs;
+    padding: 5px;
+
+    position: relative;
+
+    .car-wrapper {
+      position: static;
+      max-width: 90%;
+      height: $row-height;
+      transform: translate(10%, -100%);
+    }
+  }
+
+  tbody {
+    background-color: $color-light-l;
+    tr {
+      height: $row-height;
+
+      &:nth-of-type(2n) {
+        background-color: $color-dark-l;
+        color: $color-light-xl;
+      }
+    }
+  }
+}

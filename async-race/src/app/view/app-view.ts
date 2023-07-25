@@ -8,7 +8,7 @@ import footer from './footer/footer';
 import Header from './header/header';
 import GarageView from './sections/garage/garage-view';
 import SectionView from './sections/section-view';
-import WinnersView from './sections/winners-view';
+import WinnersView from './sections/winners/winners-view';
 import colorPalette from './color-palette.html';
 import './styles/main.scss';
 
@@ -43,6 +43,10 @@ export default class AppView {
   public get carsPerPage(): number {
     const currentSection = this.sections.get(this.currentSection);
     return currentSection ? currentSection.carsPerPage : -1;
+  }
+
+  public get currentPage(): number {
+    return this.sections.get(this.currentSection)?.currentPage || -1;
   }
 
   public switchTo(viewType: AppViews): void {

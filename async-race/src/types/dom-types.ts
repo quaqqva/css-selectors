@@ -20,6 +20,11 @@ export enum Tags {
   SVG = 'svg',
   SVGUse = 'use',
   Image = 'img',
+  Table = 'table',
+  TableHead = 'thead',
+  TableBody = 'tbody',
+  TableRow = 'tr',
+  TableElement = 'td',
 }
 
 export enum Events {

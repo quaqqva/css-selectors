@@ -1,7 +1,7 @@
-import DOMComponent, { ElementParameters } from '../../../../components/base-component';
-import SVGComponent from '../../../../components/svg-component';
-import { AnimationFillMode, Tags, TransformOrigin } from '../../../../types/dom-types';
-import trackSprite from '../../../../assets/img/track_sprite.svg';
+import DOMComponent, { ElementParameters } from '../../components/base-component';
+import SVGComponent from '../../components/svg-component';
+import { AnimationFillMode, Tags, TransformOrigin } from '../../types/dom-types';
+import trackSprite from '../../assets/img/track_sprite.svg';
 
 enum CarElements {
   Wrapper = 'car-wrapper',

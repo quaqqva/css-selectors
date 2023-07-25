@@ -160,7 +160,7 @@ export default class GarageView extends SectionView {
   }
 
   private requestPage(): void {
-    this.emitter.emit(AppEvents.CarsPageLoad, this.currentPage);
+    this.emitter.emit(AppEvents.PageLoad, this.currentPage);
   }
 
   private launchRace(): void {
@@ -178,6 +178,7 @@ export default class GarageView extends SectionView {
         params: {},
         info: `${car.name} finished first in ${time}s!`,
       });
+      this.emitter.emit(AppEvents.UpdateWinner, carData);
       infoModal.show();
 
       this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);

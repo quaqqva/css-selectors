@@ -10,7 +10,7 @@ import SubmitCarModal from './submit-car-modal';
 import ConfirmModal from '../../../../components/modals/confirm-modal';
 import AppEvents from '../../../app-events';
 import { DriveData, EngineStatus } from '../../../model/drive';
-import CarImage from './car';
+import CarImage from '../../car';
 
 enum TrackElements {
   Track = 'track',

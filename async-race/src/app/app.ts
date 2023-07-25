@@ -47,9 +47,15 @@ export class App {
       },
       [AppEvents.CarDelete]: async (carId: unknown) => {
         await this.controller.deleteCar(carId as number);
-        this.emitter.emit(AppEvents.CarDeleted, carId);
+        try {
+          await this.controller.deleteWinner(carId as number);
+        } catch {
+          return;
+        } finally {
+          this.emitter.emit(AppEvents.CarDeleted, carId);
+        }
       },
-      [AppEvents.CarsPageLoad]: async (pageNumber: unknown) => {
+      [AppEvents.PageLoad]: async (pageNumber: unknown) => {
         this.loadPage(pageNumber as number);
       },
       [AppEvents.GenerateCars]: async (carsCount: unknown) => {
@@ -68,6 +74,16 @@ export class App {
         const isDriving = await this.controller.switchToDrive(id as number);
         this.emitter.emit(AppEvents.ResponseCarDrive, { id, isDriving });
       },
+      [AppEvents.UpdateWinner]: async (carData: unknown) => {
+        const { car, time } = carData as { car: Car; time: number };
+        try {
+          await this.controller.updateWinner({ id: car.id, time });
+        } catch {
+          await this.controller.createWinner({ id: car.id, wins: 1, time });
+        }
+
+        if (this.view.currentSection === AppViews.WinnersView) this.loadPage(this.view.currentPage);
+      },
     };
     this.emitter.addHandlers(handlers);
   }
@@ -76,10 +92,20 @@ export class App {
     if (this.view.currentSection === AppViews.GarageView) {
       const carsPage = await this.controller.getCars({ pageNum: pageNumber, carsPerPage: this.view.carsPerPage });
       this.view.drawCars(carsPage as CarFullData[]);
+    } else {
+      const winnersPage = await this.controller.getWinners({
+        pageNum: pageNumber,
+        winnersPerPage: this.view.carsPerPage,
+      });
+      console.log(winnersPage);
+      this.view.drawCars(winnersPage);
     }
   }
 
   private switchView(): void {
-    this.view.switchTo(this.view.currentSection === AppViews.GarageView ? AppViews.WinnersView : AppViews.GarageView);
+    const newView = this.view.currentSection === AppViews.GarageView ? AppViews.WinnersView : AppViews.GarageView;
+    this.view.switchTo(newView);
+
+    if (newView === AppViews.WinnersView) this.loadPage(this.view.currentPage);
   }
 }

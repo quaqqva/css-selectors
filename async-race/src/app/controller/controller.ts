@@ -157,14 +157,8 @@ export default class Controller {
     const winner = await this.getWinner(winnerData.id);
     winner.time = Math.min(winner.time, winnerData.time);
     winner.wins += 1;
-
-    try {
-      const result = await this.updateEntity<Winner>(Controller.ENDPOINTS.winners, winner);
-      return result;
-    } catch {
-      const result = await this.createWinner(winner);
-      return result;
-    }
+    const result = await this.updateEntity<Winner>(Controller.ENDPOINTS.winners, winner);
+    return result;
   }
 
   public async deleteWinner(winnerId: number): Promise<void> {

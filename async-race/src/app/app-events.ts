@@ -6,7 +6,7 @@ enum AppEvents {
   CarUpdated = 'car-updated',
   CarDelete = 'car-delete',
   CarDeleted = 'car-deleted',
-  CarsPageLoad = 'cars-page-load',
+  PageLoad = 'cars-page-load',
   GenerateCars = 'generate-cars',
   CarsGenerated = 'cars-generated',
   CarToggleEngine = 'car-toggle-engine',
@@ -14,6 +14,7 @@ enum AppEvents {
   RequestCarDrive = 'request-car-drive',
   ResponseCarDrive = 'response-car-drive',
   CarFinished = 'car-finished',
+  UpdateWinner = 'update-winner',
 }
 
 export default AppEvents;
