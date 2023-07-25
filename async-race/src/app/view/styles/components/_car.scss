@@ -1,105 +1,106 @@
 .car-wrapper {
-    position: absolute;
-    width: var(--car-width);
-    height: 150px;
-  
-    --transforms: translateY(37.5%);
-    vertical-align: bottom;
-    transform: var(--transforms);
-  
+  position: absolute;
+  width: var(--car-width);
+  height: 150px;
+
+  --transforms: translateY(37.5%);
+  vertical-align: bottom;
+  transform: var(--transforms);
+
+  left: var(--car-start);
+  bottom: 0;
+  z-index: $car-index;
+
+  transition: opacity ease-in-out $active-transition;
+
+  @media (max-width: 600px) {
+    --transforms: translateY(40%);
+  }
+
+  .car {
+    width: 100%;
+  }
+}
+
+.car__effect {
+  position: absolute;
+  display: none;
+
+  &_wheel-smoke,
+  &_break-smoke {
+    display: inline-block;
+  }
+
+  &_wheel-smoke {
+    width: 40px;
+    aspect-ratio: 2 / 1;
+
+    left: 0;
+    transform: translate(-100%, 70px) rotate(20deg);
+
+    content: url('../../../assets/img/smoke_wheels.gif');
+  }
+
+  &_break-smoke {
+    width: 20px;
+    aspect-ratio: 1/1;
+
+    right: 10px;
+    top: 30%;
+
+    content: url('../../../assets/img/smoke_break.gif');
+  }
+}
+
+@keyframes car-drive {
+  0% {
     left: var(--car-start);
-    bottom: 0;
-    z-index: $car-index;
-  
-    transition: opacity ease-in-out $active-transition;
-  
-    @media (max-width: 600px) {
-      --transforms: translateY(40%);
-    }
-
-    .car {
-        width: 100%;
-    }
   }
-
-  .car__effect {
-    position: absolute;
-    display: none;
-
-    &_wheel-smoke, &_break-smoke {
-     display: inline-block;
-    }
-
-    &_wheel-smoke {
-      width: 40px;
-      aspect-ratio: 2 / 1;
-
-      left: 0;
-      transform: translate(-100%, 70px) rotate(20deg);
-
-      content: url('../../../assets/img/smoke_wheels.gif');
-    }
-
-    &_break-smoke {
-      width: 20px;
-      aspect-ratio: 1/1;
-
-      right: 10px;
-      top: 30%;
-
-      content: url('../../../assets/img/smoke_break.gif')
-    }
+  90% {
+    transform: var(--transforms);
   }
-  
-  @keyframes car-drive {
-    0% {
-      left: var(--car-start);
-    }
-    90% {
-      transform: var(--transforms);
-    }
-    95% {
-      transform: var(--transforms) rotate(2deg);
-    }
-    100% {
-      transform: var(--transforms);
-      left: calc(100% - var(--car-width) - 10px);
-    }
+  95% {
+    transform: var(--transforms) rotate(2deg);
   }
-  
-  @keyframes car-drive-fast {
-    0% {
-      left: var(--car-start);
-    }
-    20% {
-      transform: var(--transforms) rotate(-20deg);
-    }
-    30% {
-      transform: var(--transforms);
-    }
-    90% {
-      transform: var(--transforms);
-    }
-    95% {
-      transform: var(--transforms) rotate(1deg);
-    }
-    100% {
-      transform: var(--transforms);
-      left: calc(100% - var(--car-width) - 10px);
-    }
+  100% {
+    transform: var(--transforms);
+    left: calc(100% - var(--car-width) - 10px);
   }
-  
-  @keyframes car-stop {
-    $stop-length: 30px;
-    0% {
-      left: var(--car-stop-at);
-    }
-    75% {
-      transform: var(--transforms) rotate(2deg);
-      left: min(var(--car-stop-at) + $stop-length, 100% - var(--car-width) - 10px);
-    }
-    100% {
-      transform: var(--transforms);
-      left: min(var(--car-stop-at) + $stop-length, 100% - var(--car-width) - 10px);
-    }
+}
+
+@keyframes car-drive-fast {
+  0% {
+    left: var(--car-start);
   }
+  20% {
+    transform: var(--transforms) rotate(-20deg);
+  }
+  30% {
+    transform: var(--transforms);
+  }
+  90% {
+    transform: var(--transforms);
+  }
+  95% {
+    transform: var(--transforms) rotate(1deg);
+  }
+  100% {
+    transform: var(--transforms);
+    left: calc(100% - var(--car-width) - 10px);
+  }
+}
+
+@keyframes car-stop {
+  $stop-length: 30px;
+  0% {
+    left: var(--car-stop-at);
+  }
+  75% {
+    transform: var(--transforms) rotate(2deg);
+    left: min(var(--car-stop-at) + $stop-length, 100% - var(--car-width) - 10px);
+  }
+  100% {
+    transform: var(--transforms);
+    left: min(var(--car-stop-at) + $stop-length, 100% - var(--car-width) - 10px);
+  }
+}
