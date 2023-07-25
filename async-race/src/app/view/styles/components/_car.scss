@@ -13,8 +13,8 @@
 
   transition: opacity ease-in-out $active-transition;
 
-  @media (max-width: 600px) {
-    --transforms: translateY(40%);
+  @media (max-width: $mobile-width) {
+    --transforms: translateY(42%);
   }
 
   .car {

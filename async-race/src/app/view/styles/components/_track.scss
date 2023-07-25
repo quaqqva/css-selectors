@@ -1,12 +1,13 @@
 $menu-left-indent: 6em;
-$menu-left-indent-mobile: 4em;
+$menu-left-indent-mobile: 5em;
 
 :root {
   --car-width: 120px;
   --car-start: 100px;
 
-  @media (max-width: 600px) {
-    --car-width: 100px;
+  @media (max-width: $mobile-width) {
+    --car-width: 75px;
+    --car-start: 75px;
   }
 }
 
@@ -28,7 +29,7 @@ $menu-left-indent-mobile: 4em;
   vertical-align: middle;
 
   @media (max-width: $mobile-width) {
-    width: 120px;
+    width: 180px;
   }
 }
 
@@ -43,8 +44,8 @@ $menu-left-indent-mobile: 4em;
   right: calc(var(--car-width) + 20px);
   bottom: -5px;
 
-  @media (max-width: 600px) {
-    width: 60px;
+  @media (max-width: $mobile-width) {
+    width: 40px;
     right: calc(var(--car-width) + 10px);
   }
 
@@ -97,17 +98,10 @@ $menu-left-indent-mobile: 4em;
   color: $color-light-s;
 }
 
-.track__start-engine,
-.track__reset-car {
-  position: absolute;
-  top: 40px;
-  width: 36px;
-}
-
 .track__start-engine {
   left: calc(4px - $menu-left-indent);
   @media (max-width: $mobile-width) {
-    left: calc(4px - $menu-left-indent-mobile);
+    left: calc(4px - 2 * $menu-left-indent-mobile);
   }
 
   @include button(
@@ -126,7 +120,7 @@ $menu-left-indent-mobile: 4em;
 .track__reset-car {
   left: calc(56px - $menu-left-indent);
   @media (max-width: $mobile-width) {
-    left: calc(56px - $menu-left-indent-mobile);
+    left: calc(40px - 2 * $menu-left-indent-mobile);
   }
   @include button(
     $bg-color: $color-dark-l,
@@ -135,4 +129,19 @@ $menu-left-indent-mobile: 4em;
     $edge-height: 4px
   );
   color: $color-light-xl;
+}
+
+.track__start-engine,
+.track__reset-car {
+  position: absolute;
+  top: 40px;
+  width: 36px;
+
+  @media (max-width: $mobile-width) {
+    width: 25px;
+    height: 25px;
+
+    font-size: 1rem;
+    top: 50px;
+  }
 }
