@@ -1,22 +1,46 @@
+import DOMComponent, { ElementParameters } from '../../../../components/base-component';
 import TableComponent from '../../../../components/table-component';
+import { Events, Tags } from '../../../../types/dom-types';
+import FontAwesome from '../../../../types/font-awesome';
+import EventEmitter from '../../../../utils/event-emitter';
+import AppEvents from '../../../app-events';
 import { CarFullData } from '../../../model/car-full';
+import { WinnersSortCriteria, WinnersSortOrder } from '../../../model/winner';
 import CarImage from '../../car';
 
 enum WinnersTableElements {
   Table = 'winners-table',
   TableHidden = 'winners-table_hidden',
+  SortButton = 'winners-table__sort',
 }
 export default class WinnersTable extends TableComponent {
   public static PAGE_TRANSITION = 150;
 
   private static COLUMN_NAMES = ['number', 'car', 'name', 'wins', 'best time (s)'];
 
+  private static SORT_BUTTON_PARAMS: ElementParameters = {
+    tag: Tags.Button,
+    classes: [WinnersTableElements.SortButton],
+  };
+
   private carsPerPage: number;
 
-  public constructor(carsPerPage: number) {
+  public sortOrder: WinnersSortOrder;
+
+  public sortCriteria: WinnersSortCriteria;
+
+  private emitter: EventEmitter;
+
+  public constructor(emitter: EventEmitter, carsPerPage: number) {
     super(WinnersTable.COLUMN_NAMES);
     this.addClass(WinnersTableElements.Table);
     this.carsPerPage = carsPerPage;
+
+    this.emitter = emitter;
+
+    this.sortOrder = WinnersSortOrder.Descending;
+    this.sortCriteria = WinnersSortCriteria.Wins;
+    this.addSortButtons();
   }
 
   public addCars(cars: CarFullData[], pageNum: number) {
@@ -34,5 +58,41 @@ export default class WinnersTable extends TableComponent {
       });
       this.removeClass(WinnersTableElements.TableHidden);
     }, WinnersTable.PAGE_TRANSITION);
+  }
+
+  private addSortButtons(): void {
+    const winsHeader = this.headElements[3];
+
+    const sortWinsButton = this.createSortButton();
+    sortWinsButton.addEventListener(Events.Click, () => {
+      this.sortCriteria = WinnersSortCriteria.Wins;
+      this.switchSortOrder();
+      this.emitter.emit(AppEvents.WinnersSort, null);
+    });
+    winsHeader.append(sortWinsButton);
+
+    const timeHeader = this.headElements[4];
+    const sortTimeButton = this.createSortButton();
+    sortTimeButton.addEventListener(Events.Click, () => {
+      this.sortCriteria = WinnersSortCriteria.Time;
+      this.switchSortOrder();
+      this.emitter.emit(AppEvents.WinnersSort, null);
+    });
+    timeHeader.append(sortTimeButton);
+  }
+
+  private createSortButton(): DOMComponent<HTMLButtonElement> {
+    const sortButton = new DOMComponent<HTMLButtonElement>(WinnersTable.SORT_BUTTON_PARAMS);
+    const sortIcon = new DOMComponent<HTMLElement>({
+      tag: Tags.Icon,
+      classes: [FontAwesome.Solid, FontAwesome.Sort],
+    });
+    sortButton.append(sortIcon);
+    return sortButton;
+  }
+
+  private switchSortOrder(): void {
+    this.sortOrder =
+      this.sortOrder === WinnersSortOrder.Ascending ? WinnersSortOrder.Descending : WinnersSortOrder.Ascending;
   }
 }

@@ -18,6 +18,7 @@ enum AppEvents {
   UpdateWinner = 'update-winner',
   RequestTotalCars = 'get-total-cars',
   ResponseTotalCars = 'show-total-cars',
+  WinnersSort = 'winners-sort',
 }
 
 export default AppEvents;

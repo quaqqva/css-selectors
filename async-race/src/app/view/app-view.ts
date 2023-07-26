@@ -78,6 +78,9 @@ export default class AppView {
     if (viewType !== AppViews.WinnersView) {
       this.slider.removeCSSProperty('max-height');
       this.slider.removeCSSProperty('overflow');
+    } else {
+      const winnersSection = this.sections.get(viewType) as WinnersView;
+      winnersSection.requestPage();
     }
   }
 

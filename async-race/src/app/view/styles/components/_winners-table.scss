@@ -19,6 +19,11 @@
     height: $row-height;
     background-color: $color-light-xl;
     text-transform: capitalize;
+
+    td:nth-last-of-type(1),
+    td:nth-last-of-type(2) {
+      padding-right: 1em;
+    }
   }
 
   td {
@@ -59,5 +64,22 @@
 
   &_hidden {
     opacity: 0;
+  }
+}
+
+.winners-table__sort {
+  background: none;
+  outline: none;
+  border: none;
+  color: $color-light-m;
+
+  position: absolute;
+  right: 0.25em;
+  top: 5px;
+
+  cursor: pointer;
+
+  &:hover {
+    color: $color-dark-s;
   }
 }

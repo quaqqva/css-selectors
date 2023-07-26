@@ -1,5 +1,6 @@
 import DOMComponent from '../../../../components/base-component';
 import EventEmitter from '../../../../utils/event-emitter';
+import AppEvents from '../../../app-events';
 import { CarFullData } from '../../../model/car-full';
 import SectionView from '../section-view';
 import WinnersTable from './winners-table';
@@ -11,7 +12,10 @@ export default class WinnersView extends SectionView {
 
   public constructor(emitter: EventEmitter, container: DOMComponent<HTMLElement>) {
     super(emitter, container);
-    this.table = new WinnersTable(WinnersView.CARS_PER_PAGE);
+    this.table = new WinnersTable(emitter, WinnersView.CARS_PER_PAGE);
+    this.emitter.subscribe(AppEvents.WinnersSort, () => {
+      this.requestPage();
+    });
   }
 
   public get carsPerPage(): number {
@@ -39,5 +43,13 @@ export default class WinnersView extends SectionView {
   protected removeNoDataMessage(): void {
     super.removeNoDataMessage();
     this.container.append(this.table);
+  }
+
+  public override requestPage(): void {
+    this.emitter.emit(AppEvents.PageLoad, {
+      page: this.currentPage,
+      order: this.table.sortOrder,
+      criteria: this.table.sortCriteria,
+    });
   }
 }

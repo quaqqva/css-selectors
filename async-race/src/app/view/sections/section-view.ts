@@ -94,7 +94,7 @@ export default abstract class SectionView {
   protected abstract drawCars(cars: CarFullData[]): void;
 
   protected requestPage(): void {
-    this.emitter.emit(AppEvents.PageLoad, this.currentPage);
+    this.emitter.emit(AppEvents.PageLoad, { page: this.currentPage });
   }
 
   protected alertNoData(): void {

@@ -5,6 +5,7 @@ enum FontAwesome {
   Times = 'fa-times',
   GreaterThan = 'fa-greater-than',
   LessThan = 'fa-less-than',
+  Sort = 'fa-sort',
 }
 
 export default FontAwesome;

@@ -6,6 +6,7 @@ import AppViews from './view/app-views';
 import { CarFullData } from './model/car-full';
 import { Car, CarViewData } from './model/car';
 import { EngineStatus } from './model/drive';
+import { WinnersSortCriteria, WinnersSortOrder } from './model/winner';
 
 export type AppConfig = {
   title: string;
@@ -55,8 +56,13 @@ export class App {
           this.emitter.emit(AppEvents.CarDeleted, carId);
         }
       },
-      [AppEvents.PageLoad]: async (pageNumber: unknown) => {
-        this.loadPage(pageNumber as number);
+      [AppEvents.PageLoad]: async (pageData: unknown) => {
+        const { page, order, criteria } = pageData as {
+          page: number;
+          order?: WinnersSortOrder;
+          criteria?: WinnersSortCriteria;
+        };
+        this.loadPage(page, criteria, order);
       },
       [AppEvents.GenerateCars]: async (carsCount: unknown) => {
         await this.controller.createRandomCars(carsCount as number);
@@ -97,7 +103,7 @@ export class App {
     this.emitter.addHandlers(handlers);
   }
 
-  private async loadPage(pageNumber: number): Promise<void> {
+  private async loadPage(pageNumber: number, criteria?: WinnersSortCriteria, order?: WinnersSortOrder): Promise<void> {
     if (this.view.currentSection === AppViews.GarageView) {
       const carsPage = await this.controller.getCars({ pageNum: pageNumber, carsPerPage: this.view.carsPerPage });
       this.view.drawCars(carsPage as CarFullData[]);
@@ -105,6 +111,8 @@ export class App {
       const winnersPage = await this.controller.getWinners({
         pageNum: pageNumber,
         winnersPerPage: this.view.carsPerPage,
+        sortOrder: order,
+        sortBy: criteria,
       });
       this.view.drawCars(winnersPage);
     }
@@ -113,7 +121,5 @@ export class App {
   private switchView(): void {
     const newView = this.view.currentSection === AppViews.GarageView ? AppViews.WinnersView : AppViews.GarageView;
     this.view.switchTo(newView);
-
-    if (newView === AppViews.WinnersView) this.loadPage(this.view.currentPage);
   }
 }

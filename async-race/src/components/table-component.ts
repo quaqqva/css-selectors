@@ -6,6 +6,8 @@ export default class TableComponent extends DOMComponent<HTMLTableElement> {
 
   protected tableBody: DOMComponent<HTMLElement>;
 
+  protected headElements: DOMComponent<HTMLElement>[];
+
   public constructor(columnNames: string[]) {
     super({ tag: Tags.Table });
     this.tableHead = new DOMComponent<HTMLElement>({
@@ -16,14 +18,15 @@ export default class TableComponent extends DOMComponent<HTMLTableElement> {
       tag: Tags.TableRow,
       parent: this.tableHead,
     });
-    columnNames.forEach((name) => {
-      tableHeadRow.append(
+
+    this.headElements = columnNames.map(
+      (name) =>
         new DOMComponent<HTMLElement>({
           tag: Tags.TableElement,
           textContent: name,
         })
-      );
-    });
+    );
+    tableHeadRow.append(...this.headElements);
 
     this.tableBody = new DOMComponent<HTMLElement>({
       tag: Tags.TableBody,
