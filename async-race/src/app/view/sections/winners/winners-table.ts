@@ -4,7 +4,7 @@ import CarImage from '../../car';
 
 enum WinnersTableElements {
   Table = 'winners-table',
-  BodyHidden = 'winners_hidden',
+  TableHidden = 'winners-table_hidden',
 }
 export default class WinnersTable extends TableComponent {
   private static PAGE_TRANSITION = 150;
@@ -20,7 +20,7 @@ export default class WinnersTable extends TableComponent {
   }
 
   public addCars(cars: CarFullData[], pageNum: number) {
-    this.tableBody.addClass(WinnersTableElements.BodyHidden);
+    this.addClass(WinnersTableElements.TableHidden);
     setTimeout(() => {
       this.clearRows();
 
@@ -32,7 +32,7 @@ export default class WinnersTable extends TableComponent {
         const row = [(startNumber + index).toString(), carImage, car.name, car.wins.toString(), car.time.toString()];
         this.addRow(row);
       });
-      this.tableBody.removeClass(WinnersTableElements.BodyHidden);
+      this.removeClass(WinnersTableElements.TableHidden);
     }, WinnersTable.PAGE_TRANSITION);
   }
 }
