@@ -116,7 +116,7 @@ export default class Track extends DOMComponent<HTMLDivElement> {
       if (this.engineStatus !== EngineStatus.Stopped) {
         const time = +((Date.now() - startTime) / 1000).toFixed(2);
         this.emitter.emit(AppEvents.CarFinished, { car: this.car, time });
-      }
+      } else this.emitter.emit(AppEvents.CarBroke, null);
       this.carImage.removeEventListener(Events.AnimationEnd, finishHandler);
     };
     this.carImage.addEventListener(Events.AnimationEnd, finishHandler);

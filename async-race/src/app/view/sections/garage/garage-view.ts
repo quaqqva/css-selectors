@@ -230,6 +230,16 @@ export default class GarageView extends SectionView {
       this.emitter.unsubscribe(AppEvents.CarFinished, firstFinishHandler);
     };
     this.emitter.subscribe(AppEvents.CarFinished, firstFinishHandler);
+
+    let brokenCars = 0;
+    const breakHandler = () => {
+      brokenCars += 1;
+      if (brokenCars === getMapKeys(this.tracks).length) {
+        this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
+        this.emitter.unsubscribe(AppEvents.CarBroke, breakHandler);
+      }
+    };
+    this.emitter.subscribe(AppEvents.CarBroke, breakHandler);
   }
 
   private resetRace(): void {

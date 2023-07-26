@@ -14,6 +14,7 @@ enum AppEvents {
   RequestCarDrive = 'request-car-drive',
   ResponseCarDrive = 'response-car-drive',
   CarFinished = 'car-finished',
+  CarBroke = 'car-broke',
   UpdateWinner = 'update-winner',
   RequestTotalCars = 'get-total-cars',
   ResponseTotalCars = 'show-total-cars',
