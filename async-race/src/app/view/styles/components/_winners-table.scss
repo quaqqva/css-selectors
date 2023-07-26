@@ -37,6 +37,10 @@
 
   tbody {
     background-color: $color-light-l;
+
+    opacity: 1;
+    transition: opacity ease-in-out 150ms;
+
     tr {
       height: $row-height;
 
@@ -50,6 +54,23 @@
           stroke: $color-dark-l;
         }
       }
+    }
+
+    &.winners_hidden {
+      opacity: 0;
+      height: 0;
+
+      td {
+        border: none;
+      }
+    }
+  }
+
+  &:has(.winners_hidden) {
+    height: $row-height;
+
+    td {
+      border: none;
     }
   }
 }

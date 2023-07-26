@@ -17,6 +17,7 @@ enum GarageClasses {
   MenuRaceButton = 'garage-menu__race',
   MenuResetButton = 'garage-menu__reset',
   TracksWrapper = 'garage__tracks',
+  TracksWrapperHidden = 'garage__tracks_hidden',
 }
 export default class GarageView extends SectionView {
   private static MENU_PARAMS: ElementParameters = {
@@ -37,6 +38,8 @@ export default class GarageView extends SectionView {
 
   private static CARS_PER_PAGE = 7;
 
+  private static OPACITY_TRANSITION = 150;
+
   private menu: Menu;
 
   private tracksWrapper: DOMComponent<HTMLDivElement>;
@@ -55,6 +58,7 @@ export default class GarageView extends SectionView {
       ...GarageView.TRACKS_WRAPPER_PARAMS,
       parent: this.container,
     });
+
     this.tracks = new Map();
     this.addEventHandlers();
   }
@@ -64,18 +68,23 @@ export default class GarageView extends SectionView {
   }
 
   protected drawCars(cars: Car[]): void {
-    this.tracksWrapper.clear();
-    this.tracks.clear();
+    this.tracksWrapper.addClass(GarageClasses.TracksWrapperHidden);
+    setTimeout(() => {
+      this.tracksWrapper.clear();
+      this.tracks.clear();
 
-    cars.forEach((car) => {
-      const track = new Track(this.emitter, car);
-      this.tracks.set(car.id, track);
-      this.tracksWrapper.append(track);
-    });
+      cars.forEach((car) => {
+        const track = new Track(this.emitter, car);
+        this.tracks.set(car.id, track);
+        this.tracksWrapper.append(track);
+      });
 
-    if (this.raceGoing) this.resetRace();
-    this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
-    this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
+      if (this.raceGoing) this.resetRace();
+      this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
+      this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
+
+      this.tracksWrapper.removeClass(GarageClasses.TracksWrapperHidden);
+    }, GarageView.OPACITY_TRANSITION);
   }
 
   protected alertNoData(): void {
@@ -176,20 +185,20 @@ export default class GarageView extends SectionView {
 
   private createCar(car: Car): void {
     const ids = getMapKeys(this.tracks);
+
     if (ids.length < this.carsPerPage) {
       const newTrack = new Track(this.emitter, car);
       this.tracksWrapper.append(newTrack);
       this.tracks.set(car.id, newTrack);
     }
+
+    this.totalCarCount += 1;
+    this.updatePageTitle();
   }
 
   private updateCar(car: Car): void {
     const carTrack = this.tracks.get(car.id);
     if (carTrack) carTrack.updateCar(car);
-  }
-
-  private requestPage(): void {
-    this.emitter.emit(AppEvents.PageLoad, this.currentPage);
   }
 
   private launchRace(): void {

@@ -86,4 +86,11 @@
   flex-direction: column;
   gap: 40px;
   margin: 50px auto;
+  
+  opacity: 1;
+  transition: opacity ease-in-out 150ms;
+
+  &_hidden {
+    opacity: 0;
+  }
 }

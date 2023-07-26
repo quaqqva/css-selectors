@@ -8,3 +8,30 @@
   justify-content: center;
   align-items: center;
 }
+
+.section__page-title {
+  color: $color-light-xl;
+  text-align: center;
+
+  @media (max-width: $mobile-width) {
+    font-size: 1.5rem;
+  }
+}
+
+.section__navigation {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.navigation__button {
+  aspect-ratio: 2 / 1;
+  @include button($bg-color: $color-light-s, $border-color: $color-light-xl, $edge-color: $color-light-m);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 0.8em;
+  color: $color-dark-xl;
+}

@@ -15,6 +15,8 @@ enum AppEvents {
   ResponseCarDrive = 'response-car-drive',
   CarFinished = 'car-finished',
   UpdateWinner = 'update-winner',
+  RequestTotalCars = 'get-total-cars',
+  ResponseTotalCars = 'show-total-cars',
 }
 
 export default AppEvents;

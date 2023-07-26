@@ -84,6 +84,15 @@ export class App {
 
         if (this.view.currentSection === AppViews.WinnersView) this.loadPage(this.view.currentPage);
       },
+      [AppEvents.RequestTotalCars]: async () => {
+        if (this.view.currentSection === AppViews.GarageView) {
+          const garageCarCount = await this.controller.getCarsCount();
+          this.emitter.emit(AppEvents.ResponseTotalCars, garageCarCount);
+        } else {
+          const winnersCarCount = await this.controller.getWinnersCount();
+          this.emitter.emit(AppEvents.ResponseTotalCars, winnersCarCount);
+        }
+      },
     };
     this.emitter.addHandlers(handlers);
   }

@@ -2,9 +2,9 @@ import { Tags } from '../types/dom-types';
 import DOMComponent from './base-component';
 
 export default class TableComponent extends DOMComponent<HTMLTableElement> {
-  private tableHead: DOMComponent<HTMLElement>;
+  protected tableHead: DOMComponent<HTMLElement>;
 
-  private tableBody: DOMComponent<HTMLElement>;
+  protected tableBody: DOMComponent<HTMLElement>;
 
   public constructor(columnNames: string[]) {
     super({ tag: Tags.Table });

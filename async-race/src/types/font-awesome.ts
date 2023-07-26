@@ -3,6 +3,8 @@ enum FontAwesome {
   Regular = 'fa',
   Solid = 'fas',
   Times = 'fa-times',
+  GreaterThan = 'fa-greater-than',
+  LessThan = 'fa-less-than',
 }
 
 export default FontAwesome;
