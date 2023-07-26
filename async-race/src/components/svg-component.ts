@@ -15,14 +15,14 @@ export default class SVGComponent extends DOMComponent<HTMLSVGElement> {
   }: {
     pathToSprite: string;
     id: string;
-    parent: DOMComponent<HTMLElement>;
+    parent?: DOMComponent<HTMLElement>;
   }) {
     super({});
     this.element = <HTMLSVGElement>document.createElementNS(SVGComponent.ELEMENT_NAMESPACE, Tags.SVG);
     this.useElement = document.createElementNS(SVGComponent.ELEMENT_NAMESPACE, Tags.SVGUse);
     this.useElement.setAttributeNS(SVGComponent.ATTRIBUTE_NAMESPACE, 'xlink:href', `${pathToSprite}#${id}`);
     this.element.append(this.useElement);
-    parent.append(this);
+    if (parent) parent.append(this);
   }
 
   public setColor(color: string): void {

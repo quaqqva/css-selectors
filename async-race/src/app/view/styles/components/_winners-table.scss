@@ -39,8 +39,12 @@
       height: var(--row-height);
       transform: translate(10%, -100%);
 
-      @media(max-width: 420px) {
+      @media (max-width: 420px) {
         transform: translate(10%, -200%);
+      }
+
+      .car {
+        transform: none;
       }
     }
   }

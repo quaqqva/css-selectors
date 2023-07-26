@@ -71,7 +71,7 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     this.emitter = emitter;
     this.isRacing = false;
 
-    this.carImage = new CarImage();
+    this.carImage = new CarImage(car.name);
     this.carImage.setColor(car.color);
     this.append(this.carImage);
 

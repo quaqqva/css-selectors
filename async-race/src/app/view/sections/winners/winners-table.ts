@@ -50,7 +50,7 @@ export default class WinnersTable extends TableComponent {
 
       const startNumber = (pageNum - 1) * this.carsPerPage + 1;
       cars.forEach((car, index) => {
-        const carImage = new CarImage();
+        const carImage = new CarImage(car.name);
         carImage.setColor(car.color);
 
         const row = [(startNumber + index).toString(), carImage, car.name, car.wins.toString(), car.time.toString()];

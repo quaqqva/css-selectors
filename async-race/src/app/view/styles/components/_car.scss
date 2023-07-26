@@ -3,8 +3,14 @@
   width: var(--car-width);
   height: 150px;
 
-  --transforms: translateY(37.5%);
   vertical-align: bottom;
+
+  --transforms: translateY(37.5%);
+
+  @media (max-width: $mobile-width) {
+    --transforms: translateY(42%);
+  }
+
   transform: var(--transforms);
 
   left: var(--car-start);
@@ -13,13 +19,45 @@
 
   transition: opacity ease-in-out $active-transition;
 
-  @media (max-width: $mobile-width) {
-    --transforms: translateY(42%);
-  }
-
   .car {
     width: 100%;
     stroke: $color-light-xl;
+  }
+
+  .car-2 {
+    transform: translateY(-3%);
+    @media (max-width: $mobile-width) {
+      transform: translateY(-2%);
+    }
+  }
+
+  .car-3 {
+    transform: translateY(-5%);
+    @media (max-width: $mobile-width) {
+      transform: translateY(-2.5%);
+    }
+  }
+
+  .car-4 {
+    transform: translateY(-7.5%);
+    @media (max-width: $mobile-width) {
+      transform: translateY(-5%);
+    }
+  }
+
+  .car-5 {
+    transform: translateY(-2%);
+
+    @media (max-width: $mobile-width) {
+      transform: translateY(-1%);
+    }
+  }
+
+  .car-7 {
+    transform: translateY(-2.5%);
+    @media (max-width: $mobile-width) {
+      transform: translateY(-1.5%);
+    }
   }
 }
 
@@ -36,7 +74,7 @@
     width: 40px;
     aspect-ratio: 2 / 1;
 
-    left: 0;
+    left: 20px;
     transform: translate(-100%, 70px) rotate(20deg);
 
     content: url('../../../assets/img/smoke_wheels.gif');
@@ -50,6 +88,58 @@
     top: 30%;
 
     content: url('../../../assets/img/smoke_break.gif');
+  }
+}
+
+.car-1 + .car__effect_break-smoke {
+  @media (max-width: $mobile-width) {
+    top: 32.5%;
+  }
+}
+
+.car-2 + .car__effect_break-smoke {
+  top: 27.5%;
+
+  @media (max-width: $mobile-width) {
+    top: 30%;
+    right: 5px;
+  }
+}
+
+.car-3 + .car__effect_break-smoke {
+  top: 25%;
+
+  @media (max-width: $mobile-width) {
+    top: 30%;
+    right: 5px;
+  }
+}
+
+.car-4 + .car__effect_break-smoke {
+  top: 20%;
+  right: 20px;
+
+  @media (max-width: $mobile-width) {
+    top: 25%;
+    right: 10px;
+  }
+}
+
+.car-5 + .car__effect_break-smoke {
+  top: 27.5%;
+
+  @media (max-width: $mobile-width) {
+    top: 30%;
+    right: 5px;
+  }
+}
+
+.car-7 + .car__effect_break-smoke {
+  top: 27.5%;
+
+  @media (max-width: $mobile-width) {
+    top: 30%;
+    right: 5px;
   }
 }
 

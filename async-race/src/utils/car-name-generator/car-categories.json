@@ -1,0 +1,9 @@
+{
+  "Sport": ["BMW", "Audi", "Mercedes-Benz", "Nissan", "Mitsubishi", "Mazda"],
+  "SportCheap": ["Subaru", "Toyota", "Volkswagen", "VW", "Hyundai", "Kia"],
+  "OldCheap": ["Ford", "Chevrolet"],
+  "VeryOld": ["Jeep", "Oldsmobile"],
+  "Old": ["Buick", "Cadillac", "Chrysler", "Lincoln", "Saab"],
+  "Muscle": ["Plymouth", "Honda", "Dodge", "Pontiac"],
+  "SportExpensive": ["Lancia", "Suzuki", "Porsche", "Ferrari", "Lamborghini", "Jaguar", "Lexus"]
+}

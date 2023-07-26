@@ -2,6 +2,7 @@ import DOMComponent, { ElementParameters } from '../../components/base-component
 import SVGComponent from '../../components/svg-component';
 import { AnimationFillMode, Tags, TransformOrigin } from '../../types/dom-types';
 import trackSprite from '../../assets/img/track_sprite.svg';
+import { getCarCategory } from '../../utils/car-name-generator/get-car-category';
 
 enum CarElements {
   Wrapper = 'car-wrapper',
@@ -21,6 +22,8 @@ export default class CarImage extends DOMComponent<HTMLDivElement> {
     classes: [CarElements.EffectPlaceholder],
   };
 
+  private static CAR_SPRITES_COUNT = 8;
+
   private static MAX_FAST_TIME = 3500;
 
   private static CAR_DRIVE_ANIMATION = 'car-drive';
@@ -39,15 +42,12 @@ export default class CarImage extends DOMComponent<HTMLDivElement> {
 
   private effectPlaceholder: DOMComponent<HTMLImageElement>;
 
-  public constructor() {
+  public constructor(carName: string) {
     super(CarImage.WRAPPER_PARAMS);
 
-    this.carSVG = new SVGComponent({
-      pathToSprite: trackSprite,
-      id: 'car',
-      parent: this,
-    });
+    this.carSVG = CarImage.createCarSVG(carName);
     this.carSVG.addClass(CarElements.SVG);
+    this.append(this.carSVG);
 
     this.effectPlaceholder = new DOMComponent<HTMLImageElement>(CarImage.PLACEHOLDER_PARAMS);
     this.append(this.effectPlaceholder);
@@ -104,5 +104,16 @@ export default class CarImage extends DOMComponent<HTMLDivElement> {
       this.setCSSProperty('opacity', '');
       this.effectPlaceholder.removeClass(CarElements.BreakSmokeEffect);
     }, CarImage.RESET_DURATION);
+  }
+
+  private static createCarSVG(carName: string): SVGComponent {
+    const carBrand = carName.split(' ')[0];
+    const carCategory = getCarCategory(carBrand);
+    const svg = new SVGComponent({
+      pathToSprite: trackSprite,
+      id: `car-${carCategory}`,
+    });
+    svg.addClass(`car-${carCategory}`);
+    return svg;
   }
 }
