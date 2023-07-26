@@ -46,12 +46,8 @@ export default class GarageView extends SectionView {
 
   private tracks: Map<number, Track>;
 
-  private raceGoing: boolean;
-
   public constructor(emitter: EventEmitter, container: DOMComponent<HTMLElement>) {
     super(emitter, container);
-
-    this.raceGoing = false;
 
     this.menu = this.createMenu();
     this.tracksWrapper = new DOMComponent<HTMLDivElement>({
@@ -79,7 +75,6 @@ export default class GarageView extends SectionView {
         this.tracksWrapper.append(track);
       });
 
-      if (this.raceGoing) this.resetRace();
       this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
       this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
 
@@ -95,6 +90,7 @@ export default class GarageView extends SectionView {
   protected removeNoDataMessage(): void {
     super.removeNoDataMessage();
     this.container.append(this.tracksWrapper);
+    this.container.append(this.navigation);
   }
 
   private addEventHandlers(): void {
@@ -107,13 +103,7 @@ export default class GarageView extends SectionView {
         this.updateCar(data as Car);
       },
       [AppEvents.CarDeleted]: (id: unknown) => {
-        const carsOnPage = getMapKeys(this.tracks).length;
-        if (carsOnPage === this.carsPerPage) this.requestPage();
-        else {
-          if (carsOnPage === 1) this.alertNoData();
-          this.tracks.get(id as number)?.destroy();
-          this.tracks.delete(id as number);
-        }
+        this.deleteCar(id as number);
       },
       [AppEvents.CarsGenerated]: () => {
         this.requestPage();
@@ -191,6 +181,7 @@ export default class GarageView extends SectionView {
       this.tracksWrapper.append(newTrack);
       this.tracks.set(car.id, newTrack);
     }
+    if (!ids.length) this.container.append(this.navigation);
 
     this.totalCarCount += 1;
     this.updatePageTitle();
@@ -201,6 +192,22 @@ export default class GarageView extends SectionView {
     if (carTrack) carTrack.updateCar(car);
   }
 
+  private deleteCar(id: number): void {
+    const carsOnPage = getMapKeys(this.tracks).length;
+    if (carsOnPage === this.carsPerPage) {
+      this.requestPage();
+    } else {
+      if (carsOnPage === 1) {
+        this.alertNoData();
+        this.navigation.destroy();
+      }
+      this.tracks.get(id)?.destroy();
+      this.tracks.delete(id);
+    }
+    this.totalCarCount -= 1;
+    this.updatePageTitle();
+  }
+
   private launchRace(): void {
     this.menu.disableButton(GarageView.RACE_BUTTON_INDEX);
     this.menu.disableButton(GarageView.RESET_BUTTON_INDEX);
@@ -209,8 +216,6 @@ export default class GarageView extends SectionView {
       track.startEngine();
       track.disableStopButton();
     });
-
-    this.raceGoing = true;
 
     const firstFinishHandler = (carData: unknown) => {
       const { car, time } = carData as { car: Car; time: number };
@@ -228,7 +233,6 @@ export default class GarageView extends SectionView {
   }
 
   private resetRace(): void {
-    this.raceGoing = false;
     this.tracks.forEach((track) => {
       track.stopEngine();
     });

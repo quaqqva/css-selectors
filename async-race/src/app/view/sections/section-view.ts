@@ -52,7 +52,7 @@ export default abstract class SectionView {
 
   public abstract get carsPerPage(): number;
 
-  private navigation: Menu;
+  protected navigation: Menu;
 
   public get currentPage(): number {
     return this.page;
@@ -80,10 +80,9 @@ export default abstract class SectionView {
     if (cars.length) {
       this.removeNoDataMessage();
       this.drawCars(cars);
-
       this.container.append(this.navigation);
     } else {
-      this.pageTitle.textContent = '';
+      this.navigation.destroy();
       this.alertNoData();
     }
   }
@@ -95,6 +94,7 @@ export default abstract class SectionView {
   }
 
   protected alertNoData(): void {
+    this.pageTitle.textContent = '';
     this.container.append(this.noDataMessage);
   }
 
@@ -103,7 +103,11 @@ export default abstract class SectionView {
   }
 
   protected updatePageTitle(): void {
-    this.pageTitle.textContent = `Page ${this.page} of ${this.totalPageCount}\nTotal: ${this.totalCarCount} cars`;
+    if (this.totalCarCount)
+      this.pageTitle.textContent = `Page ${this.page} of ${this.totalPageCount}\nTotal: ${this.totalCarCount} car${
+        this.totalCarCount > 1 ? 's' : ''
+      }`;
+    else this.pageTitle.textContent = '';
   }
 
   private requestTotalCount(): void {
