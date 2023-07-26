@@ -98,12 +98,13 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
   public startEngine(): void {
     this.menu.disableButton(Track.START_BUTTON_INDEX);
-    this.menu.enableButton(Track.STOP_BUTTON_INDEX);
 
     this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Started });
   }
 
   public launchCar(driveData: DriveData): void {
+    this.menu.enableButton(Track.STOP_BUTTON_INDEX);
+
     this.engineStatus = EngineStatus.Started;
     const travelTime: number = driveData.distance / driveData.velocity;
 
@@ -123,7 +124,6 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   }
 
   public stopEngine(): void {
-    this.menu.enableButton(Track.START_BUTTON_INDEX);
     this.disableStopButton();
 
     this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Stopped });
@@ -131,6 +131,7 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
   public resetCar(): void {
     this.carImage.reset();
+    this.menu.enableButton(Track.START_BUTTON_INDEX);
     this.engineStatus = EngineStatus.Stopped;
   }
 
