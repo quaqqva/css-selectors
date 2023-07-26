@@ -9,7 +9,7 @@ enum WinnersTableElements {
 export default class WinnersTable extends TableComponent {
   public static PAGE_TRANSITION = 150;
 
-  private static COLUMN_NAMES = ['number', 'car', 'name', 'wins', 'best time(s)'];
+  private static COLUMN_NAMES = ['number', 'car', 'name', 'wins', 'best time (s)'];
 
   private carsPerPage: number;
 
