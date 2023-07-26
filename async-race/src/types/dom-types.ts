@@ -39,6 +39,7 @@ export enum Events {
   Submit = 'submit',
   TransitionEnd = 'transitionend',
   AnimationEnd = 'animationend',
+  Resize = 'resize',
 }
 
 export enum InsertPositions {

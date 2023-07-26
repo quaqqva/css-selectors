@@ -1,6 +1,6 @@
 import DOMComponent from '../../components/base-component';
 import Slider from '../../components/slider/slider';
-import { Tags } from '../../types/dom-types';
+import { Events, Tags } from '../../types/dom-types';
 import EventEmitter from '../../utils/event-emitter';
 import { CarFullData } from '../model/car-full';
 import AppViews from './app-views';
@@ -38,6 +38,10 @@ export default class AppView {
     this.currentSection = AppViews.GarageView;
     this.sections = new Map<AppViews, SectionView>();
     DOMComponent.fromElement(document.body).append(DOMComponent.fromHTML(colorPalette));
+
+    window.addEventListener(Events.Resize, () => {
+      if (this.currentSection === AppViews.WinnersView) this.adjustWinnersHeight();
+    });
   }
 
   public get carsPerPage(): number {
@@ -90,10 +94,7 @@ export default class AppView {
 
     if (currentSection instanceof WinnersView) {
       setTimeout(() => {
-        const height = `calc(${currentSection?.height}px)`;
-
-        this.slider.setCSSProperty('max-height', height);
-        this.slider.setCSSProperty('overflow', 'hidden');
+        this.adjustWinnersHeight();
       }, currentSection.addDelay);
     }
   }
@@ -113,5 +114,13 @@ export default class AppView {
     body.append(footer);
 
     return main;
+  }
+
+  private adjustWinnersHeight(): void {
+    const currentSection = this.sections.get(this.currentSection) as WinnersView;
+    const height = `calc(${currentSection?.height}px)`;
+
+    this.slider.setCSSProperty('max-height', height);
+    this.slider.setCSSProperty('overflow', 'hidden');
   }
 }
