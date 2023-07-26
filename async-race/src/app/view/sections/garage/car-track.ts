@@ -64,9 +64,12 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
   private menu: Menu;
 
+  private isRacing: boolean;
+
   public constructor(emitter: EventEmitter, car: Car) {
     super(Track.TRACK_PARAMS);
     this.emitter = emitter;
+    this.isRacing = false;
 
     this.carImage = new CarImage();
     this.carImage.setColor(car.color);
@@ -96,14 +99,15 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     this.menu.getButton(Track.START_BUTTON_INDEX).setCSSProperty(Track.CAR_COLOR_VAR, car.color);
   }
 
-  public startEngine(): void {
+  public startEngine(isRace: boolean): void {
+    this.isRacing = isRace;
     this.menu.disableButton(Track.START_BUTTON_INDEX);
 
     this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Started });
   }
 
   public launchCar(driveData: DriveData): void {
-    this.menu.enableButton(Track.STOP_BUTTON_INDEX);
+    if (!this.isRacing) this.menu.enableButton(Track.STOP_BUTTON_INDEX);
 
     this.engineStatus = EngineStatus.Started;
     const travelTime: number = driveData.distance / driveData.velocity;
@@ -113,14 +117,16 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
     this.carImage.launchCar(travelTime);
 
-    const finishHandler = () => {
-      if (this.engineStatus !== EngineStatus.Stopped) {
-        const time = +((Date.now() - startTime) / 1000).toFixed(2);
-        this.emitter.emit(AppEvents.CarFinished, { car: this.car, time });
-      } else this.emitter.emit(AppEvents.CarBroke, null);
-      this.carImage.removeEventListener(Events.AnimationEnd, finishHandler);
-    };
-    this.carImage.addEventListener(Events.AnimationEnd, finishHandler);
+    if (this.isRacing) {
+      const finishHandler = () => {
+        if (this.engineStatus !== EngineStatus.Stopped) {
+          const time = +((Date.now() - startTime) / 1000).toFixed(2);
+          this.emitter.emit(AppEvents.CarFinished, { car: this.car, time });
+        } else this.emitter.emit(AppEvents.CarBroke, null);
+        this.carImage.removeEventListener(Events.AnimationEnd, finishHandler);
+      };
+      this.carImage.addEventListener(Events.AnimationEnd, finishHandler);
+    }
   }
 
   public stopEngine(): void {
@@ -157,7 +163,7 @@ export default class Track extends DOMComponent<HTMLDivElement> {
       clickHandlers: [
         () => this.changeCar(),
         () => this.deleteCar(),
-        () => this.startEngine(),
+        () => this.startEngine(false),
         () => this.stopEngine(),
       ],
     });

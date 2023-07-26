@@ -213,7 +213,7 @@ export default class GarageView extends SectionView {
     this.menu.disableButton(GarageView.RESET_BUTTON_INDEX);
 
     this.tracks.forEach((track) => {
-      track.startEngine();
+      track.startEngine(true);
       track.disableStopButton();
     });
 
