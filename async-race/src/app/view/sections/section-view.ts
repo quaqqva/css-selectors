@@ -42,7 +42,7 @@ export default abstract class SectionView {
 
   private noDataMessage: DOMComponent<HTMLHeadingElement>;
 
-  private pageTitle: DOMComponent<HTMLHeadingElement>;
+  protected pageTitle: DOMComponent<HTMLHeadingElement>;
 
   protected totalCarCount: number;
 
@@ -56,6 +56,10 @@ export default abstract class SectionView {
 
   public get currentPage(): number {
     return this.page;
+  }
+
+  public get height(): number {
+    return this.container.height;
   }
 
   private get totalPageCount(): number {

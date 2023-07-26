@@ -74,10 +74,25 @@ export default class AppView {
     }
 
     this.slider.slideTo(sectionView.section);
+
+    if (viewType !== AppViews.WinnersView) {
+      this.slider.removeCSSProperty('max-height');
+      this.slider.removeCSSProperty('overflow');
+    }
   }
 
   public drawCars(cars: CarFullData[]): void {
-    this.sections.get(this.currentSection)?.drawData(cars);
+    const currentSection = this.sections.get(this.currentSection);
+    currentSection?.drawData(cars);
+
+    if (currentSection instanceof WinnersView) {
+      setTimeout(() => {
+        const height = `calc(${currentSection?.height}px)`;
+
+        this.slider.setCSSProperty('max-height', height);
+        this.slider.setCSSProperty('overflow', 'hidden');
+      }, currentSection.addDelay);
+    }
   }
 
   private initializeBody(): DOMComponent<HTMLElement> {

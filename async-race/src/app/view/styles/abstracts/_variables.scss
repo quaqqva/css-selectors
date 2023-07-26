@@ -9,7 +9,7 @@ $views-count: 2;
 
 $header-height: 75px;
 $footer-height: 60px;
-$main-height: calc(100vh - $header-height - $footer-height);
+$main-height: calc(100vh - $header-height - $footer-height - 40px);
 
 $hover-transition: 500ms;
 $active-transition: 300ms;

@@ -62,6 +62,12 @@ export default class DOMComponent<T extends HTMLElement> {
     return this.element.offsetHeight;
   }
 
+  public get fullHeight(): number {
+    const marginTop = parseFloat(this.getCSSProperty('margin-top'));
+    const marginBottom = parseFloat(this.getCSSProperty('margin-bottom'));
+    return marginTop + this.height + marginBottom;
+  }
+
   public get scrolledY(): number {
     return this.element.scrollTop;
   }

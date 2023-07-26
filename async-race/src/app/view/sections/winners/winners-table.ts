@@ -7,7 +7,7 @@ enum WinnersTableElements {
   TableHidden = 'winners-table_hidden',
 }
 export default class WinnersTable extends TableComponent {
-  private static PAGE_TRANSITION = 150;
+  public static PAGE_TRANSITION = 150;
 
   private static COLUMN_NAMES = ['number', 'car', 'name', 'wins', 'best time(s)'];
 

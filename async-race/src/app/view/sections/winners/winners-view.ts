@@ -18,6 +18,15 @@ export default class WinnersView extends SectionView {
     return WinnersView.CARS_PER_PAGE;
   }
 
+  public get addDelay(): number {
+    return WinnersTable.PAGE_TRANSITION;
+  }
+
+  public override get height(): number {
+    const offset = 10; // I am very sorry I don't know what to do
+    return this.table.fullHeight + this.navigation.fullHeight + this.pageTitle.fullHeight + offset;
+  }
+
   protected drawCars(cars: CarFullData[]): void {
     this.table.addCars(cars, this.currentPage);
   }
