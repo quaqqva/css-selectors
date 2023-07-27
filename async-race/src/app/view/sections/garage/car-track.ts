@@ -152,8 +152,10 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   }
 
   public stopCar(): void {
-    this.engineStatus = EngineStatus.Stopped;
-    this.carImage.stop();
+    if (this.engineStatus !== EngineStatus.Stopped) {
+      this.engineStatus = EngineStatus.Stopped;
+      this.carImage.stop();
+    }
   }
 
   public disableStopButton(): void {
