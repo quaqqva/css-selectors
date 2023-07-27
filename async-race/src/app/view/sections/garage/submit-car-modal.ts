@@ -27,8 +27,11 @@ export default class SubmitCarModal extends FormModal {
         name: formData[0],
         color: formData[1],
       };
-      if (carData) emitter.emit(AppEvents.CarUpdate, { id: carData.id, ...carViewData });
-      else emitter.emit(AppEvents.CarCreate, carViewData);
+
+      if (carData) {
+        const car: Car = { id: carData.id, ...carViewData };
+        emitter.emit(AppEvents.CarUpdate, car);
+      } else emitter.emit(AppEvents.CarCreate, carViewData);
     };
 
     let inputValues: string[] | undefined;

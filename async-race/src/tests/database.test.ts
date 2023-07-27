@@ -4,25 +4,25 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import fetch from 'node-fetch';
-import Controller from '../app/controller/controller';
 import { EngineStatus } from '../app/model/drive';
 import { Winner } from '../app/model/winner';
+import CarDatabase from '../app/model/car-database';
 
-describe('controller', () => {
+describe('database', () => {
   const url = 'http://127.0.0.1:3000';
-  const controller = new Controller(url);
+  const database = new CarDatabase(url);
 
   describe('garage', () => {
     it('gets entities count from server', async () => {
-      const count = await controller.getCarsCount();
+      const count = await database.getCarsCount();
       expect(count).toBeGreaterThanOrEqual(0);
     });
 
     describe('gets entities array from server', () => {
       describe('when no params specified', () => {
         it('returns full array of entities', async () => {
-          const cars = await controller.getCars({});
-          const count = await controller.getCarsCount();
+          const cars = await database.getCars({});
+          const count = await database.getCarsCount();
           expect(cars.length).toBe(count);
         });
       });
@@ -30,7 +30,7 @@ describe('controller', () => {
       describe('when numbers of page and entities per page are specified', () => {
         it('returns correct page', async () => {
           const carsPerPage = 2;
-          const carsLimited = await controller.getCars({ pageNum: 1, carsPerPage });
+          const carsLimited = await database.getCars({ pageNum: 1, carsPerPage });
           expect(carsLimited.length).toBeLessThanOrEqual(carsPerPage);
         });
       });
@@ -41,26 +41,26 @@ describe('controller', () => {
         name: 'GAZ 21',
         color: '#ffffff',
       };
-      const cars = await controller.getCars({});
-      controller.createCar(newCar);
-      const newCount = await controller.getCarsCount();
+      const cars = await database.getCars({});
+      await database.createCar(newCar);
+      const newCount = await database.getCarsCount();
       expect(newCount).toBe(cars.length + 1);
     });
 
     it('can update entities', async () => {
-      const car = (await controller.getCars({}))[0];
+      const car = (await database.getCars({}))[0];
       car.name = 'BMW X5';
-      controller.updateCar(car);
-      const updatedCar = await controller.getCar(car.id);
+      database.updateCar(car);
+      const updatedCar = await database.getCar(car.id);
       expect(car).toEqual(updatedCar);
     });
 
     it('can delete entities', async () => {
-      const cars = await controller.getCars({});
+      const cars = await database.getCars({});
       const deleted = cars.at(-1);
       if (deleted) {
-        controller.deleteCar(deleted.id);
-        const newCarsCount = await controller.getCarsCount();
+        database.deleteCar(deleted.id);
+        const newCarsCount = await database.getCarsCount();
         expect(newCarsCount).toBe(cars.length - 1);
       }
     });
@@ -68,33 +68,33 @@ describe('controller', () => {
 
   describe('engine', () => {
     it('can start engine and return velocity data', async () => {
-      const currentCar = (await controller.getCars({}))[0];
-      const velocityData = await controller.toggleEngine({ carId: currentCar.id, engineStatus: EngineStatus.Started });
+      const currentCar = (await database.getCars({}))[0];
+      const velocityData = await database.toggleEngine({ carId: currentCar.id, engineStatus: EngineStatus.Started });
       expect(velocityData).toBeDefined();
     });
     it('can switch car to drive mode', async () => {
-      const currentCar = (await controller.getCars({}))[0];
-      const success = await controller.switchToDrive(currentCar.id);
+      const currentCar = (await database.getCars({}))[0];
+      const success = await database.switchToDrive(currentCar.id);
       expect(typeof success).toBe('boolean');
     });
     it('can stop engine', async () => {
-      const currentCar = (await controller.getCars({}))[0];
-      const velocityData = await controller.toggleEngine({ carId: currentCar.id, engineStatus: EngineStatus.Stopped });
+      const currentCar = (await database.getCars({}))[0];
+      const velocityData = await database.toggleEngine({ carId: currentCar.id, engineStatus: EngineStatus.Stopped });
       expect(velocityData).toBeDefined();
     });
   });
 
   describe('winners', () => {
     it('gets entities count from server', async () => {
-      const count = await controller.getWinnersCount();
+      const count = await database.getWinnersCount();
       expect(count).toBeGreaterThanOrEqual(0);
     });
 
     describe('gets entities array from server', () => {
       describe('when no params specified', () => {
         it('returns full array of entities', async () => {
-          const winners = await controller.getWinners({});
-          const count = await controller.getWinnersCount();
+          const winners = await database.getWinners({});
+          const count = await database.getWinnersCount();
           expect(winners.length).toBe(count);
         });
       });
@@ -102,7 +102,7 @@ describe('controller', () => {
       describe('when numbers of page and entities per page are specified', () => {
         it('returns correct page', async () => {
           const winnersPerPage = 2;
-          const winnersLimited = await controller.getWinners({ pageNum: 1, winnersPerPage });
+          const winnersLimited = await database.getWinners({ pageNum: 1, winnersPerPage });
           expect(winnersLimited.length).toBeLessThanOrEqual(winnersPerPage);
         });
       });
@@ -121,27 +121,27 @@ describe('controller', () => {
         wins: 10,
         time: 500,
       };
-      carData.id = (await controller.createCar(carData)).id;
+      carData.id = (await database.createCar(carData)).id;
 
-      const oldCount = await controller.getWinnersCount();
-      controller.createWinner(carData as Winner);
-      const newCount = await controller.getWinnersCount();
+      const oldCount = await database.getWinnersCount();
+      database.createWinner(carData as Winner);
+      const newCount = await database.getWinnersCount();
       expect(newCount).toBe(oldCount + 1);
     });
 
     it('can update entities', async () => {
-      const car = (await controller.getWinners({}))[0];
-      const updatedCar = await controller.updateWinner(car);
+      const car = (await database.getWinners({}))[0];
+      const updatedCar = await database.updateWinner(car);
       const carWinnerData = { id: car.id, wins: car.wins + 1, time: car.time };
       expect(carWinnerData).toEqual(updatedCar);
     });
 
     it('can delete entities', async () => {
-      const winners = await controller.getWinners({});
+      const winners = await database.getWinners({});
       const deleted = winners.at(-1);
       if (deleted) {
-        controller.deleteWinner(deleted.id);
-        const newCount = await controller.getWinnersCount();
+        database.deleteWinner(deleted.id);
+        const newCount = await database.getWinnersCount();
         expect(newCount).toBe(winners.length - 1);
       }
     });

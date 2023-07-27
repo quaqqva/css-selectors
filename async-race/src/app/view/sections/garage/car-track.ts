@@ -11,6 +11,7 @@ import ConfirmModal from '../../../../components/modals/confirm-modal';
 import AppEvents from '../../../app-events';
 import { DriveData, EngineStatus } from '../../../model/drive';
 import CarImage from '../../car';
+import { EngineRequestData, UpdateWinnerRequestData } from '../../../../types/app-interfaces';
 
 enum TrackElements {
   Track = 'track',
@@ -103,7 +104,11 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     this.isRacing = isRace;
     this.menu.disableButton(Track.START_BUTTON_INDEX);
 
-    this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Started });
+    const requestData: EngineRequestData = {
+      id: this.car.id,
+      engineStatus: EngineStatus.Started,
+    };
+    this.emitter.emit(AppEvents.CarToggleEngine, requestData);
   }
 
   public launchCar(driveData: DriveData): void {
@@ -121,7 +126,9 @@ export default class Track extends DOMComponent<HTMLDivElement> {
       const finishHandler = () => {
         if (this.engineStatus !== EngineStatus.Stopped) {
           const time = +((Date.now() - startTime) / 1000).toFixed(2);
-          this.emitter.emit(AppEvents.CarFinished, { car: this.car, time });
+
+          const requestData: UpdateWinnerRequestData = { car: this.car, time };
+          this.emitter.emit(AppEvents.CarFinished, requestData);
         } else this.emitter.emit(AppEvents.CarBroke, null);
         this.carImage.removeEventListener(Events.AnimationEnd, finishHandler);
       };
@@ -132,7 +139,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   public stopEngine(): void {
     this.disableStopButton();
 
-    this.emitter.emit(AppEvents.CarToggleEngine, { id: this.car.id, engineStatus: EngineStatus.Stopped });
+    const requestData: EngineRequestData = { id: this.car.id, engineStatus: EngineStatus.Stopped };
+    this.emitter.emit(AppEvents.CarToggleEngine, requestData);
   }
 
   public resetCar(): void {

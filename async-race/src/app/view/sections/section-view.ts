@@ -1,5 +1,6 @@
 import DOMComponent, { ElementParameters } from '../../../components/base-component';
 import Menu from '../../../components/menu/menu';
+import { PageLoadRequestData } from '../../../types/app-interfaces';
 import { Tags } from '../../../types/dom-types';
 import FontAwesome from '../../../types/font-awesome';
 import EventEmitter from '../../../utils/event-emitter';
@@ -94,7 +95,8 @@ export default abstract class SectionView {
   protected abstract drawCars(cars: CarFullData[]): void;
 
   protected requestPage(): void {
-    this.emitter.emit(AppEvents.PageLoad, { page: this.currentPage });
+    const requestData: PageLoadRequestData = { page: this.currentPage };
+    this.emitter.emit(AppEvents.PageLoad, requestData);
   }
 
   protected alertNoData(): void {

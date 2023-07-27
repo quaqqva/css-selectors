@@ -1,4 +1,5 @@
 import DOMComponent from '../../../../components/base-component';
+import { PageLoadRequestData } from '../../../../types/app-interfaces';
 import EventEmitter from '../../../../utils/event-emitter';
 import AppEvents from '../../../app-events';
 import { CarFullData } from '../../../model/car-full';
@@ -46,10 +47,11 @@ export default class WinnersView extends SectionView {
   }
 
   public override requestPage(): void {
-    this.emitter.emit(AppEvents.PageLoad, {
+    const requestData: PageLoadRequestData = {
       page: this.currentPage,
       order: this.table.sortOrder,
       criteria: this.table.sortCriteria,
-    });
+    };
+    this.emitter.emit(AppEvents.PageLoad, requestData);
   }
 }

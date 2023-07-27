@@ -1,11 +1,12 @@
 import DOMComponent, { ElementParameters } from '../../../../components/base-component';
 import Menu from '../../../../components/menu/menu';
 import InfoModal from '../../../../components/modals/info-modal';
+import { CarDriveResponseData, EngineResponseData, UpdateWinnerRequestData } from '../../../../types/app-interfaces';
 import EventEmitter from '../../../../utils/event-emitter';
 import { getMapKeys, getMapValues } from '../../../../utils/get-map-entries';
 import AppEvents from '../../../app-events';
 import { Car } from '../../../model/car';
-import { DriveData, EngineStatus } from '../../../model/drive';
+import { EngineStatus } from '../../../model/drive';
 import SectionView from '../section-view';
 import Track from './car-track';
 import SubmitCarModal from './submit-car-modal';
@@ -112,11 +113,7 @@ export default class GarageView extends SectionView {
         this.menu.disableButton(GarageView.RACE_BUTTON_INDEX);
       },
       [AppEvents.CarEngineToggled]: (data: unknown) => {
-        const { id, engineStatus, driveData } = data as {
-          id: number;
-          engineStatus: EngineStatus;
-          driveData: DriveData;
-        };
+        const { id, engineStatus, driveData } = data as EngineResponseData;
         const track = this.tracks.get(id);
         if (engineStatus === EngineStatus.Started) {
           track?.launchCar(driveData);
@@ -127,10 +124,7 @@ export default class GarageView extends SectionView {
         }
       },
       [AppEvents.ResponseCarDrive]: (data: unknown) => {
-        const { id, isDriving } = data as {
-          id: number;
-          isDriving: boolean;
-        };
+        const { id, isDriving } = data as CarDriveResponseData;
         if (!isDriving) this.tracks.get(id)?.stopCar();
       },
     };
@@ -218,7 +212,7 @@ export default class GarageView extends SectionView {
     });
 
     const firstFinishHandler = (carData: unknown) => {
-      const { car, time } = carData as { car: Car; time: number };
+      const { car, time } = carData as UpdateWinnerRequestData;
       const infoModal = new InfoModal({
         params: {},
         info: `${car.name} finished first in ${time}s!`,
