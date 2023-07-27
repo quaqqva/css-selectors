@@ -51,6 +51,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
   private static CAR_COLOR_VAR = '--car-color'; // for CSS
 
+  private static WIN_TIME_DECIMAL_DIGITS = 2;
+
   private emitter: EventEmitter;
 
   private carImage: CarImage;
@@ -125,7 +127,7 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     if (this.isRacing) {
       const finishHandler = () => {
         if (this.engineStatus !== EngineStatus.Stopped) {
-          const time = +((Date.now() - startTime) / 1000).toFixed(2);
+          const time = +((Date.now() - startTime) / 1000).toFixed(Track.WIN_TIME_DECIMAL_DIGITS);
 
           const requestData: UpdateWinnerRequestData = { car: this.car, time };
           this.emitter.emit(AppEvents.CarFinished, requestData);
