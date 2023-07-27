@@ -91,28 +91,12 @@
   }
 }
 
-.car-1 + .car__effect_break-smoke {
-  @media (max-width: $mobile-width) {
-    top: 32.5%;
-  }
-}
-
 .car-2 + .car__effect_break-smoke {
   top: 27.5%;
-
-  @media (max-width: $mobile-width) {
-    top: 30%;
-    right: 5px;
-  }
 }
 
 .car-3 + .car__effect_break-smoke {
   top: 25%;
-
-  @media (max-width: $mobile-width) {
-    top: 30%;
-    right: 5px;
-  }
 }
 
 .car-4 + .car__effect_break-smoke {
@@ -125,73 +109,21 @@
   }
 }
 
-.car-5 + .car__effect_break-smoke {
-  top: 27.5%;
-
-  @media (max-width: $mobile-width) {
-    top: 30%;
-    right: 5px;
-  }
-}
-
+.car-5 + .car__effect_break-smoke,
 .car-7 + .car__effect_break-smoke {
   top: 27.5%;
+}
 
-  @media (max-width: $mobile-width) {
+@media(max-width: $mobile-width) {
+  .car-2 + .car__effect_break-smoke,
+  .car-3 + .car__effect_break-smoke,
+  .car-5 + .car__effect_break-smoke,
+  .car-7 + .car__effect_break-smoke {
     top: 30%;
     right: 5px;
   }
-}
 
-@keyframes car-drive {
-  0% {
-    left: var(--car-start);
-  }
-  90% {
-    transform: var(--transforms);
-  }
-  95% {
-    transform: var(--transforms) rotate(2deg);
-  }
-  100% {
-    transform: var(--transforms);
-    left: calc(100% - var(--car-width) - 10px);
-  }
-}
-
-@keyframes car-drive-fast {
-  0% {
-    left: var(--car-start);
-  }
-  20% {
-    transform: var(--transforms) rotate(-20deg);
-  }
-  30% {
-    transform: var(--transforms);
-  }
-  90% {
-    transform: var(--transforms);
-  }
-  95% {
-    transform: var(--transforms) rotate(1deg);
-  }
-  100% {
-    transform: var(--transforms);
-    left: calc(100% - var(--car-width) - 10px);
-  }
-}
-
-@keyframes car-stop {
-  $stop-length: 30px;
-  0% {
-    left: var(--car-stop-at);
-  }
-  75% {
-    transform: var(--transforms) rotate(2deg);
-    left: min(var(--car-stop-at) + $stop-length, 100% - var(--car-width) - 10px);
-  }
-  100% {
-    transform: var(--transforms);
-    left: min(var(--car-stop-at) + $stop-length, 100% - var(--car-width) - 10px);
+  .car-1 + .car__effect_break-smoke {
+    top: 32.5%;
   }
 }

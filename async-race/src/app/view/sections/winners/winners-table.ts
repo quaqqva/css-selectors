@@ -64,21 +64,19 @@ export default class WinnersTable extends TableComponent {
     const winsHeader = this.headElements[3];
 
     const sortWinsButton = this.createSortButton();
-    sortWinsButton.addEventListener(Events.Click, () => {
-      this.sortCriteria = WinnersSortCriteria.Wins;
-      this.switchSortOrder();
-      this.emitter.emit(AppEvents.WinnersSort, null);
-    });
+    sortWinsButton.addEventListener(Events.Click, () => this.changeSortCriteria(WinnersSortCriteria.Wins));
     winsHeader.append(sortWinsButton);
 
     const timeHeader = this.headElements[4];
     const sortTimeButton = this.createSortButton();
-    sortTimeButton.addEventListener(Events.Click, () => {
-      this.sortCriteria = WinnersSortCriteria.Time;
-      this.switchSortOrder();
-      this.emitter.emit(AppEvents.WinnersSort, null);
-    });
+    sortTimeButton.addEventListener(Events.Click, () => this.changeSortCriteria(WinnersSortCriteria.Time));
     timeHeader.append(sortTimeButton);
+  }
+
+  private changeSortCriteria(criteria: WinnersSortCriteria): void {
+    this.sortCriteria = criteria;
+    this.switchSortOrder();
+    this.emitter.emit(AppEvents.WinnersSort, null);
   }
 
   private createSortButton(): DOMComponent<HTMLButtonElement> {

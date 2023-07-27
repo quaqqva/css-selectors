@@ -139,19 +139,17 @@ export default abstract class SectionView {
 
     menu.disableButton(SectionView.LEFT_NAV_BUTTON_INDEX);
 
-    menu.getButton(SectionView.LEFT_NAV_BUTTON_INDEX).append(
-      new DOMComponent<HTMLElement>({
-        tag: Tags.Icon,
-        classes: [FontAwesome.Solid, FontAwesome.LessThan],
-      })
-    );
+    const leftNavigationIcon = new DOMComponent<HTMLElement>({
+      tag: Tags.Icon,
+      classes: [FontAwesome.Solid, FontAwesome.LessThan],
+    });
+    menu.getButton(SectionView.LEFT_NAV_BUTTON_INDEX).append(leftNavigationIcon);
 
-    menu.getButton(SectionView.RIGHT_NAV_BUTTON_INDEX).append(
-      new DOMComponent<HTMLElement>({
-        tag: Tags.Icon,
-        classes: [FontAwesome.Solid, FontAwesome.GreaterThan],
-      })
-    );
+    const rightNavigationIcon = new DOMComponent<HTMLElement>({
+      tag: Tags.Icon,
+      classes: [FontAwesome.Solid, FontAwesome.GreaterThan],
+    });
+    menu.getButton(SectionView.RIGHT_NAV_BUTTON_INDEX).append(rightNavigationIcon);
 
     return menu;
   }
