@@ -29,9 +29,9 @@ export default abstract class SectionView {
     classes: [SectionElements.Navigation],
   };
 
-  private static LEFT_NAV_BUTTON_INDEX = 0;
+  protected static LEFT_NAV_BUTTON_INDEX = 0;
 
-  private static RIGHT_NAV_BUTTON_INDEX = 1;
+  protected static RIGHT_NAV_BUTTON_INDEX = 1;
 
   private static BUTTON_ACTIVE_TRANSITION = 300;
 

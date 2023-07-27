@@ -47,8 +47,11 @@ export default class GarageView extends SectionView {
 
   private tracks: Map<number, Track>;
 
+  private raceGoing: boolean;
+
   public constructor(emitter: EventEmitter, container: DOMComponent<HTMLElement>) {
     super(emitter, container);
+    this.raceGoing = false;
 
     this.menu = this.createMenu();
     this.tracksWrapper = new DOMComponent<HTMLDivElement>({
@@ -97,7 +100,7 @@ export default class GarageView extends SectionView {
   private addEventHandlers(): void {
     const handler = {
       [AppEvents.CarCreated]: (data: unknown) => {
-        this.removeNoDataMessage();
+        if (!this.totalCarCount) this.removeNoDataMessage();
         this.createCar(data as Car);
       },
       [AppEvents.CarUpdated]: (data: unknown) => {
@@ -174,7 +177,7 @@ export default class GarageView extends SectionView {
       const newTrack = new Track(this.emitter, car);
       this.tracksWrapper.append(newTrack);
       this.tracks.set(car.id, newTrack);
-    }
+    } else if (ids.length === this.carsPerPage) this.navigation.enableButton(GarageView.RIGHT_NAV_BUTTON_INDEX);
     if (!ids.length) this.container.append(this.navigation);
 
     this.totalCarCount += 1;
@@ -211,6 +214,8 @@ export default class GarageView extends SectionView {
       track.disableStopButton();
     });
 
+    this.raceGoing = true;
+
     const firstFinishHandler = (carData: unknown) => {
       const { car, time } = carData as UpdateWinnerRequestData;
       const infoModal = new InfoModal({
@@ -240,5 +245,6 @@ export default class GarageView extends SectionView {
     this.tracks.forEach((track) => {
       track.stopEngine();
     });
+    this.raceGoing = false;
   }
 }
