@@ -23,7 +23,7 @@ module.exports = {
   },
   output: {
     filename: 'main.js',
-    assetModuleFilename: 'assets/[name][ext][query]',
+    assetModuleFilename: '[hash][ext][query]',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
@@ -64,12 +64,25 @@ module.exports = {
         use: ['babel-loader', 'ts-loader'],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'images/[hash][ext][query]',
+        },
       },
       {
         test: /\.(mp3|wav)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'sounds/[hash][ext][query]',
+        },
+      },
+      {
+        test: /\.ttf$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[hash][ext][query]',
+        },
       },
     ],
   },
