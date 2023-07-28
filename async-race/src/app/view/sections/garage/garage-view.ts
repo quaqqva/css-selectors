@@ -195,8 +195,13 @@ export default class GarageView extends SectionView {
       this.requestPage();
     } else {
       if (carsOnPage === 1) {
-        this.alertNoData();
-        this.navigation.destroy();
+        if (this.totalCarCount === 1) {
+          this.alertNoData();
+          this.navigation.destroy();
+        } else {
+          this.switchToPreviousPage();
+          this.navigation.disableButton(GarageView.RIGHT_NAV_BUTTON_INDEX);
+        }
       }
       this.tracks.get(id)?.destroy();
       this.tracks.delete(id);

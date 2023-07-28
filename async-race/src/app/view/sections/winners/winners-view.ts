@@ -14,9 +14,7 @@ export default class WinnersView extends SectionView {
   public constructor(emitter: EventEmitter, container: DOMComponent<HTMLElement>) {
     super(emitter, container);
     this.table = new WinnersTable(emitter, WinnersView.CARS_PER_PAGE);
-    this.emitter.subscribe(AppEvents.WinnersSort, () => {
-      this.requestPage();
-    });
+    this.addEventHandlers();
   }
 
   public get carsPerPage(): number {
@@ -53,5 +51,12 @@ export default class WinnersView extends SectionView {
       criteria: this.table.sortCriteria,
     };
     this.emitter.emit(AppEvents.PageLoad, requestData);
+  }
+
+  private addEventHandlers(): void {
+    const handlers = {
+      [AppEvents.WinnersSort]: () => this.requestPage,
+    };
+    this.emitter.addHandlers(handlers);
   }
 }

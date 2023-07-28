@@ -86,9 +86,11 @@ export default abstract class SectionView {
       this.removeNoDataMessage();
       this.drawCars(cars);
       this.container.append(this.navigation);
-    } else {
+    } else if (!this.totalCarCount) {
       this.navigation.destroy();
       this.alertNoData();
+    } else {
+      this.switchToPreviousPage();
     }
   }
 
@@ -129,11 +131,30 @@ export default abstract class SectionView {
     this.emitter.emit(AppEvents.RequestTotalCars, null);
   }
 
+  protected switchToPreviousPage(): void {
+    this.page -= 1;
+    this.requestPage();
+
+    if (this.page === 1) this.navigation.disableButton(SectionView.LEFT_NAV_BUTTON_INDEX);
+    this.navigation.enableButton(SectionView.RIGHT_NAV_BUTTON_INDEX);
+  }
+
+  protected switchToNextPage(): void {
+    this.page += 1;
+    this.requestPage();
+
+    if (this.page === this.totalPageCount) this.navigation.disableButton(SectionView.RIGHT_NAV_BUTTON_INDEX);
+    this.navigation.enableButton(SectionView.LEFT_NAV_BUTTON_INDEX);
+  }
+
   private createNavigation(): Menu {
     const menu = new Menu({
       params: SectionView.NAVIGATION_PARAMS,
       buttonTexts: ['', ''],
-      clickHandlers: [() => this.switchToPreviousPage(), () => this.switchToNextPage()],
+      clickHandlers: [
+        () => setTimeout(() => this.switchToPreviousPage(), SectionView.BUTTON_ACTIVE_TRANSITION),
+        () => setTimeout(() => this.switchToNextPage(), SectionView.BUTTON_ACTIVE_TRANSITION),
+      ],
       buttonClasses: [SectionElements.NavigationButton, SectionElements.NavigationButton],
     });
 
@@ -152,25 +173,5 @@ export default abstract class SectionView {
     menu.getButton(SectionView.RIGHT_NAV_BUTTON_INDEX).append(rightNavigationIcon);
 
     return menu;
-  }
-
-  private switchToPreviousPage(): void {
-    this.page -= 1;
-    setTimeout(() => {
-      this.requestPage();
-    }, SectionView.BUTTON_ACTIVE_TRANSITION);
-
-    if (this.page === 1) this.navigation.disableButton(SectionView.LEFT_NAV_BUTTON_INDEX);
-    this.navigation.enableButton(SectionView.RIGHT_NAV_BUTTON_INDEX);
-  }
-
-  private switchToNextPage(): void {
-    this.page += 1;
-    setTimeout(() => {
-      this.requestPage();
-    }, SectionView.BUTTON_ACTIVE_TRANSITION);
-
-    if (this.page === this.totalPageCount) this.navigation.disableButton(SectionView.RIGHT_NAV_BUTTON_INDEX);
-    this.navigation.enableButton(SectionView.LEFT_NAV_BUTTON_INDEX);
   }
 }
