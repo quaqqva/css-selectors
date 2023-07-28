@@ -58,7 +58,7 @@ export default class WinnersView extends SectionView {
 
   private addEventHandlers(): void {
     const handlers = {
-      [AppEvents.WinnersSort]: () => this.requestPage,
+      [AppEvents.WinnersSort]: () => this.requestPage(),
     };
     this.emitter.addHandlers(handlers);
   }
