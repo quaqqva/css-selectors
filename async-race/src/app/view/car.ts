@@ -22,8 +22,6 @@ export default class CarImage extends DOMComponent<HTMLDivElement> {
     classes: [CarElements.EffectPlaceholder],
   };
 
-  private static CAR_SPRITES_COUNT = 8;
-
   private static MAX_FAST_TIME = 3500;
 
   private static CAR_DRIVE_ANIMATION = 'car-drive';
@@ -36,7 +34,9 @@ export default class CarImage extends DOMComponent<HTMLDivElement> {
 
   private static STOP_DURATION = 500;
 
-  private static RESET_DURATION = 300;
+  public static RESET_DURATION = 300;
+
+  private resetAnimationPlaying: boolean;
 
   private carSVG: SVGComponent;
 
@@ -51,6 +51,8 @@ export default class CarImage extends DOMComponent<HTMLDivElement> {
 
     this.effectPlaceholder = new DOMComponent<HTMLImageElement>(CarImage.PLACEHOLDER_PARAMS);
     this.append(this.effectPlaceholder);
+
+    this.resetAnimationPlaying = false;
   }
 
   public setColor(color: string): void {
@@ -79,6 +81,10 @@ export default class CarImage extends DOMComponent<HTMLDivElement> {
     );
   }
 
+  public get isReseting(): boolean {
+    return this.resetAnimationPlaying;
+  }
+
   public stop(): void {
     const left = this.getCSSProperty('left');
     this.setCSSProperty('animation', '');
@@ -97,12 +103,14 @@ export default class CarImage extends DOMComponent<HTMLDivElement> {
 
   public reset(): void {
     this.setCSSProperty('opacity', '0');
+    this.resetAnimationPlaying = true;
 
     setTimeout(() => {
       this.setCSSProperty('animation', '');
       this.setCSSProperty(CarImage.CAR_STOP_COORDS, '');
       this.setCSSProperty('opacity', '');
       this.effectPlaceholder.removeClass(CarElements.BreakSmokeEffect);
+      this.resetAnimationPlaying = false;
     }, CarImage.RESET_DURATION);
   }
 

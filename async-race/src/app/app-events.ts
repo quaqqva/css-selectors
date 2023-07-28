@@ -11,6 +11,7 @@ enum AppEvents {
   CarsGenerated = 'cars-generated',
   CarToggleEngine = 'car-toggle-engine',
   CarEngineToggled = 'car-engine-toggled',
+  CarImageReset = 'car-image-reset',
   RequestCarDrive = 'request-car-drive',
   ResponseCarDrive = 'response-car-drive',
   CarFinished = 'car-finished',

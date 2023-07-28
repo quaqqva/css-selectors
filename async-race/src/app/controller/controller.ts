@@ -93,9 +93,13 @@ export default class Controller {
   }
 
   private async onDriveRequest(id: number) {
-    const isDriving = await this.database.switchToDrive(id as number);
-    const response: CarDriveResponseData = { id, isDriving };
-    this.emitter.emit(AppEvents.ResponseCarDrive, response);
+    try {
+      const isDriving = await this.database.switchToDrive(id as number);
+      const response: CarDriveResponseData = { id, isDriving };
+      this.emitter.emit(AppEvents.ResponseCarDrive, response);
+    } catch {
+      this.emitter.emit(AppEvents.ResponseCarDrive, null);
+    }
   }
 
   private async onEngineToggle(requestData: EngineRequestData) {

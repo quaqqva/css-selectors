@@ -23,6 +23,10 @@ export default class EventEmitter {
     if (handlerIndex >= 0) handlers.splice(handlerIndex, 1);
   }
 
+  public unsubscriveEvery(eventName: string): void {
+    this.events[eventName] = [];
+  }
+
   public addHandlers(handlers: { [event: string]: (data: unknown) => void }) {
     Object.entries(handlers).forEach((entry) => {
       this.subscribe(entry[0], entry[1]);

@@ -73,6 +73,7 @@ export default class GarageView extends SectionView {
   }
 
   protected drawCars(cars: Car[]): void {
+    if (this.raceGoing) this.resetRace();
     this.tracksWrapper.addClass(GarageClasses.TracksWrapperHidden);
     setTimeout(() => {
       this.tracksWrapper.clear();
@@ -125,17 +126,19 @@ export default class GarageView extends SectionView {
         const track = this.tracks.get(id);
         if (engineStatus === EngineStatus.Started) {
           track?.launchCar(driveData);
-        } else {
-          track?.resetCar();
-          if (getMapValues(this.tracks).every((trackElement) => !trackElement.isDriving)) {
-            this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
-            this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
-          }
+        } else track?.resetCar();
+      },
+      [AppEvents.CarImageReset]: () => {
+        if (getMapValues(this.tracks).every((trackElement) => !trackElement.isDriving)) {
+          this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
+          this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
         }
       },
       [AppEvents.ResponseCarDrive]: (data: unknown) => {
+        if (!data) return;
         const { id, isDriving } = data as CarDriveResponseData;
-        if (!isDriving) this.tracks.get(id)?.stopCar();
+        const carTrack = this.tracks.get(id);
+        if (!isDriving && carTrack?.isDriving) carTrack?.stopCar();
       },
     };
     this.emitter.addHandlers(handler);
@@ -225,7 +228,7 @@ export default class GarageView extends SectionView {
 
   private launchRace(): void {
     this.menu.disableButton(GarageView.RACE_BUTTON_INDEX);
-    this.menu.disableButton(GarageView.RESET_BUTTON_INDEX);
+    // this.menu.disableButton(GarageView.RESET_BUTTON_INDEX);
 
     this.tracks.forEach((track) => {
       track.startEngine(true);
@@ -265,5 +268,6 @@ export default class GarageView extends SectionView {
       track.stopEngine();
     });
     this.raceGoing = false;
+    this.emitter.unsubscriveEvery(AppEvents.CarFinished);
   }
 }

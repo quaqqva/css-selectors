@@ -153,12 +153,16 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
   public resetCar(): void {
     this.carImage.reset();
-    this.menu.enableButton(Track.START_BUTTON_INDEX);
-    this.engineStatus = EngineStatus.Stopped;
+
+    setTimeout(() => {
+      this.menu.enableButton(Track.START_BUTTON_INDEX);
+      this.engineStatus = EngineStatus.Stopped;
+      this.emitter.emit(AppEvents.CarImageReset, null);
+    }, CarImage.RESET_DURATION);
   }
 
   public stopCar(): void {
-    if (this.engineStatus !== EngineStatus.Stopped) {
+    if (this.engineStatus !== EngineStatus.Stopped && !this.carImage.isReseting) {
       this.engineStatus = EngineStatus.Stopped;
       this.carImage.stop();
     }
