@@ -20,6 +20,7 @@ enum AppEvents {
   RequestTotalCars = 'get-total-cars',
   ResponseTotalCars = 'show-total-cars',
   WinnersSort = 'winners-sort',
+  NoConnection = 'no-connection',
 }
 
 export default AppEvents;

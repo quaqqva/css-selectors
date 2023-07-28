@@ -65,4 +65,8 @@ export default class Menu extends DOMComponent<HTMLDivElement> {
     const button = this.getButton(index);
     button.setAttribute('disabled', true.toString());
   }
+
+  public forEachButton(callback: (button: DOMComponent<HTMLButtonElement>, index: number) => void): void {
+    this.buttons.forEach((button, index) => callback(button, index));
+  }
 }

@@ -168,16 +168,20 @@ export default class CarDatabase {
   }
 
   private async createEntity<T, V>(endpoint: string, viewData: T): Promise<V> {
-    const url = buildURL([this.baseUrl, endpoint]);
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: RequestMethod.POST,
-      body: JSON.stringify(viewData),
-    });
-    const entity = (await response.json()) as V;
-    return entity;
+    try {
+      const url = buildURL([this.baseUrl, endpoint]);
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: RequestMethod.POST,
+        body: JSON.stringify(viewData),
+      });
+      const entity = (await response.json()) as V;
+      return entity;
+    } catch {
+      throw Error('No connection');
+    }
   }
 
   private async getEntity<T>(endpoint: string, id: number): Promise<T> {
@@ -195,25 +199,33 @@ export default class CarDatabase {
   private async getEntities<T>(endpoint: string, queryParams?: { [query: string]: string }): Promise<T[]> {
     const url = buildURL([this.baseUrl, endpoint], queryParams);
 
-    const response = await fetch(url, {
-      method: RequestMethod.GET,
-    });
-    const entities = (await response.json()) as T[];
-
-    return entities;
+    try {
+      const response = await fetch(url, {
+        method: RequestMethod.GET,
+      });
+      const entities = (await response.json()) as T[];
+      return entities;
+    } catch {
+      throw Error('No connection');
+    }
   }
 
   private async updateEntity<T extends { id: number }>(endpoint: string, data: T): Promise<T> {
     const url = buildURL([this.baseUrl, endpoint, data.id.toString()]);
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: RequestMethod.PUT,
-      body: JSON.stringify(data),
-    });
-    if (response.status === ResponseStatus.NotFound) throw Error('Entity not found');
-    return (await response.json()) as T;
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: RequestMethod.PUT,
+        body: JSON.stringify(data),
+      });
+      if (response.status === ResponseStatus.NotFound) throw Error('Entity not found');
+      return (await response.json()) as T;
+    } catch {
+      throw Error('No connection');
+    }
   }
 
   private async deleteEntity(endpoint: string, id: number): Promise<void> {
@@ -229,9 +241,13 @@ export default class CarDatabase {
       _limit: '1',
     };
     const url = buildURL([this.baseUrl, endpoint], queryParams);
-    const response = await fetch(url, {
-      method: RequestMethod.GET,
-    });
-    return Number(response.headers.get('X-Total-Count'));
+    try {
+      const response = await fetch(url, {
+        method: RequestMethod.GET,
+      });
+      return Number(response.headers.get('X-Total-Count'));
+    } catch {
+      throw Error('No connection');
+    }
   }
 }

@@ -140,6 +140,9 @@ export default class GarageView extends SectionView {
         const carTrack = this.tracks.get(id);
         if (!isDriving && carTrack?.isDriving) carTrack?.stopCar();
       },
+      [AppEvents.NoConnection]: () => {
+        this.menu.forEachButton((_, index) => this.menu.disableButton(index));
+      },
     };
     this.emitter.addHandlers(handler);
   }

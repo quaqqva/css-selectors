@@ -36,8 +36,12 @@ export default class Controller {
         this.switchView();
       },
       [AppEvents.CarCreate]: async (carViewData: unknown) => {
-        const car = await this.database.createCar(carViewData as CarViewData);
-        this.emitter.emit(AppEvents.CarCreated, car);
+        try {
+          const car = await this.database.createCar(carViewData as CarViewData);
+          this.emitter.emit(AppEvents.CarCreated, car);
+        } catch {
+          this.emitter.emit(AppEvents.NoConnection, null);
+        }
       },
       [AppEvents.CarUpdate]: async (carData: unknown) => {
         const updatedCar = await this.database.updateCar(carData as Car);
@@ -49,8 +53,12 @@ export default class Controller {
         this.loadPage(page, criteria, order);
       },
       [AppEvents.GenerateCars]: async (carsCount: unknown) => {
-        await this.database.createRandomCars(carsCount as number);
-        this.emitter.emit(AppEvents.CarsGenerated, null);
+        try {
+          await this.database.createRandomCars(carsCount as number);
+          this.emitter.emit(AppEvents.CarsGenerated, null);
+        } catch {
+          this.emitter.emit(AppEvents.NoConnection, null);
+        }
       },
       [AppEvents.CarToggleEngine]: async (requestData: unknown) =>
         this.onEngineToggle(requestData as EngineRequestData),
@@ -62,17 +70,22 @@ export default class Controller {
   }
 
   public async loadPage(pageNumber: number, criteria?: WinnersSortCriteria, order?: WinnersSortOrder): Promise<void> {
-    if (this.view.currentSection === AppViews.GarageView) {
-      const carsPage = await this.database.getCars({ pageNum: pageNumber, carsPerPage: this.view.carsPerPage });
-      this.view.drawCars(carsPage as CarFullData[]);
-    } else {
-      const winnersPage = await this.database.getWinners({
-        pageNum: pageNumber,
-        winnersPerPage: this.view.carsPerPage,
-        sortOrder: order,
-        sortBy: criteria,
-      });
-      this.view.drawCars(winnersPage);
+    try {
+      if (this.view.currentSection === AppViews.GarageView) {
+        const carsPage = await this.database.getCars({ pageNum: pageNumber, carsPerPage: this.view.carsPerPage });
+        this.view.drawCars(carsPage as CarFullData[]);
+      } else {
+        const winnersPage = await this.database.getWinners({
+          pageNum: pageNumber,
+          winnersPerPage: this.view.carsPerPage,
+          sortOrder: order,
+          sortBy: criteria,
+        });
+        this.view.drawCars(winnersPage);
+      }
+    } catch {
+      this.view.drawCars([]);
+      this.emitter.emit(AppEvents.NoConnection, null);
     }
   }
 
@@ -124,12 +137,17 @@ export default class Controller {
   }
 
   private async onTotalCarsRequest(): Promise<void> {
-    if (this.view.currentSection === AppViews.GarageView) {
-      const garageCarCount = await this.database.getCarsCount();
-      this.emitter.emit(AppEvents.ResponseTotalCars, garageCarCount);
-    } else {
-      const winnersCarCount = await this.database.getWinnersCount();
-      this.emitter.emit(AppEvents.ResponseTotalCars, winnersCarCount);
+    try {
+      if (this.view.currentSection === AppViews.GarageView) {
+        const garageCarCount = await this.database.getCarsCount();
+        this.emitter.emit(AppEvents.ResponseTotalCars, garageCarCount);
+      } else {
+        const winnersCarCount = await this.database.getWinnersCount();
+        this.emitter.emit(AppEvents.ResponseTotalCars, winnersCarCount);
+      }
+    } catch {
+      this.emitter.emit(AppEvents.ResponseTotalCars, 0);
+      this.emitter.emit(AppEvents.NoConnection, null);
     }
   }
 
