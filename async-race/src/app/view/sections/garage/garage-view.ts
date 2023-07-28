@@ -122,8 +122,10 @@ export default class GarageView extends SectionView {
           track?.launchCar(driveData);
         } else {
           track?.resetCar();
-          if (getMapValues(this.tracks).every((trackElement) => !trackElement.isDriving))
+          if (getMapValues(this.tracks).every((trackElement) => !trackElement.isDriving)) {
             this.menu.enableButton(GarageView.RACE_BUTTON_INDEX);
+            this.menu.enableButton(GarageView.RESET_BUTTON_INDEX);
+          }
         }
       },
       [AppEvents.ResponseCarDrive]: (data: unknown) => {
@@ -247,6 +249,7 @@ export default class GarageView extends SectionView {
   }
 
   private resetRace(): void {
+    this.menu.disableButton(GarageView.RESET_BUTTON_INDEX);
     this.tracks.forEach((track) => {
       track.stopEngine();
     });
