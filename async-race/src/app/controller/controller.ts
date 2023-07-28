@@ -23,11 +23,14 @@ export default class Controller {
 
   private view: AppView;
 
+  private connectionEstablished: boolean;
+
   public constructor(view: AppView, emitter: EventEmitter, connectionUrl: string) {
     this.emitter = emitter;
     this.view = view;
     this.database = new CarDatabase(connectionUrl);
     this.addEventHandlers();
+    this.connectionEstablished = true;
   }
 
   private addEventHandlers(): void {
@@ -40,7 +43,7 @@ export default class Controller {
           const car = await this.database.createCar(carViewData as CarViewData);
           this.emitter.emit(AppEvents.CarCreated, car);
         } catch {
-          this.emitter.emit(AppEvents.NoConnection, null);
+          this.onConnectionFail();
         }
       },
       [AppEvents.CarUpdate]: async (carData: unknown) => {
@@ -57,7 +60,7 @@ export default class Controller {
           await this.database.createRandomCars(carsCount as number);
           this.emitter.emit(AppEvents.CarsGenerated, null);
         } catch {
-          this.emitter.emit(AppEvents.NoConnection, null);
+          this.onConnectionFail();
         }
       },
       [AppEvents.CarToggleEngine]: async (requestData: unknown) =>
@@ -84,8 +87,7 @@ export default class Controller {
         this.view.drawCars(winnersPage);
       }
     } catch {
-      this.view.drawCars([]);
-      this.emitter.emit(AppEvents.NoConnection, null);
+      this.onConnectionFail();
     }
   }
 
@@ -146,13 +148,20 @@ export default class Controller {
         this.emitter.emit(AppEvents.ResponseTotalCars, winnersCarCount);
       }
     } catch {
-      this.emitter.emit(AppEvents.ResponseTotalCars, 0);
-      this.emitter.emit(AppEvents.NoConnection, null);
+      this.onConnectionFail();
+    }
+  }
+
+  private onConnectionFail(forceEmit = false): void {
+    if (this.connectionEstablished || forceEmit) {
+      this.emitter.emit(AppEvents.NoConnection, this.connectionEstablished);
+      this.connectionEstablished = false;
     }
   }
 
   private switchView(): void {
     const newView = this.view.currentSection === AppViews.GarageView ? AppViews.WinnersView : AppViews.GarageView;
     this.view.switchTo(newView);
+    if (!this.connectionEstablished) this.onConnectionFail(true);
   }
 }
