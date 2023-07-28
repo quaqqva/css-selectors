@@ -95,8 +95,14 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   }
 
   public updateCar(car: Car): void {
-    this.car = car;
+    if (this.car.name !== car.name) {
+      this.carImage.destroy();
+      this.carImage = new CarImage(car.name);
+      this.append(this.carImage);
+    }
     this.carImage.setColor(car.color);
+
+    this.car = car;
     this.carTitle.textContent = car.name;
 
     this.menu.getButton(Track.START_BUTTON_INDEX).setCSSProperty(Track.CAR_COLOR_VAR, car.color);
