@@ -4,6 +4,7 @@ import {
   UpdateWinnerRequestData,
   EngineResponseData,
   CarDriveResponseData,
+  CarDeleteResponseData,
 } from '../../types/app-interfaces';
 import EventEmitter from '../../utils/event-emitter';
 import AppEvents from '../app-events';
@@ -77,12 +78,17 @@ export default class Controller {
 
   private async onCarDelete(carId: number) {
     await this.database.deleteCar(carId);
+    const replace = (
+      await this.database.getCars({ pageNum: this.view.currentPage, carsPerPage: this.view.carsPerPage })
+    ).at(-1);
+    const response: CarDeleteResponseData = { id: carId, replace };
+
     try {
       await this.database.deleteWinner(carId);
     } catch {
       return;
     } finally {
-      this.emitter.emit(AppEvents.CarDeleted, carId);
+      this.emitter.emit(AppEvents.CarDeleted, response);
     }
   }
 

@@ -1,7 +1,12 @@
 import DOMComponent, { ElementParameters } from '../../../../components/base-component';
 import Menu from '../../../../components/menu/menu';
 import InfoModal from '../../../../components/modals/info-modal';
-import { CarDriveResponseData, EngineResponseData, UpdateWinnerRequestData } from '../../../../types/app-interfaces';
+import {
+  CarDeleteResponseData,
+  CarDriveResponseData,
+  EngineResponseData,
+  UpdateWinnerRequestData,
+} from '../../../../types/app-interfaces';
 import EventEmitter from '../../../../utils/event-emitter';
 import { getMapKeys, getMapValues } from '../../../../utils/get-map-entries';
 import AppEvents from '../../../app-events';
@@ -106,8 +111,8 @@ export default class GarageView extends SectionView {
       [AppEvents.CarUpdated]: (data: unknown) => {
         this.updateCar(data as Car);
       },
-      [AppEvents.CarDeleted]: (id: unknown) => {
-        this.deleteCar(id as number);
+      [AppEvents.CarDeleted]: (data: unknown) => {
+        this.deleteCar(data as CarDeleteResponseData);
       },
       [AppEvents.CarsGenerated]: () => {
         this.requestPage();
@@ -176,9 +181,7 @@ export default class GarageView extends SectionView {
     const ids = getMapKeys(this.tracks);
 
     if (ids.length < this.carsPerPage) {
-      const newTrack = new Track(this.emitter, car);
-      this.tracksWrapper.append(newTrack);
-      this.tracks.set(car.id, newTrack);
+      this.addTrack(car);
     } else if (ids.length === this.carsPerPage) this.navigation.enableButton(GarageView.RIGHT_NAV_BUTTON_INDEX);
     if (!ids.length) this.container.append(this.navigation);
 
@@ -191,25 +194,33 @@ export default class GarageView extends SectionView {
     if (carTrack) carTrack.updateCar(car);
   }
 
-  private deleteCar(id: number): void {
+  private deleteCar({ id, replace }: CarDeleteResponseData): void {
     const carsOnPage = getMapKeys(this.tracks).length;
-    if (carsOnPage === this.carsPerPage) {
-      this.requestPage();
-    } else {
-      if (carsOnPage === 1) {
-        if (this.totalCarCount === 1) {
-          this.alertNoData();
-          this.navigation.destroy();
-        } else {
-          this.switchToPreviousPage();
-          this.navigation.disableButton(GarageView.RIGHT_NAV_BUTTON_INDEX);
-        }
+    this.tracks.get(id)?.destroy();
+    this.tracks.delete(id);
+
+    if (carsOnPage === this.carsPerPage && replace) {
+      this.addTrack(replace);
+      if (this.page === this.totalPageCount - 1 && (this.totalCarCount - 1) % this.carsPerPage === 0) {
+        this.navigation.disableButton(GarageView.RIGHT_NAV_BUTTON_INDEX);
       }
-      this.tracks.get(id)?.destroy();
-      this.tracks.delete(id);
+    } else if (carsOnPage === 1) {
+      if (this.totalCarCount === 1) {
+        this.alertNoData();
+        this.navigation.destroy();
+      } else {
+        this.switchToPreviousPage();
+        this.navigation.disableButton(GarageView.RIGHT_NAV_BUTTON_INDEX);
+      }
     }
     this.totalCarCount -= 1;
     this.updatePageTitle();
+  }
+
+  private addTrack(car: Car): void {
+    const newTrack = new Track(this.emitter, car);
+    this.tracksWrapper.append(newTrack);
+    this.tracks.set(car.id, newTrack);
   }
 
   private launchRace(): void {

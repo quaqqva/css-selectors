@@ -63,7 +63,7 @@ export default abstract class SectionView {
     return this.container.height;
   }
 
-  private get totalPageCount(): number {
+  protected get totalPageCount(): number {
     return Math.ceil(this.totalCarCount / this.carsPerPage);
   }
 

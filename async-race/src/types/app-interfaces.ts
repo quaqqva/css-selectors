@@ -13,6 +13,11 @@ export type EngineRequestData = {
   engineStatus: EngineStatus.Started | EngineStatus.Stopped;
 };
 
+export type CarDeleteResponseData = {
+  id: number;
+  replace?: Car;
+};
+
 export type EngineResponseData = {
   id: number;
   engineStatus: EngineStatus;
