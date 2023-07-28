@@ -53,6 +53,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
   private static WIN_TIME_DECIMAL_DIGITS = 2;
 
+  private static MAX_TRAVEL_TIME = 10;
+
   private emitter: EventEmitter;
 
   private carImage: CarImage;
@@ -68,6 +70,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
   private menu: Menu;
 
   private isRacing: boolean;
+
+  private startTime: number;
 
   public constructor(emitter: EventEmitter, car: Car) {
     super(Track.TRACK_PARAMS);
@@ -88,6 +92,8 @@ export default class Track extends DOMComponent<HTMLDivElement> {
 
     this.menu = this.createMenu();
     this.disableStopButton();
+
+    this.startTime = 0;
   }
 
   public get isDriving(): boolean {
@@ -117,6 +123,7 @@ export default class Track extends DOMComponent<HTMLDivElement> {
       engineStatus: EngineStatus.Started,
     };
     this.emitter.emit(AppEvents.CarToggleEngine, requestData);
+    this.startTime = Date.now();
   }
 
   public launchCar(driveData: DriveData): void {
@@ -125,7 +132,6 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     this.engineStatus = EngineStatus.Started;
     const travelTime: number = driveData.distance / driveData.velocity;
 
-    const startTime = Date.now();
     this.emitter.emit(AppEvents.RequestCarDrive, this.car.id);
 
     this.carImage.launchCar(travelTime);
@@ -133,7 +139,9 @@ export default class Track extends DOMComponent<HTMLDivElement> {
     if (this.isRacing) {
       const finishHandler = () => {
         if (this.engineStatus !== EngineStatus.Stopped) {
-          const time = +((Date.now() - startTime) / 1000).toFixed(Track.WIN_TIME_DECIMAL_DIGITS);
+          const finishTime = Date.now();
+          const timeResult = Math.min(Track.MAX_TRAVEL_TIME, (finishTime - this.startTime) / 1000);
+          const time = +timeResult.toFixed(Track.WIN_TIME_DECIMAL_DIGITS);
 
           const requestData: UpdateWinnerRequestData = { car: this.car, time };
           this.emitter.emit(AppEvents.CarFinished, requestData);
