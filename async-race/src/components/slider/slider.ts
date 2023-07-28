@@ -43,6 +43,10 @@ export default class Slider extends DOMComponent<HTMLDivElement> {
     this.currentElementIndex = -1;
   }
 
+  public get transitionTime(): number {
+    return this.slideTime;
+  }
+
   public override append(...elements: DOMComponent<HTMLElement>[]): void {
     super.append(...elements);
     this.components.push(...elements);

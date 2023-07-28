@@ -80,8 +80,10 @@ export default class AppView {
     this.slider.slideTo(sectionView.section);
 
     if (viewType !== AppViews.WinnersView) {
-      this.slider.removeCSSProperty('max-height');
-      this.slider.removeCSSProperty('overflow');
+      setTimeout(() => {
+        this.slider.removeCSSProperty('max-height');
+        this.slider.removeCSSProperty('overflow');
+      }, this.slider.transitionTime / 2);
     } else {
       const winnersSection = this.sections.get(viewType) as WinnersView;
       winnersSection.requestPage();
@@ -119,7 +121,6 @@ export default class AppView {
   private adjustWinnersHeight(): void {
     const currentSection = this.sections.get(this.currentSection) as WinnersView;
     const height = `calc(${currentSection?.height}px)`;
-    console.log(height);
 
     this.slider.setCSSProperty('max-height', height);
     this.slider.setCSSProperty('overflow', 'hidden');
