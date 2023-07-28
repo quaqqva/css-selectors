@@ -119,6 +119,7 @@ export default class AppView {
   private adjustWinnersHeight(): void {
     const currentSection = this.sections.get(this.currentSection) as WinnersView;
     const height = `calc(${currentSection?.height}px)`;
+    console.log(height);
 
     this.slider.setCSSProperty('max-height', height);
     this.slider.setCSSProperty('overflow', 'hidden');

@@ -26,8 +26,11 @@ export default class WinnersView extends SectionView {
   }
 
   public override get height(): number {
-    const offset = 10; // I am very sorry I don't know what to do
-    return this.table.fullHeight + this.navigation.fullHeight + this.pageTitle.fullHeight + offset;
+    if (this.table.fullHeight) {
+      const offset = 10; // I am very sorry I don't know what to do
+      return this.table.fullHeight + this.navigation.fullHeight + this.pageTitle.fullHeight + offset;
+    }
+    return 0;
   }
 
   protected drawCars(cars: CarFullData[]): void {
