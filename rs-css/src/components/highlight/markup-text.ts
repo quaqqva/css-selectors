@@ -1,4 +1,4 @@
-import { Tags } from '../../types/dom-types';
+import { Tags } from '../../types/dom-types/enums';
 import { MarkupClasses } from '../../types/markup-classes';
 import BaseComponent from '../base-component';
 import HighlightableComponent from './highlightable';
@@ -12,12 +12,12 @@ export default class MarkupText extends BaseComponent<HTMLDivElement> {
   private text: HighlightableComponent<HTMLSpanElement>;
 
   private static ELEMENT_PARAMS = {
-    classes: [MarkupClasses.TextElement],
+    classList: [MarkupClasses.TextElement],
   };
 
   private static TEXT_PARAMS = {
     tag: Tags.Code,
-    classes: [MarkupClasses.Element],
+    classList: [MarkupClasses.Element],
   };
 
   private static OFFSET = 75;

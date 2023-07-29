@@ -1,5 +1,5 @@
 import { LevelData, PetElement } from '../../app/model/level-data';
-import { AnimationParams, Events, Tags } from '../../types/dom-types';
+import { Events, Tags } from '../../types/dom-types/enums';
 import EventEmitter from '../../utils/event-emitter';
 import BaseComponent from '../base-component';
 import CSSInput from '../text-input/css-input/css-input';
@@ -9,6 +9,7 @@ import Pet from '../pet/pet';
 import { AppEvents } from '../../types/app-events';
 import './animations.scss';
 import HTMLView from '../draggables/html-view/html-view';
+import { AnimationParams } from '../../types/dom-types/types';
 
 enum PlaygroundClasses {
   Playground = 'playground',
@@ -24,35 +25,35 @@ enum PlaygroundClasses {
 export default class Playground extends BaseComponent<HTMLElement> {
   private static ELEMENT_PARAMS = {
     tag: Tags.Main,
-    classes: [PlaygroundClasses.Playground],
+    classList: [PlaygroundClasses.Playground],
   };
 
   private static HEADING_PARAMS = {
     tag: Tags.Heading2,
-    classes: [PlaygroundClasses.TaskHeading],
+    classList: [PlaygroundClasses.TaskHeading],
   };
 
   private static HELP_BUTTON_PARAMS = {
     tag: Tags.Button,
-    classes: [PlaygroundClasses.HelpButton],
+    classList: [PlaygroundClasses.HelpButton],
     textContent: "Help, I'm stuck!",
   };
 
   private static COUCH_PARAMS = {
     tag: Tags.Div,
-    classes: [PlaygroundClasses.Couch],
+    classList: [PlaygroundClasses.Couch],
     name: 'couch',
   };
 
   private static TABLE_PARAMS = {
     tag: Tags.Div,
-    classes: [PlaygroundClasses.Table],
+    classList: [PlaygroundClasses.Table],
     name: 'table',
   };
 
   private static FLOOR_PARAMS = {
     tag: Tags.Div,
-    classes: [PlaygroundClasses.Floor],
+    classList: [PlaygroundClasses.Floor],
     name: 'floor',
   };
 

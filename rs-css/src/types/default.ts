@@ -5,7 +5,7 @@ export type DefaultCallback = () => void;
 export type ElementParameters = {
   tag: string;
   textContent: string;
-  classes: string[];
+  classList: string[];
   attributes: { [attribute: string]: string };
   parent: Node | BaseComponent<HTMLElement>;
 };

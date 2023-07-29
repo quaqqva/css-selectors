@@ -1,6 +1,6 @@
 import headerLayout from './header-layout.html';
 import BaseComponent from '../base-component';
-import { Tags, Events } from '../../types/dom-types';
+import { Tags, Events } from '../../types/dom-types/enums';
 import './header-styles.scss';
 import SideMenu from '../side-menu/side-menu';
 
@@ -11,12 +11,12 @@ enum HeaderClasses {
 export default class Header extends BaseComponent<HTMLElement> {
   private static ELEMENT_PARAMS = {
     tag: Tags.Header,
-    classes: [HeaderClasses.Header],
+    classList: [HeaderClasses.Header],
   };
 
   private static MENU_BUTTON_PARAMS = {
     tag: Tags.Button,
-    classes: [HeaderClasses.MenuButton],
+    classList: [HeaderClasses.MenuButton],
     textContent: 'open menu',
   };
 

@@ -1,11 +1,12 @@
 import BaseComponent from '../base-component';
 import EventEmitter from '../../utils/event-emitter';
-import { Tags, Events } from '../../types/dom-types';
+import { Tags, Events } from '../../types/dom-types/enums';
 import { FontAwesome } from '../../types/font-awesome';
 import './menu-styles.scss';
-import { CompletionState, NumeratedLevel } from '../../app/model/level-data';
+import { NumeratedLevel } from '../../app/model/level-data';
 import ToggleInput from '../checkbox-input/toggle-input/toggle-input';
 import { AppEvents } from '../../types/app-events';
+import CompletionState from '../../app/model/completion-state';
 
 enum MenuClasses {
   Menu = 'side-menu',
@@ -24,31 +25,31 @@ enum MenuClasses {
 
 export default class SideMenu extends BaseComponent<HTMLDivElement> {
   private static ELEMENT_PARAMS = {
-    classes: [MenuClasses.Menu],
+    classList: [MenuClasses.Menu],
   };
 
   private static CLOSE_BUTTON_PARAMS = {
     tag: Tags.Button,
-    classes: [MenuClasses.CloseButton],
+    classList: [MenuClasses.CloseButton],
   };
 
   private static CONTENT_LABEL_PARAMS = {
     tag: Tags.Span,
-    classes: [MenuClasses.ContentLabel],
+    classList: [MenuClasses.ContentLabel],
   };
 
   private static CONTENT_WRAPPER_PARAMS = {
-    classes: [MenuClasses.ContentWrapper],
+    classList: [MenuClasses.ContentWrapper],
   };
 
   private static LEVEL_BUTTON_PARAMS = {
     tag: Tags.Button,
-    classes: [MenuClasses.LevelButton],
+    classList: [MenuClasses.LevelButton],
   };
 
   private static RESET_BUTTON_PARAMS = {
     tag: Tags.Button,
-    classes: [MenuClasses.ResetButton],
+    classList: [MenuClasses.ResetButton],
     textContent: 'Reset progress',
   };
 
@@ -176,7 +177,7 @@ export default class SideMenu extends BaseComponent<HTMLDivElement> {
     const closeButton = new BaseComponent<HTMLButtonElement>({ ...SideMenu.CLOSE_BUTTON_PARAMS });
     const crossIcon = new BaseComponent<HTMLElement>({
       tag: Tags.Icon,
-      classes: [FontAwesome.Solid, FontAwesome.Times],
+      classList: [FontAwesome.Solid, FontAwesome.Times],
     });
     closeButton.append(crossIcon);
     return closeButton;

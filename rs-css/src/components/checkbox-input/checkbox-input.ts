@@ -1,4 +1,4 @@
-import { InputTypes, Tags } from '../../types/dom-types';
+import { InputTypes, Tags } from '../../types/dom-types/enums';
 import BaseComponent from '../base-component';
 
 export default class CheckboxComponent extends BaseComponent<HTMLInputElement> {

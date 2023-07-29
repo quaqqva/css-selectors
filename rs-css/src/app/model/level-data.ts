@@ -1,3 +1,5 @@
+import CompletionState from './completion-state';
+
 export type LevelData = {
   name: string;
   task: string;
@@ -12,7 +14,7 @@ export type NumeratedLevel = LevelData & { index: number };
 
 export type PetElement = {
   tag: string;
-  classes?: string[];
+  classList?: string[];
   attributes?: { [attribute: string]: string };
   children?: PetElement[];
 };
@@ -22,8 +24,4 @@ export type UserData = {
   completedLevels: CompletionState[];
 };
 
-export enum CompletionState {
-  Completed = 'completed',
-  CompletedWithHelp = 'completed-with-help',
-  NotCompleted = 'not-completed',
-}
+export { CompletionState };

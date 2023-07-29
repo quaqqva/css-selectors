@@ -1,5 +1,5 @@
 import { DefaultCallback } from '../../types/default';
-import { Events, Tags } from '../../types/dom-types';
+import { Events, Tags } from '../../types/dom-types/enums';
 import { FontAwesome } from '../../types/font-awesome';
 import BaseComponent from '../base-component';
 import './drag-n-drop-styles.scss';
@@ -15,25 +15,25 @@ enum DragNDropClasses {
 }
 export default class DragNDropComponent extends BaseComponent<HTMLDivElement> {
   private static WRAPPER_PARAMS = {
-    classes: [DragNDropClasses.Wrapper],
+    classList: [DragNDropClasses.Wrapper],
   };
 
   private static TOP_PANEL_PARAMS = {
-    classes: [DragNDropClasses.TopPanel],
+    classList: [DragNDropClasses.TopPanel],
   };
 
   private static TITLE_PARAMS = {
     tag: Tags.Span,
-    classes: [DragNDropClasses.PanelTitle],
+    classList: [DragNDropClasses.PanelTitle],
   };
 
   private static CONTENT_PARAMS = {
-    classes: [DragNDropClasses.Content],
+    classList: [DragNDropClasses.Content],
   };
 
   private static MINIMIZE_BUTTON_PARAMS = {
     tag: Tags.Icon,
-    classes: [DragNDropClasses.MinimizeButton, FontAwesome.Regular, FontAwesome.WindowMinimize],
+    classList: [DragNDropClasses.MinimizeButton, FontAwesome.Regular, FontAwesome.WindowMinimize],
   };
 
   private static MIN_BOTTOM_HEIGHT = 60;

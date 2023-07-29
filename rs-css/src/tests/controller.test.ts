@@ -1,5 +1,6 @@
 import AppController from '../app/controller/controller';
-import { CompletionState, UserData } from '../app/model/level-data';
+import CompletionState from '../app/model/completion-state';
+import { UserData } from '../app/model/level-data';
 
 // Copied from https://stackoverflow.com/questions/32911630/how-do-i-deal-with-localstorage-in-jest-tests
 class LocalStorageMock {

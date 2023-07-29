@@ -2,7 +2,7 @@ import { PetElement } from '../app/model/level-data';
 import BaseComponent from '../components/base-component';
 import Furniture from '../components/furniture/furniture';
 import Pet from '../components/pet/pet';
-import { Tags } from '../types/dom-types';
+import { Tags } from '../types/dom-types/enums';
 
 describe('furniture', () => {
   const furnitureParams = {

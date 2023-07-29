@@ -1,11 +1,12 @@
 import BaseComponent from '../../components/base-component';
-import { CompletionState, NumeratedLevel } from '../model/level-data';
+import { NumeratedLevel } from '../model/level-data';
 import EventEmitter from '../../utils/event-emitter';
 import Header from '../../components/header/header';
 import footer from '../../components/footer/footer';
 import Playground from '../../components/playground (main)/playground';
 import SideMenu from '../../components/side-menu/side-menu';
-import { AnimationParams } from '../../types/dom-types';
+import { AnimationParams } from '../../types/dom-types/types';
+import CompletionState from '../model/completion-state';
 
 export default class AppView {
   private body: BaseComponent<HTMLElement>;

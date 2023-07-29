@@ -1,11 +1,11 @@
 import BaseComponent from '../components/base-component';
-import { Tags } from '../types/dom-types';
+import { Tags } from '../types/dom-types/enums';
 
 describe('base DOM component', () => {
   it('creates new dom element and adds it to the specified parent into the DOM', () => {
     new BaseComponent<HTMLElement>({
       tag: Tags.Span,
-      classes: ['test-span'],
+      classList: ['test-span'],
       parent: document.body,
       attributes: {
         attr: 'value',
@@ -18,7 +18,7 @@ describe('base DOM component', () => {
     component.append(
       new BaseComponent({
         tag: Tags.Paragraph,
-        classes: ['test-p'],
+        classList: ['test-p'],
       })
     );
     expect(document.querySelector('div .test-p')).toBeTruthy();
@@ -28,7 +28,7 @@ describe('base DOM component', () => {
       it('returns true', () => {
         const component = new BaseComponent<HTMLSpanElement>({
           tag: Tags.Span,
-          classes: ['super-span', 'span-span'],
+          classList: ['super-span', 'span-span'],
           attributes: {
             size: 'big',
             lines: '100',
@@ -55,7 +55,7 @@ describe('base DOM component', () => {
   it('returns correct HTML', () => {
     const component = new BaseComponent<HTMLButtonElement>({
       tag: Tags.Button,
-      classes: ['super-button'],
+      classList: ['super-button'],
       attributes: {
         count: '3',
       },

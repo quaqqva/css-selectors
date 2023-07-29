@@ -1,5 +1,5 @@
 import { DefaultCallback } from '../../../types/default';
-import { Events, Tags } from '../../../types/dom-types';
+import { Events, Tags } from '../../../types/dom-types/enums';
 import BaseComponent from '../../base-component';
 import CheckboxComponent from '../checkbox-input';
 import './toggle-input-styles.scss';
@@ -13,17 +13,17 @@ enum ToggleInputClasses {
 
 export default class ToggleInput extends BaseComponent<HTMLDivElement> {
   private static ELEMENT_PARAMS = {
-    classes: [ToggleInputClasses.ToggleInput],
+    classList: [ToggleInputClasses.ToggleInput],
   };
 
   private static SWITCH_BUTTON_PARAMS = {
     tag: Tags.Div,
-    classes: [ToggleInputClasses.SwitchButton],
+    classList: [ToggleInputClasses.SwitchButton],
   };
 
   private static LABEL_PARAMS = {
     tag: Tags.Label,
-    classes: [ToggleInputClasses.Label],
+    classList: [ToggleInputClasses.Label],
   };
 
   private checkbox: CheckboxComponent;

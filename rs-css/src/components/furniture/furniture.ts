@@ -1,11 +1,12 @@
 import { ElementParameters } from '../../types/default';
-import { AnimationParams, Events, Tags } from '../../types/dom-types';
+import { Events, Tags } from '../../types/dom-types/enums';
 import BaseComponent from '../base-component';
 import Pet from '../pet/pet';
 import HighlightableComponent from '../highlight/highlightable';
 import FakeComponent from '../pet/fake-component';
 import { MarkupClasses } from '../../types/markup-classes';
 import MarkupText from '../highlight/markup-text';
+import { AnimationParams } from '../../types/dom-types/types';
 
 enum FurnitureClasses {
   Markup = 'markup',
@@ -32,7 +33,7 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
 
   private static MARKUP_PARAMS = {
     tag: Tags.Code,
-    classes: [FurnitureClasses.Markup],
+    classList: [FurnitureClasses.Markup],
   };
 
   public constructor(params: Partial<ElementParameters> & { name: string }) {
@@ -47,7 +48,7 @@ export default class Furniture extends BaseComponent<HTMLDivElement> {
 
     const spanElement = new HighlightableComponent<HTMLSpanElement>({
       tag: Tags.Span,
-      classes: [MarkupClasses.Element],
+      classList: [MarkupClasses.Element],
     });
     spanElement.addText(`<${this.name}>\n`);
     spanElement.append(...this.pets.map((pet) => pet.getMarkup(1, appearingTextPlaceholder)));

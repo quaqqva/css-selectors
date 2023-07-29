@@ -1,5 +1,6 @@
 import { ElementParameters } from '../types/default';
-import { Tags, Events, InsertPositions, AnimationParams } from '../types/dom-types';
+import { Tags, Events, InsertPositions } from '../types/dom-types/enums';
+import { AnimationParams } from '../types/dom-types/types';
 
 export default class BaseComponent<T extends HTMLElement> {
   protected element: T;
@@ -19,12 +20,12 @@ export default class BaseComponent<T extends HTMLElement> {
     return component;
   }
 
-  public constructor({ tag = Tags.Div, textContent, classes, attributes, parent }: Partial<ElementParameters>) {
+  public constructor({ tag = Tags.Div, textContent, classList, attributes, parent }: Partial<ElementParameters>) {
     this.element = document.createElement(tag) as T;
 
     if (textContent) this.element.innerText = textContent;
 
-    if (classes) this.addClass(...classes);
+    if (classList) this.addClass(...classList);
 
     if (attributes) {
       for (const attribute in attributes) this.setAttribute(attribute, attributes[attribute]);

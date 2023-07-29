@@ -1,5 +1,5 @@
 import { DefaultCallback, ElementParameters } from '../../types/default';
-import { Events, InputTypes, Tags } from '../../types/dom-types';
+import { Events, InputTypes, Tags } from '../../types/dom-types/enums';
 import BaseComponent from '../base-component';
 import { Keys } from '../../types/keys';
 

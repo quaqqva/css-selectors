@@ -1,4 +1,4 @@
-import { Tags } from '../../../types/dom-types';
+import { Tags } from '../../../types/dom-types/enums';
 import BaseComponent from '../../base-component';
 import DragNDropComponent from '../drag-n-drop-component';
 import './line-styles.scss';
@@ -13,12 +13,12 @@ export default class HTMLView extends DragNDropComponent {
   private static PANEL_TITLE = 'index.html';
 
   private static LINES_VIEW_PARAMS = {
-    classes: [HTMLViewClasses.LinesWrapper],
+    classList: [HTMLViewClasses.LinesWrapper],
   };
 
   private static LINE_ELEMENTS_PARAMS = {
     tag: Tags.Span,
-    classes: [HTMLViewClasses.LineNumber],
+    classList: [HTMLViewClasses.LineNumber],
   };
 
   private linesView: BaseComponent<HTMLDivElement>;

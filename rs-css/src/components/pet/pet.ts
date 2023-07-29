@@ -1,7 +1,7 @@
 import BaseComponent from '../base-component';
 import { ElementParameters } from '../../types/default';
 import { PetElement } from '../../app/model/level-data';
-import { Events, Tags } from '../../types/dom-types';
+import { Events, Tags } from '../../types/dom-types/enums';
 import FakeComponent from './fake-component';
 import HighlightableComponent from '../highlight/highlightable';
 import { MarkupClasses } from '../../types/markup-classes';
@@ -44,7 +44,7 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
     const resultComponent = new HighlightableComponent<HTMLSpanElement>({
       tag: Tags.Span,
       textContent: `${indents}${componentHTML}`,
-      classes: [MarkupClasses.Element],
+      classList: [MarkupClasses.Element],
     });
     resultComponent.addText('\n');
     if (this.fakeMarkupParams.children)
@@ -77,11 +77,11 @@ export default class Pet extends BaseComponent<HTMLDivElement> {
   }
 
   private static createMarkup(data: PetElement): Partial<ElementParameters> {
-    const classes = JSON.parse(JSON.stringify(data.classes || []));
-    classes.push(data.tag);
+    const classList = JSON.parse(JSON.stringify(data.classList || []));
+    classList.push(data.tag);
     const markup: Partial<ElementParameters> = {
       tag: Tags.Div,
-      classes,
+      classList,
       attributes: data.attributes,
     };
     return markup;

@@ -2,7 +2,7 @@ import { ElementParameters } from '../../types/default';
 import BaseComponent from '../base-component';
 import wrapInSpan from '../../utils/wrap-in-span';
 import './highlight-theme.scss';
-import { NodeTypes } from '../../types/dom-types';
+import { NodeTypes } from '../../types/dom-types/enums';
 
 type Replacer = (match: string) => string;
 

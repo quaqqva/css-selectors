@@ -1,5 +1,5 @@
 import { DefaultCallback } from '../../../types/default';
-import { Events, Tags } from '../../../types/dom-types';
+import { Events, Tags } from '../../../types/dom-types/enums';
 import EventEmitter from '../../../utils/event-emitter';
 import BaseComponent from '../../base-component';
 import HighlightableComponent from '../../highlight/highlightable';
@@ -16,11 +16,11 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
   public static INPUT_EVENT = 'css-input';
 
   private static ELEMENT_PARAMS = {
-    classes: [CSSInputClasses.Wrapper],
+    classList: [CSSInputClasses.Wrapper],
   };
 
   private static INPUT_PARAMS = {
-    classes: [CSSInputClasses.CSSInput],
+    classList: [CSSInputClasses.CSSInput],
     attributes: {
       placeholder: '/*Type in selector*/',
     },
@@ -30,13 +30,13 @@ export default class CSSInput extends BaseComponent<HTMLDivElement> {
 
   private static BUTTON_PARAMS = {
     tag: Tags.Button,
-    classes: [CSSInputClasses.EnterButton],
+    classList: [CSSInputClasses.EnterButton],
     textContent: 'Enter',
   };
 
   private static TEXT_VIEW_PARAMS = {
     tag: Tags.Code,
-    classes: [CSSInputClasses.TextView],
+    classList: [CSSInputClasses.TextView],
   };
 
   private input: TextInput;
