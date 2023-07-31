@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>SVG Presentation</title>
+
+		<link rel="stylesheet" href="src/reset.css">
+		<link rel="stylesheet" href="src/reveal.css">
+		<link rel="stylesheet" href="src/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2 class="r-fit-text">SVG</h2>
+					<h3 class="r-fit-text">Coordinates, Basic Shapes, Animations</h3>
+				</section>
+				<section>SVG stands for <b>Scalable Vector Graphic</b>, 
+					it is an XML language for describing two-dimensional vector drawings. 
+					It is an open standard and specification of the W3C whose version 1.0 dates back to 2001. 
+					The current version is 1.1 which was released in 2003. 
+					Work on the SVG 1.2 Full version is ongoing.
+				</section>
+				<section>
+					<section>
+						<h2>How does it differ from raster formats?</h2>
+						<img class="r-stretch" src = "./images/svg-comparison.png">
+					</section>
+					<section>
+					  <h2>SVG Advantages</h2>
+					  <ul>
+					  	  <li class="fragment fade-in">Scalable</li>
+					  	  <li class="fragment fade-in">Zoomable</li>
+					  	  <li class="fragment fade-in">Customizable</li>
+					  	  <li class="fragment fade-in">Can be searched, scripted, indexed</li>
+					  </ul>
+					</section>
+				</section>
+				<section>
+					<h2>Base SVG document structure</h2>
+					<pre><code data-trim> 
+                      &lt;?xml version="1.0" standalone="no"?&gt;
+                      &lt;svg width="100%" height="100%" 
+                        version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+                        &lt;!-- SVG declarations --&gt;
+                      &lt;/svg&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>Coordinate system</h2>
+					For all elements, SVG uses a coordinate system or grid system similar to the one used by canvas
+					<img style="display:block; margin: 0 auto" src="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Positions/canvas_default_grid.png" alt="">
+				</section>
+				<section>
+					<section>
+						<h2>Basic shapes</h2>
+						<ul>
+							<li>Rectangle</li>
+							<li>Circle</li>
+							<li>Ellipse</li>
+							<li>Line</li>
+							<li>Polygon</li>
+							<li>Polyline</li>
+							<li>Path</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Rectange</h2>
+						<pre>
+						  <code data-trim>
+							&lt;?xml version="1.0" standalone="no"?&gt;
+							&lt;svg width="100%" height="100%" 
+							  version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+							    &lt;rect 
+							    width="150"
+							    height="100"
+							    style="fill:blue; stroke-width:1; stroke:white"/&gt;
+							&lt;/svg&gt;
+						  </code>
+					    </pre>
+						<svg>
+							<rect x="30" y="30" width="150" height="100" style="fill:blue; stroke-width:1; stroke:white;"></rect>
+						</svg>
+					</section>
+					<section>
+						<h2>Circle</h2>
+						<pre>
+						  <code data-trim>
+							&lt;?xml version="1.0" standalone="no"?&gt;
+							&lt;svg width="100%" height="100%" 
+							  version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+							    &lt;circle 
+							    cx="70"
+							    cy="70"
+							    r="40"
+							    stroke="white"
+							    stroke-width="2"
+							    fill="red"/&gt;
+							&lt;/svg&gt;
+						  </code>
+					   </pre>
+					   <svg>
+						  <circle 
+							  cx="70"
+							  cy="70"
+							  r="40"
+							  stroke="white"
+							  stroke-width="2"
+							  fill="red"/>
+					   </svg>
+					</section>
+					<section>
+						<h2>Ellipse</h2>
+						<pre>
+							<code data-trim>
+								&lt;?xml version="1.0" standalone="no"?&gt;
+								&lt;svg width="100%" height="100%" 
+								  version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+								    &lt;ellipse
+								    cx="100"
+								    cy="60"
+								    rx="50"
+								    ry="30"
+								    style="fill:green; stroke-width:2; stroke:white"/&gt;
+								&lt;/svg&gt;
+						    </code>
+					    </pre>
+						<svg>
+							<ellipse
+								cx="100"
+								cy="60"
+								rx="50"
+								ry="30"
+								style="fill:green; stroke-width:2; stroke:white"/>
+						</svg>
+					</section>
+					<section>
+						<h2>Line</h2>
+						<pre>
+							<code data-trim>
+								&lt;?xml version="1.0" standalone="no"?&gt;
+								&lt;svg width="100%" height="100%" 
+								  version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+								    &lt;line 
+								    x1="30" 
+								    y1="30" 
+								    x2="120" 
+								    y2="70" 
+								    style="stroke:white; stroke-width:2"/&gt;
+								&lt;/svg&gt;
+						    </code>
+					    </pre>
+						<svg>
+							<line 
+ 								x1="30" 
+ 								y1="30" 
+ 								x2="120" 
+ 								y2="70" 
+ 								style="stroke:white; stroke-width:2"/>
+						</svg>
+					</section>
+					<section>
+						<h2>Polygon</h2>
+						<pre>
+							<code data-trim>
+								&lt;?xml version="1.0" standalone="no"?&gt;
+								&lt;svg width="100%" height="100%" 
+								  version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+								  &lt;polygon 
+								    points="120,70 100,30 170,50 30,50 70,90" 
+								    style="fill:pink; stroke:black; stroke-width:1"/&gt;
+								&lt;/svg&gt;
+						    </code>
+					    </pre>
+						<svg>
+							<polygon 
+ 								points="120,70 100,30 170,50 30,50 70,90" 
+ 								style="fill:pink; stroke:black; stroke-width:1"/>
+						</svg>
+					</section>
+					<section>
+						<h2>Polyline</h2>
+						<pre>
+							<code data-trim>
+								&lt;?xml version="1.0" standalone="no"?&gt;
+								&lt;svg width="100%" height="100%" 
+								  version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+								    &lt;polyline 
+								    points="30,30 60,30 30,60 60,60" 
+								    style="fill:white; stroke:red; stroke-width:2"/&gt;
+								&lt;/svg&gt;
+						    </code>
+					    </pre>
+						<svg>
+							<polyline 
+ 								points="30,30 60,30 30,60 60,60" 
+ 								style="fill:white; stroke:red; stroke-width:2"/>
+						</svg>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Path Commands</h2>
+						<ul class="r-fit-text">
+							<li class="fragment fade-in">
+								M: move to a given position
+							</li>
+							<li class="fragment fade-in">
+								L: draw a line to a given position
+							</li>
+							<li class="fragment fade-in">
+								H: draw an horizontal line to a given abscissa
+							</li>
+							<li class="fragment fade-in">
+								V: draw a vertical line to a given ordinate
+							</li>
+							<li class="fragment fade-in">
+								C and S: draw a cubic Bezier curve (with two control points)
+							</li>
+							<li class="fragment fade-in">
+								Q and T: draw a quadratic Bezier curve (with a control point)
+							</li>
+							<li class="fragment fade-in">
+								A: draw an elliptical arc
+							</li>
+							<li class="fragment fade-in">
+								Z: finalize the path by drawing a straight line between the last point and the first point.
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Path shape example</h2>
+						<pre>
+							<code data-trim>
+								&lt;?xml version="1.0" standalone="no"?&gt;
+								&lt;svg width="100%" height="100%" 
+								  version="1.1" xmlns="http://www.w3.org/2000/svg"&gt;
+									&lt;path 
+									d="M100 100 L200 100 C150 50 125 125 100 150 Z"
+									style="fill:green; stroke-width:2; stroke:blue"/&gt;
+								&lt;/svg&gt;
+							</code>
+						</pre>
+						<svg>
+							<path 
+								 d="M100 100 L200 100 C150 50 125 125 100 150 Z"
+								 style="fill:green; stroke-width:2; stroke:blue"/>
+						</svg>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>SVG animations</h2>
+						SVGs support <code>CSS</code> and <code>SMIL</code> animations
+					</section>
+					<section>
+						<h2>SMIL Animations</h2>
+						<ul>
+							<li class="fragment fade-in">using <code>animate</code></li>
+							<li class="fragment fade-in">using <code>animateMotion</code></li>
+							<li class="fragment fade-in">using <code>animateTransform</code></li>
+						</ul> 
+					</section>
+					<section>
+						<h2>Some animation attributes</h2>
+						<ul>
+							<li class="fragment fade-in"><code>attributeName</code></li>
+							<li class="fragment fade-in"><code>dur</code></li>
+							<li class="fragment fade-in"><code>from</code>, <code>to</code>, <code>values</code></li>
+							<li class="fragment fade-in"><code>repeatCount</code>, <code>repeatDur</code></li>
+							<li class="fragment fade-in"><code>begin</code></li>
+							<li class="fragment fade-in"><code>calcMode</code></li>
+						</ul>
+					</section>
+					<section>
+						<h2>Animation example</h2>
+						<pre><code data-trim>
+							&lt;?xml version="1.0" standalone="no"?&gt;
+							&lt;svg width="300" height="100"&gt;
+								&lt;title&gt;Attribute Animation with SMIL&lt;/title&gt;
+								&lt;rect x="0" y="0" width="300" height="100" stroke="black" stroke-width="1" /&gt;
+								&lt;circle cx="0" cy="50" r="15" fill="blue" stroke="black" stroke-width="1"&gt;
+								  &lt;animate
+									attributeName="cx"
+									from="0"
+									to="500"
+									dur="5s"
+									repeatCount="indefinite" /&gt;
+								&lt;/circle&gt;
+							&lt;/svg&gt;
+						</code></pre>
+						<svg width="300" height="100">
+							<title>Attribute Animation with SMIL</title>
+							<rect x="0" y="0" width="300" height="100" stroke="black" stroke-width="1" />
+							<circle cx="0" cy="50" r="15" fill="blue" stroke="black" stroke-width="1">
+							  <animate
+								attributeName="cx"
+								from="0"
+								to="500"
+								dur="5s"
+								repeatCount="indefinite" />
+							</circle>
+						  </svg>
+					</section>
+					<section>
+						<h2>Transform animation example</h2>
+						<pre><code data-trim>
+							&lt;?xml version="1.0" standalone="no"?&gt;
+							&lt;svg width="300" height="100"&gt;
+								&lt;title&gt;SVG SMIL Animate with transform&lt;/title&gt;
+								&lt;rect x="0" y="0" width="300" height="100" stroke="black" stroke-width="1" /&gt;
+								&lt;rect
+								  x="0"
+								  y="50"
+								  width="15"
+								  height="34"
+								  fill="blue"
+								  stroke="black"
+								  stroke-width="1"&gt;
+								  &lt;animateTransform
+									attributeName="transform"
+									begin="0s"
+									dur="20s"
+									type="rotate"
+									from="0 60 60"
+									to="360 100 60"
+									repeatCount="indefinite" /&gt;
+								&lt;/rect&gt;
+							  &lt;/svg&gt;
+						</code></pre>
+						<svg width="300" height="100">
+							<title>SVG SMIL Animate with transform</title>
+							<rect x="0" y="0" width="300" height="100" stroke="black" stroke-width="1" />
+							<rect
+							  x="0"
+							  y="50"
+							  width="15"
+							  height="34"
+							  fill="blue"
+							  stroke="black"
+							  stroke-width="1">
+							  <animateTransform
+								attributeName="transform"
+								begin="0s"
+								dur="20s"
+								type="rotate"
+								from="0 60 60"
+								to="360 100 60"
+								repeatCount="indefinite" />
+							</rect>
+						  </svg>
+					</section>
+					<section>
+						<h2>Motion animation example</h2>
+						<pre><code data-trim>
+							&lt;?xml version="1.0" standalone="no"?&gt;
+							&lt;svg width="300" height="100"&gt;
+								&lt;title&gt;SVG SMIL Animate with Path&lt;/title&gt;
+								&lt;rect x="0" y="0" width="300" height="100" stroke="black" stroke-width="1" /&gt;
+								&lt;rect
+								  x="0"
+								  y="0"
+								  width="20"
+								  height="20"
+								  fill="blue"
+								  stroke="black"
+								  stroke-width="1"&gt;
+								  &lt;animateMotion
+									path="M 250,80 H 50 Q 30,80 30,50 Q 30,20 50,20 H 250 Q 280,20,280,50 Q 280,80,250,80Z"
+									dur="3s"
+									repeatCount="indefinite"
+									rotate="auto" /&gt;
+								&lt;/rect&gt;
+							  &lt;/svg&gt;
+						</code></pre>
+						<svg width="300" height="100">
+							<title>SVG SMIL Animate with Path</title>
+							<rect x="0" y="0" width="300" height="100" stroke="black" stroke-width="1" />
+							<rect
+							  x="0"
+							  y="0"
+							  width="20"
+							  height="20"
+							  fill="blue"
+							  stroke="black"
+							  stroke-width="1">
+							  <animateMotion
+								path="M 250,80 H 50 Q 30,80 30,50 Q 30,20 50,20 H 250 Q 280,20,280,50 Q 280,80,250,80Z"
+								dur="3s"
+								repeatCount="indefinite"
+								rotate="auto" />
+							</rect>
+						  </svg>
+					</section>
+				</section>
+				<section>
+					<h2 class="r-fit-text">
+						Thank you for your attention!
+					</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="src/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
