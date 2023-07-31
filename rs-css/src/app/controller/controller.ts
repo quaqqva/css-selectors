@@ -1,94 +1,73 @@
-import levels from '../../data/levels.json';
 import { DefaultCallback } from '../../types/default';
-import { CompletionState, LevelData, NumeratedLevel } from '../model/level-data';
+import { CompletionState } from '../model/level-data';
 import validateSelector from '../../utils/validator';
-import { UserData } from '../model/level-data';
-import parseMarkdown from '../../utils/parse-markdown';
+import EventEmitter from '../../utils/event-emitter';
+import AppView from '../view/view';
+import LevelStorage from '../model/level-storage/level-storage';
+import { AppEvents } from '../../types/app-events';
 
 export default class AppController {
-  private levels: LevelData[];
+  private emitter: EventEmitter;
 
-  private currentLevelIndex: number;
+  private levelStorage: LevelStorage;
 
-  private userData: UserData;
+  private view: AppView;
 
-  private helpUsed: boolean;
+  public constructor(emitter: EventEmitter, view: AppView) {
+    this.emitter = emitter;
+    this.levelStorage = new LevelStorage();
+    this.view = view;
 
-  private static STORAGE_KEY = 'css-pets-quaqva';
+    this.addEventHandlers();
+  }
 
-  public constructor() {
-    this.levels = levels as LevelData[];
-    this.levels.forEach((levelData) => {
-      const data = levelData;
-      data.description = parseMarkdown(data.description);
+  public get sideMenuData() {
+    return [this.levelStorage.completedLevels, this.levelStorage.names];
+  }
+
+  public initializeSideMenu(): void {
+    this.view.loadSideMenu(this.levelStorage.completedLevels, this.levelStorage.names);
+  }
+
+  public loadCurrentLevel(): void {
+    this.levelStorage.loadLevel(this.levelStorage.currentLevel, (level) => this.view.drawLevel(level));
+  }
+
+  private addEventHandlers(): void {
+    this.emitter.subscribe(AppEvents.SelectorInput, (data) => {
+      this.checkInput({
+        viewData: data,
+        sucessCallback: async () => {
+          await this.view.signalLevelWin(this.levelStorage.currentSolution);
+          this.emitter.emit(AppEvents.LevelCompleted, [this.levelStorage.currentLevel, this.levelStorage.helped]);
+          this.levelStorage.loadNextLevel((level) => this.view.drawLevel(level));
+        },
+        failCallback: () => {
+          this.view.signalWrongInput(this.getUserInput(data));
+        },
+        winCallback: async () => {
+          this.emitter.emit(AppEvents.LevelCompleted, [this.levelStorage.currentLevel, this.levelStorage.helped]);
+          await this.view.signalLevelWin(this.levelStorage.currentSolution);
+          this.view.signalWin();
+        },
+      });
     });
 
-    this.userData = this.loadUserData();
-    this.currentLevelIndex = this.userData.currentLevel;
+    this.emitter.subscribe(AppEvents.LevelChoose, (index) =>
+      this.levelStorage.loadLevel(index as number, (level) => this.view.drawLevel(level))
+    );
 
-    this.helpUsed = false;
+    this.emitter.subscribe(AppEvents.ResetProgress, () => {
+      this.levelStorage.clearUserData();
+      this.levelStorage.loadLevel(this.levelStorage.currentLevel, (level) => this.view.drawLevel(level));
+    });
+
+    this.emitter.subscribe(AppEvents.GetSelector, () => {
+      this.emitter.emit(AppEvents.PostSelector, this.levelStorage.help);
+    });
   }
 
-  public saveUserData(): void {
-    localStorage.setItem(AppController.STORAGE_KEY, JSON.stringify(this.userData));
-  }
-
-  public clearUserData(): void {
-    const emptyData: UserData = {
-      currentLevel: 0,
-      completedLevels: new Array(this.levels.length).fill(CompletionState.NotCompleted),
-    };
-    localStorage.setItem(AppController.STORAGE_KEY, JSON.stringify(emptyData));
-    this.currentLevelIndex = emptyData.currentLevel;
-    this.userData = emptyData;
-  }
-
-  public get currentLevel(): number {
-    return this.currentLevelIndex;
-  }
-
-  public get completedLevels(): CompletionState[] {
-    return this.userData.completedLevels;
-  }
-
-  public get names(): string[] {
-    return this.levels.map((levelData) => levelData.name);
-  }
-
-  public get descriptions(): string[] {
-    return this.levels.map((levelData) => levelData.description);
-  }
-
-  public get currentSolution(): string {
-    return this.levels[this.currentLevelIndex].solution;
-  }
-
-  public get help(): string {
-    this.helpUsed = true;
-    return this.currentSolution;
-  }
-
-  public get helped(): boolean {
-    return this.helpUsed;
-  }
-
-  public loadLevel(index: number, callback: (level: NumeratedLevel) => void): void {
-    this.helpUsed = false;
-
-    this.currentLevelIndex = index;
-    this.userData.currentLevel = this.currentLevelIndex;
-    this.saveUserData();
-
-    const level = this.levels[this.currentLevelIndex] as NumeratedLevel;
-    level.index = index;
-    callback(level);
-  }
-
-  public loadNextLevel(callback: (level: NumeratedLevel) => void) {
-    this.loadLevel(this.currentLevelIndex + 1, callback);
-  }
-
-  public checkInput({
+  private checkInput({
     viewData,
     sucessCallback,
     failCallback,
@@ -100,28 +79,19 @@ export default class AppController {
     winCallback: DefaultCallback;
   }): void {
     const [markup, selector] = viewData as [markup: string, selector: string];
-    const isValid = validateSelector({ markup, selector, solution: this.levels[this.currentLevelIndex].solution });
+    const isValid = validateSelector({ markup, selector, solution: this.levelStorage.currentSolution });
     if (isValid) {
-      this.userData.completedLevels[this.currentLevelIndex] = this.helpUsed
+      this.levelStorage.levelCompletionState = this.levelStorage.helped
         ? CompletionState.CompletedWithHelp
         : CompletionState.Completed;
-      this.saveUserData();
-      if (this.currentLevelIndex === this.levels.length - 1) winCallback();
+      this.levelStorage.saveUserData();
+      if (this.levelStorage.currentLevel === this.levelStorage.levelsCount - 1) winCallback();
       else sucessCallback();
     } else failCallback();
   }
 
-  public getUserInput(viewData: unknown) {
+  private getUserInput(viewData: unknown) {
     const selector = (viewData as [markup: string, selector: string])[1];
     return selector;
-  }
-
-  private loadUserData(): UserData {
-    const data: string | null = localStorage.getItem(AppController.STORAGE_KEY);
-    if (!data || JSON.parse(data).completedLevels.length !== this.levels.length) {
-      this.clearUserData();
-      return this.userData;
-    }
-    return JSON.parse(data);
   }
 }

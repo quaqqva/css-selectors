@@ -12,7 +12,7 @@
     "floorPets": [
       {
         "tag": "dog",
-        "classes": ["pug"]
+        "classList": ["pug"]
       }
     ]
   },
@@ -30,7 +30,7 @@
         "children": [
           {
             "tag": "cat",
-            "classes": ["small"]
+            "classList": ["small"]
           }
         ]
       }
@@ -44,7 +44,7 @@
     "couchPets": [
       {
         "tag": "dog",
-        "classes": ["corgy"]
+        "classList": ["corgy"]
       }
     ],
     "floorPets": [
@@ -69,7 +69,7 @@
       },
       {
         "tag": "dog",
-        "classes": ["pug"],
+        "classList": ["pug"],
         "attributes": {
           "id": "laying"
         }
@@ -78,7 +78,7 @@
     "floorPets": [
       {
         "tag": "dog",
-        "classes": ["pug"]
+        "classList": ["pug"]
       }
     ]
   },
@@ -90,7 +90,7 @@
     "floorPets": [
       {
         "tag": "dog",
-        "classes": ["corgy"],
+        "classList": ["corgy"],
         "attributes": {
           "mood": "hungry"
         }
@@ -110,7 +110,7 @@
     "couchPets": [
       {
         "tag": "dog",
-        "classes": ["corgy"],
+        "classList": ["corgy"],
         "attributes": {
           "mood": "happy"
         }
@@ -124,11 +124,11 @@
     "floorPets": [
       {
         "tag": "cat",
-        "classes": ["small"]
+        "classList": ["small"]
       },
       {
         "tag": "dog",
-        "classes": ["corgy"],
+        "classList": ["corgy"],
         "attributes": {
           "mood": "happy"
         }
@@ -162,7 +162,7 @@
     "couchPets":[
       {
         "tag": "dog",
-        "classes":["pug"],
+        "classList":["pug"],
         "attributes": {
           "id": "laying"
         }
@@ -172,11 +172,11 @@
         "children": [
           {
             "tag": "guinea-pig",
-            "classes": ["small"],
+            "classList": ["small"],
             "children": [
               {
                 "tag": "turtle",
-                "classes":["small"]
+                "classList":["small"]
               }
             ]
           }
@@ -189,7 +189,7 @@
         "children": [
           {
             "tag": "turtle",
-            "classes": ["small"]
+            "classList": ["small"]
           }
         ]
       }
@@ -214,11 +214,11 @@
       },
       {
         "tag": "dog",
-        "classes": ["pug"]
+        "classList": ["pug"]
       },
       {
         "tag": "dog",
-        "classes": ["corgy"],
+        "classList": ["corgy"],
         "attributes": {
           "mood": "happy"
         }
@@ -246,7 +246,7 @@
         "children": [
           {
             "tag": "turtle",
-            "classes": ["small"]
+            "classList": ["small"]
           }
         ]
       }
@@ -257,7 +257,7 @@
       },
       {
         "tag": "dog",
-        "classes": ["pug"]
+        "classList": ["pug"]
       }
     ],
     "tablePets": [
@@ -277,7 +277,7 @@
       },
       {
         "tag": "dog",
-        "classes": ["corgy"],
+        "classList": ["corgy"],
         "attributes": {
           "mood": "hungry"
         }
@@ -305,7 +305,7 @@
     "floorPets": [
       {
         "tag": "hamster",
-        "classes": ["super-extra-double-huge"]
+        "classList": ["super-extra-double-huge"]
       }
     ],
     "tablePets": [
