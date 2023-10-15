@@ -1,6 +1,0 @@
-body {
-  @include scrollbar($track-color: $additional-color-light,
-  $thumb-color: $additional-color-grey,
-  $width: 8px,
-  $border-radius: 5px);
-}
