@@ -17,4 +17,4 @@
   - Jest
 
 ## Деплой
-https://quaqvagit.github.io/css-selectors/
+https://quaqqva.github.io/css-selectors/
